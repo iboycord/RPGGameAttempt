@@ -28,16 +28,7 @@ public class Unit : MonoBehaviour
     public Stat skill;
     public Stat speed;
     [Space]
-    [Header("Stat Growths")]
-    /*
-    public int attack_Growth;
-    public int defense_Growth;
-    public int special_Growth;
-    public int special_Defense_Growth;
-    public int luck_Growth;
-    public int skill_Growth;
-    public int speed_Growth;    
-    */
+    [Header("Elemental Typings")]
 
     public ElementalTyping EType1;
     public ElementalTyping EType2;
@@ -187,4 +178,108 @@ public class Unit : MonoBehaviour
             changeStat.UpdateValue(1);
         }
     }
+
+    public int ReturnStatValue(TargetStat target)
+    {
+        int statVal = 0;
+
+        switch (target)
+        {
+            case TargetStat.defense:
+                statVal = defense.GetValue();
+                break;
+            case TargetStat.special_defense:
+                statVal = special_Defense.GetValue();
+                break;
+            case TargetStat.attack:
+                statVal = attack.GetValue();
+                break;
+            case TargetStat.special:
+                statVal = special.GetValue();
+                break;
+            case TargetStat.luck:
+                statVal = luck.GetValue();
+                break;
+            case TargetStat.skill:
+                statVal = skill.GetValue();
+                break;
+            case TargetStat.speed:
+                statVal = speed.GetValue();
+                break;
+            case TargetStat.level:
+                statVal = level;
+                break;
+            case TargetStat.maxHP:
+                statVal = maxHP.GetValue();
+                break;
+            case TargetStat.currentHP:
+                statVal = currentHP;
+                break;
+            case TargetStat.maxSP:
+                statVal = maxSP.GetValue();
+                break;
+            case TargetStat.currentSP:
+                statVal = currentSP;
+                break;
+            case TargetStat.currentXp:
+                statVal = currentXp;
+                break;
+            case TargetStat.XpToNextLevel:
+                statVal = XpToNextLevel;
+                break;
+        }
+
+        return statVal;
+    }
+
+    public Stat ReturnStat(TargetStat target)
+    {
+        if(target == TargetStat.defense)
+        {
+            Stat stat = defense;
+            return stat;
+        }
+        if (target == TargetStat.special_defense)
+        {
+            Stat stat = special_Defense;
+            return stat;
+        }
+        if (target == TargetStat.attack)
+        {
+            Stat stat = attack;
+            return stat;
+        }
+        if (target == TargetStat.special)
+        {
+            Stat stat = special;
+            return stat;
+        }
+        if (target == TargetStat.luck)
+        {
+            Stat stat = luck;
+            return stat;
+        }
+        if (target == TargetStat.skill)
+        {
+            Stat stat = skill;
+            return stat;
+        }
+        if (target == TargetStat.speed)
+        {
+            Stat stat = speed;
+            return stat;
+        }
+        if (target == TargetStat.maxHP)
+        {
+            Stat stat = maxHP;
+            return stat;
+        }
+        if (target == TargetStat.maxSP)
+        {
+            Stat stat = maxSP;
+            return stat;
+        }
+        return attack;
+    }
+
 }

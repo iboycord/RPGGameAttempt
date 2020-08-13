@@ -11,17 +11,53 @@ public class StatusEffect : ScriptableObject
     public int basePower;
     public StatusType statusType1;
     public StatusType statusType2;
+
+    public TargetStat targetStat1;
+    public TargetStat targetStat2;
+    [Range(0,5)]
+    public float statMultiplier;
+    int statAfterMultiply;
     bool causedStatChange = false;
 
     public GameObject gfx;
 
     public virtual void Execute()
     {
+        if(statusType1 == StatusType.Damaging || statusType2 == StatusType.Damaging)
+        {
+            characterAfflicted.TakeDamage(basePower, false, false);
+        }
+        if (statusType1 == StatusType.Healing || statusType2 == StatusType.Healing)
+        {
+            characterAfflicted.Heal(basePower);
+        }
 
 
 
+    }
+
+    public virtual void OnCreation()
+    {
+        if (statusType1 == StatusType.StatDown)
+        {
+            statAfterMultiply = Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat1) * statMultiplier);
+            characterAfflicted.ReturnStat(targetStat1).AddModifier(statAfterMultiply);
+        }
+    }
+
+    public virtual void Update()
+    {
 
 
+    }
+
+    public virtual void Clear()
+    {
+        if (statusType1 == StatusType.StatDown)
+        {
+            characterAfflicted.ReturnStat(targetStat1).RemoveModifier(statAfterMultiply);
+            statAfterMultiply = 0;
+        }
     }
 
     public virtual void End()

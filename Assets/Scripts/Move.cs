@@ -110,7 +110,7 @@ public class Move : ScriptableObject
     //  Adds the certain stat and the move's base power
     public virtual int HealFormula(CharacterStats user)
     {
-        int healer = StatValue(user, atkStat);
+        int healer = user.ReturnStatValue(atkStat);
 
         float tempHeal = Mathf.Max(1, healer + basePower);
 
@@ -139,8 +139,10 @@ public class Move : ScriptableObject
         }
 
         // get target stat from both units, using the base power and ext ext.
-        int attacker = StatValue(user, atkStat);
-        int defender = StatValue(target, defStat);
+        //int attacker = StatValue(user, atkStat);
+        //int defender = StatValue(target, defStat);
+        int attacker = user.ReturnStatValue(atkStat);
+        int defender = target.ReturnStatValue(defStat);
 
         float tempDmg = Mathf.Max(1, ((attacker + ((basePower + Random.Range(-basePower * randomnessCoefficient, basePower * randomnessCoefficient)) * weak)) - (defender - CritStrike(defender))));
         
@@ -152,11 +154,11 @@ public class Move : ScriptableObject
     public virtual int DuoDamageFormula(CharacterStats user, CharacterStats partner, CharacterStats target)
     {
         int dmg;
-        
+
 
         // get target stat from both units, using the base power and ext ext.
-        int attacker1 = StatValue(user, atkStat);
-        int defender = StatValue(target, defStat);
+        int attacker1 = user.ReturnStatValue(atkStat);
+        int defender = target.ReturnStatValue(defStat);
 
         float tempDmg = Mathf.Max(1, ((attacker1 + basePower) - (defender - CritStrike(defender))));
 
@@ -167,7 +169,8 @@ public class Move : ScriptableObject
 
     public virtual int CritStrike(int def)
     {
-        int chance = Mathf.FloorToInt(StatValue(moveUser, TargetStat.skill) / 3);
+        //int chance = Mathf.FloorToInt(StatValue(moveUser, TargetStat.skill) / 3);
+        int chance = Mathf.FloorToInt(moveUser.ReturnStatValue(TargetStat.skill) / 3);
 
         // Come back here and change this constant 0.3 to the true guarding value later.
         int t = RNG(chance) ? Mathf.FloorToInt(def * 0.3f) : 0;
@@ -212,58 +215,6 @@ public class Move : ScriptableObject
         return false;
     }
 
-    public virtual int StatValue(CharacterStats unit, TargetStat target)
-    {
-        int statVal = 0;
-
-        switch (target)
-        {
-            case TargetStat.defense:
-                statVal = unit.defense.GetValue();
-                break;
-            case TargetStat.special_defense:
-                statVal = unit.special_Defense.GetValue();
-                break;
-            case TargetStat.attack:
-                statVal = unit.attack.GetValue();
-                break;
-            case TargetStat.special:
-                statVal = unit.special.GetValue();
-                break;
-            case TargetStat.luck:
-                statVal = unit.luck.GetValue();
-                break;
-            case TargetStat.skill:
-                statVal = unit.skill.GetValue();
-                break;
-            case TargetStat.speed:
-                statVal = unit.speed.GetValue();
-                break;
-            case TargetStat.level:
-                statVal = unit.level;
-                break;
-            case TargetStat.maxHP:
-                statVal = unit.maxHP.GetValue();
-                break;
-            case TargetStat.currentHP:
-                statVal = unit.currentHP;
-                break;
-            case TargetStat.maxSP:
-                statVal = unit.maxSP.GetValue();
-                break;
-            case TargetStat.currentSP:
-                statVal = unit.currentSP;
-                break;
-            case TargetStat.currentXp:
-                statVal = unit.currentXp;
-                break;
-            case TargetStat.XpToNextLevel:
-                statVal = unit.XpToNextLevel;
-                break;
-        }
-
-        return statVal;
-    }
 }
 
 //public enum MoveStrength { One_Star, Two_Star, Three_Star, Four_Star, Five_Star, Six_Star }
