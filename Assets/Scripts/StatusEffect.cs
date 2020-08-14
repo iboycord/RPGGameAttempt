@@ -14,10 +14,11 @@ public class StatusEffect : ScriptableObject
 
     public TargetStat targetStat1;
     public TargetStat targetStat2;
+
+    public float maxMultiplier = 5;
     [Range(0,5)]
     public float statMultiplier;
     int statAfterMultiply;
-    bool causedStatChange = false;
 
     public GameObject gfx;
 
@@ -33,29 +34,59 @@ public class StatusEffect : ScriptableObject
         }
 
 
-
+        TurnIncrementor(-1);
     }
 
-    public virtual void OnCreation()
+    public virtual void OnCreation(CharacterStats chara)
     {
-        if (statusType1 == StatusType.StatDown)
+        characterAfflicted = chara;
+        StatCheckChange();
+    }
+
+    public virtual void StatCheckChange()
+    {
+
+        if (statusType1 == StatusType.StatDown || statusType1 == StatusType.StatUp)
         {
             statAfterMultiply = Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat1) * statMultiplier);
             characterAfflicted.ReturnStat(targetStat1).AddModifier(statAfterMultiply);
         }
+        if (statusType2 == StatusType.StatDown || statusType2 == StatusType.StatUp)
+        {
+            statAfterMultiply = Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat2) * statMultiplier);
+            characterAfflicted.ReturnStat(targetStat2).AddModifier(statAfterMultiply);
+        }
     }
 
-    public virtual void Update()
+    public virtual void ChangeMultiplier(int newMulti)
     {
-
+        Clear();
+        if(newMulti > maxMultiplier)
+        {
+            statMultiplier = maxMultiplier;
+        }
+        if(newMulti < -maxMultiplier)
+        {
+            statMultiplier = maxMultiplier;
+        }
+        else
+        {
+            statMultiplier = newMulti;
+        }
+        StatCheckChange();
 
     }
 
     public virtual void Clear()
     {
-        if (statusType1 == StatusType.StatDown)
+        if (statusType1 == StatusType.StatDown || statusType1 == StatusType.StatUp)
         {
             characterAfflicted.ReturnStat(targetStat1).RemoveModifier(statAfterMultiply);
+            statAfterMultiply = 0;
+        }
+        if (statusType2 == StatusType.StatDown || statusType2 == StatusType.StatUp)
+        {
+            characterAfflicted.ReturnStat(targetStat2).RemoveModifier(statAfterMultiply);
             statAfterMultiply = 0;
         }
     }
@@ -66,6 +97,10 @@ public class StatusEffect : ScriptableObject
         {
             characterAfflicted.TakeDamage(basePower, false, false);
         }
+
+        Clear();
+
+        //Remove the status somehow. Thinking theres a script on each combatant that reads a status' effects and then executes them
     }
 
     public virtual bool QuickLostTurnCheck()
