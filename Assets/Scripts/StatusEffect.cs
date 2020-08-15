@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Statuses", menuName = "Status Effects/New Status")]
 public class StatusEffect : ScriptableObject
 {
-    public CharacterStats characterAfflicted;
     public int turnsLeft = 4;
 
     public int basePower;
@@ -22,7 +21,7 @@ public class StatusEffect : ScriptableObject
 
     public GameObject gfx;
 
-    public virtual void Execute()
+    public virtual void Execute(CharacterStats characterAfflicted)
     {
         if(statusType1 == StatusType.Damaging || statusType2 == StatusType.Damaging)
         {
@@ -39,11 +38,10 @@ public class StatusEffect : ScriptableObject
 
     public virtual void OnCreation(CharacterStats chara)
     {
-        characterAfflicted = chara;
-        StatCheckChange();
+        StatCheckChange(chara);
     }
 
-    public virtual void StatCheckChange()
+    public virtual void StatCheckChange(CharacterStats characterAfflicted)
     {
 
         if (statusType1 == StatusType.StatDown || statusType1 == StatusType.StatUp)
@@ -58,9 +56,9 @@ public class StatusEffect : ScriptableObject
         }
     }
 
-    public virtual void ChangeMultiplier(int newMulti)
+    public virtual void ChangeMultiplier(CharacterStats chara, int newMulti)
     {
-        Clear();
+        Clear(chara);
         if(newMulti > maxMultiplier)
         {
             statMultiplier = maxMultiplier;
@@ -73,11 +71,11 @@ public class StatusEffect : ScriptableObject
         {
             statMultiplier = newMulti;
         }
-        StatCheckChange();
+        StatCheckChange(chara);
 
     }
 
-    public virtual void Clear()
+    public virtual void Clear(CharacterStats characterAfflicted)
     {
         if (statusType1 == StatusType.StatDown || statusType1 == StatusType.StatUp)
         {
@@ -91,14 +89,14 @@ public class StatusEffect : ScriptableObject
         }
     }
 
-    public virtual void End()
+    public virtual void End(CharacterStats characterAfflicted)
     {
         if(statusType1 == StatusType.DamagesWhenExpired || statusType2 == StatusType.DamagesWhenExpired)
         {
             characterAfflicted.TakeDamage(basePower, false, false);
         }
 
-        Clear();
+        Clear(characterAfflicted);
 
         //Remove the status somehow. Thinking theres a script on each combatant that reads a status' effects and then executes them
     }
