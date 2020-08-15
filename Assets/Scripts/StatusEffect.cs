@@ -17,10 +17,12 @@ public class StatusEffect : ScriptableObject
     public float maxMultiplier = 5;
     [Range(0,5)]
     public float statMultiplier;
-    int statAfterMultiply;
+    int statAfterMultiply1;
+    int statAfterMultiply2;
 
     public GameObject gfx;
 
+    // For executing commands every turn
     public virtual void Execute(CharacterStats characterAfflicted)
     {
         if(statusType1 == StatusType.Damaging || statusType2 == StatusType.Damaging)
@@ -33,7 +35,7 @@ public class StatusEffect : ScriptableObject
         }
 
 
-        TurnIncrementor(-1);
+        TurnDeterminer(characterAfflicted);
     }
 
     public virtual void OnCreation(CharacterStats chara)
@@ -46,46 +48,35 @@ public class StatusEffect : ScriptableObject
 
         if (statusType1 == StatusType.StatDown || statusType1 == StatusType.StatUp)
         {
-            statAfterMultiply = Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat1) * statMultiplier);
-            characterAfflicted.ReturnStat(targetStat1).AddModifier(statAfterMultiply);
+            statAfterMultiply1 = Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat1) * statMultiplier);
+            characterAfflicted.ReturnStat(targetStat1).AddModifier(statAfterMultiply1);
         }
         if (statusType2 == StatusType.StatDown || statusType2 == StatusType.StatUp)
         {
-            statAfterMultiply = Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat2) * statMultiplier);
-            characterAfflicted.ReturnStat(targetStat2).AddModifier(statAfterMultiply);
+            statAfterMultiply2 = Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat2) * statMultiplier);
+            characterAfflicted.ReturnStat(targetStat2).AddModifier(statAfterMultiply2);
         }
     }
 
     public virtual void ChangeMultiplier(CharacterStats chara, int newMulti)
     {
-        Clear(chara);
-        if(newMulti > maxMultiplier)
-        {
-            statMultiplier = maxMultiplier;
-        }
-        if(newMulti < -maxMultiplier)
-        {
-            statMultiplier = maxMultiplier;
-        }
-        else
-        {
-            statMultiplier = newMulti;
-        }
+        ClearMultiplier(chara);
+        statMultiplier = Mathf.Clamp(newMulti, -maxMultiplier, maxMultiplier);
         StatCheckChange(chara);
 
     }
 
-    public virtual void Clear(CharacterStats characterAfflicted)
+    public virtual void ClearMultiplier(CharacterStats characterAfflicted)
     {
         if (statusType1 == StatusType.StatDown || statusType1 == StatusType.StatUp)
         {
-            characterAfflicted.ReturnStat(targetStat1).RemoveModifier(statAfterMultiply);
-            statAfterMultiply = 0;
+            characterAfflicted.ReturnStat(targetStat1).RemoveModifier(statAfterMultiply1);
+            statAfterMultiply1 = 0;
         }
         if (statusType2 == StatusType.StatDown || statusType2 == StatusType.StatUp)
         {
-            characterAfflicted.ReturnStat(targetStat2).RemoveModifier(statAfterMultiply);
-            statAfterMultiply = 0;
+            characterAfflicted.ReturnStat(targetStat2).RemoveModifier(statAfterMultiply2);
+            statAfterMultiply2 = 0;
         }
     }
 
@@ -96,7 +87,7 @@ public class StatusEffect : ScriptableObject
             characterAfflicted.TakeDamage(basePower, false, false);
         }
 
-        Clear(characterAfflicted);
+        ClearMultiplier(characterAfflicted);
 
         //Remove the status somehow. Thinking theres a script on each combatant that reads a status' effects and then executes them
     }
@@ -108,6 +99,18 @@ public class StatusEffect : ScriptableObject
             return true;
         }
         return false;
+    }
+
+    public virtual void TurnDeterminer(CharacterStats characterAfflicted)
+    {
+        if(turnsLeft - 1 > 0)
+        {
+            TurnIncrementor(-1);
+        }
+        if(turnsLeft <= 0)
+        {
+            End(characterAfflicted);
+        }
     }
 
     public virtual void TurnIncrementor(int turns)
