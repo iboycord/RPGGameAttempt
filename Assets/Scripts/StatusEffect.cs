@@ -6,6 +6,10 @@ using UnityEngine;
 public class StatusEffect : ScriptableObject
 {
     public int turnsLeft = 4;
+    public int turnsToIncreaseBy = 4;
+
+    public HPorSP hp_spChoice;
+    public float hp_spMultiplier;
 
     public int basePower;
     public StatusType statusType1;
@@ -14,9 +18,9 @@ public class StatusEffect : ScriptableObject
     public TargetStat targetStat1;
     public TargetStat targetStat2;
 
-    public float maxMultiplier = 5;
+    public float maxMultiplier1 = 2, maxMultiplier2 = 2;
     [Range(0,5)]
-    public float statMultiplier;
+    public float statMultiplier1 = 1, statMultiplier2 = 1;
     int statAfterMultiply1;
     int statAfterMultiply2;
 
@@ -34,13 +38,21 @@ public class StatusEffect : ScriptableObject
             characterAfflicted.Heal(basePower);
         }
 
-
-        TurnDeterminer(characterAfflicted);
+        if (turnsLeft - 1 > 0)
+        {
+            TurnIncrementor(-1);
+        }
+        if (turnsLeft <= 0)
+        {
+            End(characterAfflicted);
+        }
     }
 
     public virtual void OnCreation(CharacterStats chara)
     {
         StatCheckChange(chara);
+        SetBasePower(chara);
+        TurnIncrementor(turnsToIncreaseBy);
     }
 
     public virtual void StatCheckChange(CharacterStats characterAfflicted)
@@ -48,22 +60,23 @@ public class StatusEffect : ScriptableObject
 
         if (statusType1 == StatusType.StatDown || statusType1 == StatusType.StatUp)
         {
-            statAfterMultiply1 = Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat1) * statMultiplier);
+            statAfterMultiply1 = Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat1) * statMultiplier1);
             characterAfflicted.ReturnStat(targetStat1).AddModifier(statAfterMultiply1);
         }
         if (statusType2 == StatusType.StatDown || statusType2 == StatusType.StatUp)
         {
-            statAfterMultiply2 = Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat2) * statMultiplier);
+            statAfterMultiply2 = Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat2) * statMultiplier2);
             characterAfflicted.ReturnStat(targetStat2).AddModifier(statAfterMultiply2);
         }
     }
 
-    public virtual void ChangeMultiplier(CharacterStats chara, int newMulti)
+    public virtual void ChangeMultiplier(CharacterStats chara, float newMulti1, float newMulti2)
     {
         ClearMultiplier(chara);
-        statMultiplier = Mathf.Clamp(newMulti, -maxMultiplier, maxMultiplier);
+        statMultiplier1 = Mathf.Clamp(newMulti1, -maxMultiplier1, maxMultiplier1);
+        statMultiplier2 = Mathf.Clamp(newMulti2, -maxMultiplier2, maxMultiplier2);
         StatCheckChange(chara);
-
+        TurnIncrementor(turnsToIncreaseBy);
     }
 
     public virtual void ClearMultiplier(CharacterStats characterAfflicted)
@@ -101,22 +114,26 @@ public class StatusEffect : ScriptableObject
         return false;
     }
 
-    public virtual void TurnDeterminer(CharacterStats characterAfflicted)
-    {
-        if(turnsLeft - 1 > 0)
-        {
-            TurnIncrementor(-1);
-        }
-        if(turnsLeft <= 0)
-        {
-            End(characterAfflicted);
-        }
-    }
-
     public virtual void TurnIncrementor(int turns)
     {
         turnsLeft += turns;
     }
+
+    public virtual int SetBasePower(CharacterStats characterAfflicted)
+    {
+        int retVal = 0;
+        if(hp_spChoice == HPorSP.Hp)
+        {
+            retVal = Mathf.FloorToInt(characterAfflicted.maxHP.GetValue() * hp_spMultiplier);
+        }
+        if (hp_spChoice == HPorSP.Sp)
+        {
+            retVal = Mathf.FloorToInt(characterAfflicted.maxSP.GetValue() * hp_spMultiplier);
+        }
+
+        return retVal;
+    }
 }
 
 public enum StatusType { None, Damaging, Healing, LostTurn, Enraged, DamagesWhenExpired, StatDown, StatUp }
+public enum HPorSP { Hp, Sp }
