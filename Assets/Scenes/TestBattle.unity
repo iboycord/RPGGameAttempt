@@ -190,6 +190,7 @@ MonoBehaviour:
   EType1: 0
   EType2: 0
   nextActTurn: 0
+  dmgReduction: 1
   isDead: 0
 --- !u!136 &55093415
 CapsuleCollider:
@@ -3288,6 +3289,7 @@ GameObject:
   - component: {fileID: 1006417893}
   - component: {fileID: 1006417892}
   - component: {fileID: 1006417891}
+  - component: {fileID: 1006417896}
   m_Layer: 0
   m_Name: TestUnitA
   m_TagString: PlayerControlled
@@ -3345,6 +3347,7 @@ MonoBehaviour:
   EType1: 1
   EType2: 0
   nextActTurn: 0
+  dmgReduction: 1
   isDead: 0
 --- !u!65 &1006417892
 BoxCollider:
@@ -3420,6 +3423,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1006417896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006417890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7470536302979e447a279f0be1f21401, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positiveStatusEffect: {fileID: 0}
+  negativeStatusEffect1: {fileID: 0}
+  negativeStatusEffect2: {fileID: 0}
 --- !u!1 &1069796159
 GameObject:
   m_ObjectHideFlags: 0
@@ -5943,6 +5961,7 @@ MonoBehaviour:
   EType1: 2
   EType2: 0
   nextActTurn: 0
+  dmgReduction: 1
   isDead: 0
 --- !u!136 &1642517819
 CapsuleCollider:
