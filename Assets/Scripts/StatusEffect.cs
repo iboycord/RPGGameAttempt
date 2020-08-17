@@ -9,21 +9,24 @@ public class StatusEffect : ScriptableObject
     public int turnsToIncreaseBy = 4;
 
     public HPorSP hp_spChoice;
+    [Range(0, 1.5f)]
     public float hp_spMultiplier;
 
     public int basePower;
     public StatusType statusType1;
     public StatusType statusType2;
+    public PosorNeg effectType;
 
+    [Space]
     public TargetStat targetStat1;
     public TargetStat targetStat2;
 
     public float maxMultiplier1 = 2, maxMultiplier2 = 2;
-    [Range(0,5)]
+    [Range(0,2)]
     public float statMultiplier1 = 1, statMultiplier2 = 1;
     int statAfterMultiply1;
     int statAfterMultiply2;
-
+    [Space]
     public GameObject gfx;
 
     // For executing commands every turn
@@ -137,3 +140,4 @@ public class StatusEffect : ScriptableObject
 
 public enum StatusType { None, Damaging, Healing, LostTurn, Enraged, DamagesWhenExpired, StatDown, StatUp }
 public enum HPorSP { Hp, Sp }
+public enum PosorNeg { Positive, Negative }

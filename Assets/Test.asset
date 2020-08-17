@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4eca58d486ded94cb98d8756f7be5cb, type: 3}
+  m_Name: Test
+  m_EditorClassIdentifier: 
+  turnsLeft: 4
+  turnsToIncreaseBy: 4
+  hp_spChoice: 0
+  hp_spMultiplier: 0.1
+  basePower: 0
+  statusType1: 1
+  statusType2: 0
+  targetStat1: 0
+  targetStat2: 0
+  maxMultiplier1: 2
+  maxMultiplier2: 2
+  statMultiplier1: 1
+  statMultiplier2: 1
+  gfx: {fileID: 0}

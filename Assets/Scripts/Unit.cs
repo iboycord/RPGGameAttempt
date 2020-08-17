@@ -169,7 +169,7 @@ public class Unit : MonoBehaviour
         int rand = Random.Range(0, 100);
         if(temp > 100)
         {
-            int t = Mathf.FloorToInt(temp / 100);
+            int t = Mathf.CeilToInt(temp / 100);
             changeStat.UpdateValue(t);
             //temp -= 100;
         }
