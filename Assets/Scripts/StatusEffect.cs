@@ -15,7 +15,6 @@ public class StatusEffect : ScriptableObject
     public int basePower;
     public StatusType statusType1;
     public StatusType statusType2;
-    public PosorNeg effectType;
 
     [Space]
     public TargetStat targetStat1;
@@ -140,4 +139,3 @@ public class StatusEffect : ScriptableObject
 
 public enum StatusType { None, Damaging, Healing, LostTurn, Enraged, DamagesWhenExpired, StatDown, StatUp }
 public enum HPorSP { Hp, Sp }
-public enum PosorNeg { Positive, Negative }
