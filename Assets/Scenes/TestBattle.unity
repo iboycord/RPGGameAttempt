@@ -3435,9 +3435,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7470536302979e447a279f0be1f21401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positiveStatusEffect: {fileID: 0}
-  negativeStatusEffect1: {fileID: 0}
-  negativeStatusEffect2: {fileID: 0}
+  character: {fileID: 0}
+  currentStatusEffect: {fileID: 11400000, guid: 9d63059382a42a34ca8bd6216be08778,
+    type: 2}
+  currentStatusTurnCount: 1
 --- !u!1 &1069796159
 GameObject:
   m_ObjectHideFlags: 0

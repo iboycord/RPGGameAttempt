@@ -220,6 +220,9 @@ public class BattleSystem : MonoBehaviour
         if (placeInLineup < lineup.Count)
         {
             CharacterStats currentUnit = lineup[placeInLineup];
+            StatusEffectHandler currentSEH = currentUnit.GetComponent<StatusEffectHandler>();
+
+            currentSEH.TurnEffects();
 
             if (!currentUnit.isDead)
             {

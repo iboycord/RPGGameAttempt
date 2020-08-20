@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4eca58d486ded94cb98d8756f7be5cb, type: 3}
   m_Name: Test
   m_EditorClassIdentifier: 
-  turnsLeft: 4
-  turnsToIncreaseBy: 4
+  id: 0
   hp_spChoice: 0
   hp_spMultiplier: 0.1
   basePower: 0
@@ -26,3 +25,6 @@ MonoBehaviour:
   statMultiplier1: 1
   statMultiplier2: 1
   gfx: {fileID: 0}
+  weakness: 0
+  transformsInto: 0
+  resists: 0
