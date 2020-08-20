@@ -48,7 +48,7 @@ public class Move : ScriptableObject
     [Space, Tooltip("Can this move cause a status?")]
     public bool canStatus;
     [Tooltip("...that status being...?")]
-    public StatusEffect status;
+    public StatusEffectList status;
     [Tooltip("...and the chance?")]
     public int chanceToStatus;
 

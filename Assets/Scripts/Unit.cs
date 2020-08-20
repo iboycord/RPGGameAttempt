@@ -70,6 +70,18 @@ public class Unit : MonoBehaviour
         }
     }
 
+    public void LooseSP(int spLost)
+    {
+        spLost = Mathf.Clamp(spLost, 0, int.MaxValue);
+
+        currentSP -= spLost;
+
+        if(currentSP <= 0)
+        {
+            currentSP = 0;
+        }
+    }
+
     public void ResetDMGRedux()
     {
         if (dmgReduction != 1) { dmgReduction = 1; }
@@ -90,6 +102,21 @@ public class Unit : MonoBehaviour
         }
     }
 
+    public void RecoverSP(int addSP)
+    {
+        addSP = Mathf.Clamp(addSP, 0, int.MaxValue);
+
+        currentSP += addSP;
+        Debug.Log(transform.name + " gets sp: " + addSP);
+
+        int temp = maxSP.GetValue();
+
+        if (currentSP >= temp)
+        {
+            currentSP = temp;
+        }
+    }
+
     public virtual void Die()
     {
         currentHP = 0;
@@ -106,7 +133,6 @@ public class Unit : MonoBehaviour
 
     public virtual bool LuckRoll()
     {
-
         int chance = Mathf.FloorToInt(luck.GetValue() / 100);
         int t = Random.Range(0, 100);
         if (t <= chance)

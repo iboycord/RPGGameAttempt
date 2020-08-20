@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Statuses", menuName = "Status Effects/New Status")]
 public class StatusEffect : ScriptableObject
 {
+    public StatusEffectList id;
+
     public int turnsLeft = 4;
     public int turnsToIncreaseBy = 4;
 
@@ -23,10 +25,16 @@ public class StatusEffect : ScriptableObject
     public float maxMultiplier1 = 2, maxMultiplier2 = 2;
     [Range(0,2)]
     public float statMultiplier1 = 1, statMultiplier2 = 1;
-    int statAfterMultiply1;
-    int statAfterMultiply2;
+    //int statAfterMultiply1;
+    //int statAfterMultiply2;
     [Space]
     public GameObject gfx;
+    [Space, Tooltip("What status effect does this one combine with?")]
+    public StatusEffectList weakness;
+    [Tooltip("What do they combine into?")]
+    public StatusEffectList transformsInto;
+    [Tooltip("What status does this one resist?")]
+    public StatusEffectList resists;
 
     // For executing commands every turn
     public virtual void Execute(CharacterStats characterAfflicted)
@@ -38,6 +46,11 @@ public class StatusEffect : ScriptableObject
         if (statusType1 == StatusType.Healing || statusType2 == StatusType.Healing)
         {
             characterAfflicted.Heal(basePower);
+        }
+
+        if(statusType1 == StatusType.Drain || statusType2 == StatusType.Drain)
+        {
+            characterAfflicted.LooseSP(basePower);
         }
 
         if (turnsLeft - 1 > 0)
@@ -62,13 +75,13 @@ public class StatusEffect : ScriptableObject
 
         if (statusType1 == StatusType.StatDown || statusType1 == StatusType.StatUp)
         {
-            statAfterMultiply1 = Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat1) * statMultiplier1);
-            characterAfflicted.ReturnStat(targetStat1).AddModifier(statAfterMultiply1);
+            //statAfterMultiply1 = Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat1) * statMultiplier1);
+            characterAfflicted.ReturnStat(targetStat1).AddModifier(Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat1) * statMultiplier1));
         }
         if (statusType2 == StatusType.StatDown || statusType2 == StatusType.StatUp)
         {
-            statAfterMultiply2 = Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat2) * statMultiplier2);
-            characterAfflicted.ReturnStat(targetStat2).AddModifier(statAfterMultiply2);
+            //statAfterMultiply2 = Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat2) * statMultiplier2);
+            characterAfflicted.ReturnStat(targetStat2).AddModifier(Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat2) * statMultiplier2));
         }
     }
 
@@ -85,13 +98,13 @@ public class StatusEffect : ScriptableObject
     {
         if (statusType1 == StatusType.StatDown || statusType1 == StatusType.StatUp)
         {
-            characterAfflicted.ReturnStat(targetStat1).RemoveModifier(statAfterMultiply1);
-            statAfterMultiply1 = 0;
+            characterAfflicted.ReturnStat(targetStat1).RemoveModifier(Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat1) * statMultiplier1));
+            //statAfterMultiply1 = 0;
         }
         if (statusType2 == StatusType.StatDown || statusType2 == StatusType.StatUp)
         {
-            characterAfflicted.ReturnStat(targetStat2).RemoveModifier(statAfterMultiply2);
-            statAfterMultiply2 = 0;
+            characterAfflicted.ReturnStat(targetStat2).RemoveModifier(Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat2) * statMultiplier2));
+            //statAfterMultiply2 = 0;
         }
     }
 
@@ -137,5 +150,5 @@ public class StatusEffect : ScriptableObject
     }
 }
 
-public enum StatusType { None, Damaging, Healing, LostTurn, Enraged, DamagesWhenExpired, StatDown, StatUp }
+public enum StatusType { None, Damaging, Healing, LostTurn, Enraged, DamagesWhenExpired, StatDown, StatUp, Drain, Replenish }
 public enum HPorSP { Hp, Sp }
