@@ -46,7 +46,7 @@ public class Unit : MonoBehaviour
     {
         if(canDodge && LuckRoll())
         {
-            Debug.Log(transform.name + " got lucky!");
+            Debug.Log(name + " got lucky!");
         }
 
         if(!canDodge || !LuckRoll())

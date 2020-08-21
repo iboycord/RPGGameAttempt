@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST, FLEE }
 
+[RequireComponent(typeof(StatusEffectComboChart))]
 public class BattleSystem : MonoBehaviour
 {
     //https://gamedevacademy.org/how-to-create-an-rpg-game-in-unity-comprehensive-guide/
@@ -125,7 +126,10 @@ public class BattleSystem : MonoBehaviour
     {
         //Check to see if someone has died (both the player characters or the enemies)
 
-        
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            playerAUnit.gameObject.GetComponent<StatusEffectHandler>().AssignStatus(StatusEffectList.Burning);
+        }
 
     }
 

@@ -32,6 +32,7 @@ public class Move : ScriptableObject
     public Range range;
     [Tooltip("The move's elemental typing. Important in the damage calcs.")]
     public ElementalTyping elementType = ElementalTyping.Standard;
+
     [Tooltip("Which stat on the user does this move target.")]
     public TargetStat atkStat = TargetStat.attack;
     [Tooltip("Which stat on the target does this move target.")]
@@ -40,8 +41,8 @@ public class Move : ScriptableObject
     [Space, Tooltip("The move's power. Please confine to multiples of 5 please. My brain cant do math that well.")]
     public float basePower;
     [Tooltip("The move's natual ability to acchive a lucky blow and the multiplier for it... Might be getting removed due to crazy damage, dont know yet.")]
-    public float baseLBlow;
-    public float luckyMultiplier = 1.5f;
+    public int baseCritBlow;
+    public float CritMultiplier = 1.5f;
     [Tooltip("This is multiplied by Base Power to give moves damage variance. Higher = wacker values in both directions.")]
     public float randomnessCoefficient = 0.2f;
 
@@ -57,6 +58,8 @@ public class Move : ScriptableObject
     [Tooltip("...how many times?")]
     public int noOfHits;
 
+    public float vampireHealCoefficient = 1;
+
     public GameObject gfx;
 
     // Accesser Functions
@@ -69,34 +72,82 @@ public class Move : ScriptableObject
         return costAmnt.ToString() + " " + cost.ToString();
     }
 
-
-
     // Use
     //  The general function that will be called for every move. Please put all move functions into Use for ease of access.
     public virtual void Use(CharacterStats user, CharacterStats target)
     {
-
+        switch (type)
+        {
+            case MoveType.Damage:
+                Attack(user, target);
+                break;
+            case MoveType.Healing:
+                Heal(user, target);
+                break;
+            case MoveType.Status:
+                ApplyStatus(target);
+                break;
+            case MoveType.Defend:
+                Defend(user, 0.8f);
+                break;
+            case MoveType.Vampire:
+                int dmg = SoloDamageFormula(user, target);
+                target.TakeDamage(dmg, true, true);
+                user.Heal(Mathf.CeilToInt(dmg * vampireHealCoefficient));
+                break;
+            case MoveType.Dam_Def:
+                Attack(user, target);
+                Defend(user, 0.8f);
+                break;
+            case MoveType.Dam_Status:
+                Attack(user, target);
+                ApplyStatus(target);
+                break;
+            case MoveType.Heal_Def:
+                Heal(user, target);
+                Defend(user, 0.8f);
+                break;
+            case MoveType.Heal_Status:
+                Heal(user, target);
+                ApplyStatus(target);
+                break;
+            case MoveType.Status_Def:
+                ApplyStatus(target);
+                Defend(user, 0.8f);
+                break;
+            case MoveType.All:
+                int dmgAll = SoloDamageFormula(user, target);
+                target.TakeDamage(dmgAll, true, true);
+                user.Heal(Mathf.CeilToInt(dmgAll * vampireHealCoefficient));
+                ApplyStatus(target);
+                Defend(user, 0.8f);
+                break;
+        }
     }
 
     // Attack
     //  Quick and dirty Attack method. Could easly put the damage formula function in here to run it easily from Use.
     public virtual void Attack(CharacterStats user, CharacterStats target)
     {
-        SoloDamageFormula(user, target);
+        // Fix instances like this so moves can ignore dodges (true hit) or guards (guard breakers)
+        target.TakeDamage(SoloDamageFormula(user, target), true, true);
     }
 
     // Heal
     //  Quick and dirty Heal method. Could easly put the Heal formula function in here to run it easily from Use.
-    public virtual void Heal()
+    public virtual void Heal(CharacterStats user, CharacterStats target)
     {
-
+        target.Heal(HealFormula(user));
     }
 
     // ApplyStatus
     //  No status have been written yet. However this would hopefully apply them. Need a status manager to clear status in like 3 turns though
-    public virtual void ApplyStatus()
+    public virtual void ApplyStatus(CharacterStats target)
     {
-
+        if(canStatus && RNG(chanceToStatus))
+        {
+            target.gameObject.GetComponent<StatusEffectHandler>().AssignStatus(status);
+        }
     }
 
     // Defend
@@ -106,15 +157,18 @@ public class Move : ScriptableObject
         user.dmgReduction = standardDefReduction;
     }
 
+    public virtual void PlayAnimation()
+    {
+
+    }
+
     // HealFormula
     //  Adds the certain stat and the move's base power
     public virtual int HealFormula(CharacterStats user)
     {
         int healer = user.ReturnStatValue(atkStat);
 
-        float tempHeal = Mathf.Max(1, healer + basePower);
-
-        int heal = Mathf.CeilToInt(tempHeal);
+        int heal = Mathf.CeilToInt(Mathf.Max(1, healer + basePower));
 
         return heal;
     }
@@ -139,13 +193,13 @@ public class Move : ScriptableObject
         }
 
         // get target stat from both units, using the base power and ext ext.
-        //int attacker = StatValue(user, atkStat);
-        //int defender = StatValue(target, defStat);
         int attacker = user.ReturnStatValue(atkStat);
         int defender = target.ReturnStatValue(defStat);
+        float critBlow = RNG(baseCritBlow + user.ReturnStatValue(TargetStat.skill)) ? CritMultiplier : 1;
 
-        float tempDmg = Mathf.Max(1, ((attacker + ((basePower + Random.Range(-basePower * randomnessCoefficient, basePower * randomnessCoefficient)) * weak)) - (defender - CritStrike(defender))));
-        
+        float tempDmg = Mathf.Max(1, ((attacker + ((basePower + Random.Range(-basePower * randomnessCoefficient, basePower * randomnessCoefficient)) * weak)) * critBlow - (defender))); //-CritStrike(defender)
+
+
         int dmg = Mathf.CeilToInt(tempDmg);
 
         return dmg;
@@ -169,22 +223,12 @@ public class Move : ScriptableObject
 
     public virtual int CritStrike(int def)
     {
-        //int chance = Mathf.FloorToInt(StatValue(moveUser, TargetStat.skill) / 3);
         int chance = Mathf.FloorToInt(moveUser.ReturnStatValue(TargetStat.skill) / 3);
 
         // Come back here and change this constant 0.3 to the true guarding value later.
         int t = RNG(chance) ? Mathf.FloorToInt(def * 0.3f) : 0;
 
         return t;
-        /*
-        int t = Random.Range(0, 100);
-        if (t <= chance)
-        {
-            // Come back here and change this constant to the true guarding value later.
-            return Mathf.FloorToInt(def * 0.3f);
-        }
-        return 0;
-        */
     }
 
     public virtual bool RNG(int numberToBeat)
@@ -197,18 +241,18 @@ public class Move : ScriptableObject
         return false;
     }
 
-    public virtual bool CostFn()
+    public virtual bool CostFn(CharacterStats user)
     {
         if(cost != MoveCost.None && costAmnt > 0)
         {
-            if (cost == MoveCost.HP && moveUser.currentHP >= costAmnt + 1)
+            if (cost == MoveCost.HP && user.currentHP >= costAmnt + 1)
             {
-                moveUser.currentHP -= costAmnt;
+                user.currentHP -= costAmnt;
                 return true;
             }
-            if (cost == MoveCost.SP && moveUser.currentSP >= costAmnt)
+            if (cost == MoveCost.SP && user.currentSP >= costAmnt)
             {
-                moveUser.currentSP -= costAmnt;
+                user.currentSP -= costAmnt;
                 return true;
             }
         }
@@ -218,7 +262,7 @@ public class Move : ScriptableObject
 }
 
 //public enum MoveStrength { One_Star, Two_Star, Three_Star, Four_Star, Five_Star, Six_Star }
-public enum MoveType { Damage, Healing, Status, Defend, All }
+public enum MoveType { Damage, Healing, Status, Defend, Vampire, Dam_Status, Dam_Def, Heal_Status, Heal_Def, Status_Def, All }
 public enum MoveCost { None, HP, SP }
 public enum Duality { Solo, Duo }
 public enum Range { Close, Far }

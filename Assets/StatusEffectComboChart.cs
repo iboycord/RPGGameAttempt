@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class StatusEffectComboChart : MonoBehaviour
 {
-    [System.Serializable]
-    public class StatusChartElement
-    {
-        public StatusEffectList statusEffectID;
-        public StatusEffect statusEffect;
-    }
 
     public static Dictionary<StatusEffectList, StatusEffect> statusParings = new Dictionary<StatusEffectList, StatusEffect>();
-    public StatusChartElement[] chartElement;
+    public StatusEffect[] chartElement;
+
+    private void Start()
+    {
+        foreach (StatusEffect statusEffect in chartElement)
+        {
+            AddToChart(statusEffect);
+        }
+    }
 
     public static void AddToChart(StatusEffect statusEffect)
     {
@@ -32,6 +34,12 @@ public class StatusEffectComboChart : MonoBehaviour
     public static bool CompareStatusWeakness(StatusEffectList statusWithWeakness, StatusEffectList maybeTheWeakness)
     {
         if(LookupStatus(statusWithWeakness).weakness == maybeTheWeakness) { return true; }
+        return false;
+    }
+
+    public static bool CompareStatus(StatusEffectList status1, StatusEffectList status2)
+    {
+        if (status1 == status2) { return true; }
         return false;
     }
 

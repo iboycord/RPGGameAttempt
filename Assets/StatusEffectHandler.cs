@@ -26,11 +26,18 @@ public class StatusEffectHandler : MonoBehaviour
 
     public void CompareStatus(StatusEffectList statusEffectToAssign)
     {
-        if(StatusEffectComboChart.CompareStatusWeakness(currentStatusEffect.id, statusEffectToAssign))
+        if(!StatusEffectComboChart.CompareStatus(statusEffectToAssign, currentStatusEffect.id))
         {
-            currentStatusEffect = StatusEffectComboChart.LookupStatus(statusEffectToAssign);
-            //int dmg = currentStatusEffect.basePower > 0 ? Mathf.RoundToInt(currentStatusEffect.basePower * 1.5f) : Mathf.RoundToInt(character.maxHP.GetValue() * 0.1f);
-            character.TakeDamage(Mathf.RoundToInt(character.maxHP.GetValue() * 0.5f), false, false);
+            if (StatusEffectComboChart.CompareStatusWeakness(currentStatusEffect.id, statusEffectToAssign))
+            {
+                currentStatusEffect = StatusEffectComboChart.LookupStatus(statusEffectToAssign);
+                //int dmg = currentStatusEffect.basePower > 0 ? Mathf.RoundToInt(currentStatusEffect.basePower * 1.5f) : Mathf.RoundToInt(character.maxHP.GetValue() * 0.1f);
+                character.TakeDamage(Mathf.RoundToInt(character.maxHP.GetValue() * 0.5f), false, false);
+            }
+        }
+        else
+        {
+            TurnCountIncrementer(3);
         }
     }
 
