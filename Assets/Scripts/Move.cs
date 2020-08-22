@@ -40,7 +40,7 @@ public class Move : ScriptableObject
 
     [Space, Tooltip("The move's power. Please confine to multiples of 5 please. My brain cant do math that well.")]
     public float basePower;
-    [Tooltip("The move's natual ability to acchive a lucky blow and the multiplier for it... Might be getting removed due to crazy damage, dont know yet.")]
+    [Tooltip("The move's natual ability to acchive a Critical blow and the multiplier for it... Might be getting removed due to crazy damage, dont know yet.")]
     public int baseCritBlow;
     public float CritMultiplier = 1.5f;
     [Tooltip("This is multiplied by Base Power to give moves damage variance. Higher = wacker values in both directions.")]
@@ -57,8 +57,12 @@ public class Move : ScriptableObject
     public bool multihit;
     [Tooltip("...how many times?")]
     public int noOfHits;
-
+    [Tooltip("If this move is a vampire type, how much does it heal from leaching?")]
     public float vampireHealCoefficient = 1;
+    [Tooltip("Will this move hit without fail?")]
+    public bool trueHit = false;
+    [Tooltip("Does this move bypass any guard on the target?")]
+    public bool guardBreaker = false;
 
     public GameObject gfx;
 
@@ -92,7 +96,7 @@ public class Move : ScriptableObject
                 break;
             case MoveType.Vampire:
                 int dmg = SoloDamageFormula(user, target);
-                target.TakeDamage(dmg, true, true);
+                target.TakeDamage(dmg, !trueHit, !guardBreaker);
                 user.Heal(Mathf.CeilToInt(dmg * vampireHealCoefficient));
                 break;
             case MoveType.Dam_Def:
@@ -117,7 +121,7 @@ public class Move : ScriptableObject
                 break;
             case MoveType.All:
                 int dmgAll = SoloDamageFormula(user, target);
-                target.TakeDamage(dmgAll, true, true);
+                target.TakeDamage(dmgAll, !trueHit, !guardBreaker);
                 user.Heal(Mathf.CeilToInt(dmgAll * vampireHealCoefficient));
                 ApplyStatus(target);
                 Defend(user, 0.8f);
@@ -130,7 +134,7 @@ public class Move : ScriptableObject
     public virtual void Attack(CharacterStats user, CharacterStats target)
     {
         // Fix instances like this so moves can ignore dodges (true hit) or guards (guard breakers)
-        target.TakeDamage(SoloDamageFormula(user, target), true, true);
+        target.TakeDamage(SoloDamageFormula(user, target), !trueHit, !guardBreaker);
     }
 
     // Heal
@@ -205,16 +209,31 @@ public class Move : ScriptableObject
         return dmg;
     }
 
-    public virtual int DuoDamageFormula(CharacterStats user, CharacterStats partner, CharacterStats target)
+    public virtual int DuoDamageFormula(CharacterStats user, CharacterStats[] partners, CharacterStats target)
     {
         int dmg;
 
+        float weak = 1;
+        if (target.EType1 != ElementalTyping.None && target.EType2 != ElementalTyping.None)
+        {
+            weak = WeaknessChart.GetEffective(elementType, target.EType1, target.EType2);
+        }
+        if (target.EType1 != ElementalTyping.None)
+        {
+            weak = WeaknessChart.GetEffective(elementType, target.EType1);
+        }
 
         // get target stat from both units, using the base power and ext ext.
-        int attacker1 = user.ReturnStatValue(atkStat);
+        int attacker = user.ReturnStatValue(atkStat);
+        int allies = 0;
+        foreach (CharacterStats partner in partners)
+        {
+            allies += partner.ReturnStatValue(atkStat);
+        }
         int defender = target.ReturnStatValue(defStat);
+        float critBlow = RNG(baseCritBlow + user.ReturnStatValue(TargetStat.skill)) ? CritMultiplier : 1;
 
-        float tempDmg = Mathf.Max(1, ((attacker1 + basePower) - (defender - CritStrike(defender))));
+        float tempDmg = Mathf.Max(1, ((attacker + allies + ((basePower + Random.Range(-basePower * randomnessCoefficient, basePower * randomnessCoefficient)) * weak)) * critBlow - (defender))); ;
 
         dmg = Mathf.CeilToInt(tempDmg);
 

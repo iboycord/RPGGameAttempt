@@ -7,6 +7,9 @@ public class StatusEffectHandler : MonoBehaviour
     public CharacterStats character;
     public StatusEffect currentStatusEffect = null;
 
+    public bool participatedInDuoMove = false;
+    int duoCooldown = 0;
+
     public int currentStatusTurnCount = 0;
 
     public void Awake()
@@ -48,8 +51,8 @@ public class StatusEffectHandler : MonoBehaviour
             currentStatusEffect.Execute(character);
             Debug.Log("Effect is Active?");
 
-            if (currentStatusTurnCount - 1 >= 0) { TurnCountIncrementer(-1); }
-            if (currentStatusTurnCount < 0) 
+            if (currentStatusTurnCount - 1 > 0) { TurnCountIncrementer(-1); }
+            if (currentStatusTurnCount <= 0) 
             { 
                 ClearStatus(); 
                 currentStatusTurnCount = 0; 
@@ -63,10 +66,23 @@ public class StatusEffectHandler : MonoBehaviour
         currentStatusEffect.End(character);
         currentStatusEffect = null;
     }
+    public void ClearDuoCooldown()
+    {
+        if (participatedInDuoMove && duoCooldown > 0)
+        {
+            duoCooldown = 0;
+            participatedInDuoMove = false;
+        }
+    }
 
     public void TurnCountIncrementer(int turns)
     {
         currentStatusTurnCount += turns;
     }
 
+    public void HelpedDuoMove()
+    {
+        participatedInDuoMove = true;
+        duoCooldown = 1;
+    }
 }

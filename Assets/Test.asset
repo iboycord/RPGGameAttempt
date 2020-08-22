@@ -15,8 +15,7 @@ MonoBehaviour:
   id: 0
   hp_spChoice: 0
   hp_spMultiplier: 0.1
-  basePower: 0
-  statusType1: 1
+  statusType1: 3
   statusType2: 0
   targetStat1: 0
   targetStat2: 0

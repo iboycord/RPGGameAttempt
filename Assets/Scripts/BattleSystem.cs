@@ -228,7 +228,8 @@ public class BattleSystem : MonoBehaviour
 
             currentSEH.TurnEffects();
 
-            if (!currentUnit.isDead)
+            // Fix this, it always fails.
+            if (!currentUnit.isDead && !currentSEH.participatedInDuoMove && (currentSEH.currentStatusEffect && !currentSEH.currentStatusEffect.QuickLostTurnCheck()))
             {
                 currentUnit.ResetDMGRedux();
                 GameObject currentUnitGO = currentUnit.gameObject;
@@ -246,6 +247,12 @@ public class BattleSystem : MonoBehaviour
                     EnemyTurn(currentUnit);
                 }
             }
+            
+            else
+            {
+                StartCoroutine(EndMyTurn(timeToWait));
+            }
+            
         }
         else
         {
