@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 55093416}
   - component: {fileID: 55093415}
   - component: {fileID: 55093414}
+  - component: {fileID: 55093419}
   m_Layer: 0
   m_Name: TestUnitB
   m_TagString: PlayerControlled
@@ -267,6 +268,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &55093419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55093413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7470536302979e447a279f0be1f21401, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 0}
+  currentStatusEffect: {fileID: 0}
+  participatedInDuoMove: 0
+  currentStatusTurnCount: 0
 --- !u!1 &65916418
 GameObject:
   m_ObjectHideFlags: 0
@@ -3436,8 +3453,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 0}
-  currentStatusEffect: {fileID: 0}
-  currentStatusTurnCount: 1
+  currentStatusEffect: {fileID: 11400000, guid: 9d63059382a42a34ca8bd6216be08778,
+    type: 2}
+  participatedInDuoMove: 0
+  currentStatusTurnCount: 2
 --- !u!1 &1069796159
 GameObject:
   m_ObjectHideFlags: 0
@@ -5919,6 +5938,7 @@ GameObject:
   - component: {fileID: 1642517820}
   - component: {fileID: 1642517819}
   - component: {fileID: 1642517818}
+  - component: {fileID: 1642517823}
   m_Layer: 0
   m_Name: TestEnemy
   m_TagString: EnemyControlled
@@ -6053,6 +6073,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1642517823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1642517817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7470536302979e447a279f0be1f21401, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 0}
+  currentStatusEffect: {fileID: 0}
+  participatedInDuoMove: 0
+  currentStatusTurnCount: 0
 --- !u!1 &1646721991
 GameObject:
   m_ObjectHideFlags: 0
