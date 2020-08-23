@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87066b1a497c5ad4abffbde4e22cb517, type: 3}
+  m_Name: TestStatus
+  m_EditorClassIdentifier: 
+  moveUser: {fileID: 0}
+  movePartner: {fileID: 0}
+  movetarget: {fileID: 0}
+  description: []
+  type: 2
+  cost: 2
+  costAmnt: 5
+  duality: 0
+  range: 0
+  elementType: 1
+  atkStat: 2
+  defStat: 0
+  basePower: 0
+  baseCritBlow: 0
+  CritMultiplier: 1.5
+  randomnessCoefficient: 0.2
+  canStatus: 1
+  status: 13
+  chanceToStatus: 100
+  multihit: 0
+  noOfHits: 0
+  vampireHealCoefficient: 1
+  trueHit: 0
+  guardBreaker: 0
+  gfx: {fileID: 0}

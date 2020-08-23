@@ -9,6 +9,9 @@ public class StatusEffectHandler : MonoBehaviour
 
     public bool participatedInDuoMove = false;
     int duoCooldown = 0;
+    public int extraTurns = 0;
+    [HideInInspector]
+    public int extraTurnsToGive = 1;
 
     public int currentStatusTurnCount = 0;
 
@@ -23,6 +26,7 @@ public class StatusEffectHandler : MonoBehaviour
         { 
             currentStatusEffect = StatusEffectComboChart.LookupStatus(statusEffectToAssign);
             currentStatusEffect.StatCheckChange(character);
+            currentStatusEffect.AccelerateStartup(this, extraTurnsToGive);
         }
         else { CompareStatus(statusEffectToAssign); }
     }
@@ -35,7 +39,7 @@ public class StatusEffectHandler : MonoBehaviour
             {
                 currentStatusEffect = StatusEffectComboChart.LookupStatus(statusEffectToAssign);
                 //int dmg = currentStatusEffect.basePower > 0 ? Mathf.RoundToInt(currentStatusEffect.basePower * 1.5f) : Mathf.RoundToInt(character.maxHP.GetValue() * 0.1f);
-                character.TakeDamage(Mathf.RoundToInt(character.maxHP.GetValue() * 0.5f), false, false);
+                character.TakeDamage(Mathf.RoundToInt(character.maxHP.GetValue() * 0.2f), false, false);
             }
         }
         else
@@ -51,7 +55,7 @@ public class StatusEffectHandler : MonoBehaviour
             currentStatusEffect.Execute(character);
             Debug.Log("Effect is Active?");
 
-            if (currentStatusTurnCount - 1 > 0) { TurnCountIncrementer(-1); }
+            if (currentStatusTurnCount - 1 >= 0) { TurnCountIncrementer(-1); }
             if (currentStatusTurnCount <= 0) 
             { 
                 ClearStatus(); 
@@ -84,5 +88,26 @@ public class StatusEffectHandler : MonoBehaviour
     {
         participatedInDuoMove = true;
         duoCooldown = 1;
+    }
+
+    public void ExtraTurnIncrementer(int turns)
+    {
+        if(extraTurns < 0)
+        {
+            extraTurns = 0;
+        }
+        else
+        {
+            extraTurns += turns;
+        }
+    }
+    public bool ExtraTurnCheck()
+    {
+        if (extraTurns > 0) { return true; }
+        return false;
+    }
+    public void ExtraTurnGiverReset()
+    {
+        if (extraTurnsToGive > 1) { extraTurnsToGive = 1; }
     }
 }

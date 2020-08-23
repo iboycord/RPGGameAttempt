@@ -7,6 +7,9 @@ public class StatusEffect : ScriptableObject
 {
     public StatusEffectList id;
 
+    [TextArea(0, 4)]
+    public string description;
+
     public HPorSP hp_spChoice;
     [Range(0, 1.5f)]
     public float hp_spMultiplier;
@@ -115,7 +118,16 @@ public class StatusEffect : ScriptableObject
         return false;
     }
 
+    public virtual void AccelerateStartup(StatusEffectHandler statusEffectHandler, int turnsToGive)
+    {
+        if(statusType1 == StatusType.Accelerate || statusType2 == StatusType.Accelerate)
+        {
+            statusEffectHandler.ExtraTurnIncrementer(turnsToGive);
+            statusEffectHandler.ExtraTurnGiverReset();
+        }
+    }
+
 }
 
-public enum StatusType { None, Damaging, Healing, LostTurn, Enraged, DamagesWhenExpired, StatDown, StatUp, Drain, Replenish }
+public enum StatusType { None, Damaging, Healing, LostTurn, Enraged, DamagesWhenExpired, StatDown, StatUp, Drain, Replenish, Accelerate }
 public enum HPorSP { Hp, Sp }

@@ -283,6 +283,8 @@ MonoBehaviour:
   character: {fileID: 0}
   currentStatusEffect: {fileID: 0}
   participatedInDuoMove: 0
+  extraTurns: 0
+  extraTurnsToGive: 1
   currentStatusTurnCount: 0
 --- !u!1 &65916418
 GameObject:
@@ -3453,10 +3455,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 0}
-  currentStatusEffect: {fileID: 11400000, guid: 9d63059382a42a34ca8bd6216be08778,
-    type: 2}
+  currentStatusEffect: {fileID: 0}
   participatedInDuoMove: 0
-  currentStatusTurnCount: 2
+  extraTurns: 0
+  extraTurnsToGive: 1
+  currentStatusTurnCount: 0
 --- !u!1 &1069796159
 GameObject:
   m_ObjectHideFlags: 0
@@ -5224,6 +5227,7 @@ MonoBehaviour:
   moveSelected: 0
   battleDecided: 0
   timeToWait: 2.5
+  currentUnitHasExtraTurn: 0
   battleUI: {fileID: 70145960}
 --- !u!4 &1445010295
 Transform:
@@ -5305,6 +5309,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: df4894b315406ef4c9f7dbcdfc53df21, type: 2}
   - {fileID: 11400000, guid: fdf57c97e344de84689cb47ee46476a2, type: 2}
   - {fileID: 11400000, guid: c1f5a7e203ec7b2499e41a62842af556, type: 2}
+  - {fileID: 11400000, guid: 2a12a5ded4353c04e885c4d2c0f09b65, type: 2}
   listIndex: 0
 --- !u!23 &1449895675
 MeshRenderer:
@@ -6088,6 +6093,8 @@ MonoBehaviour:
   character: {fileID: 0}
   currentStatusEffect: {fileID: 0}
   participatedInDuoMove: 0
+  extraTurns: 0
+  extraTurnsToGive: 1
   currentStatusTurnCount: 0
 --- !u!1 &1646721991
 GameObject:

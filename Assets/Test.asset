@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4eca58d486ded94cb98d8756f7be5cb, type: 3}
   m_Name: Test
   m_EditorClassIdentifier: 
-  id: 0
+  id: 13
+  description: 
   hp_spChoice: 0
   hp_spMultiplier: 0.1
-  statusType1: 3
+  statusType1: 10
   statusType2: 0
   targetStat1: 0
   targetStat2: 0

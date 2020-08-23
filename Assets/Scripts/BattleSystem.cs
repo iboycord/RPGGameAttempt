@@ -77,6 +77,8 @@ public class BattleSystem : MonoBehaviour
 
     public float timeToWait;
 
+    public bool currentUnitHasExtraTurn = false;
+
     public BattleUI battleUI;
 
     private void Start()
@@ -227,9 +229,22 @@ public class BattleSystem : MonoBehaviour
             StatusEffectHandler currentSEH = currentUnit.GetComponent<StatusEffectHandler>();
 
             currentSEH.TurnEffects();
+            bool canAct = true;
+            if (currentSEH.currentStatusEffect)
+            {
+                canAct = !currentSEH.currentStatusEffect.QuickLostTurnCheck();
+            }
 
-            // Fix this, it always fails.
-            if (!currentUnit.isDead && !currentSEH.participatedInDuoMove && (currentSEH.currentStatusEffect && !currentSEH.currentStatusEffect.QuickLostTurnCheck()))
+            // Decide if you want to require a unit to be able to act before getting an extra turn
+            // if yes then put this into the if statement below it, if not then leave it.
+            if (currentSEH.ExtraTurnCheck())
+            {
+                currentUnitHasExtraTurn = true;
+                Debug.Log("Extra Turn");
+                currentSEH.ExtraTurnIncrementer(-1);
+            }
+            
+            if (!currentUnit.isDead && !currentSEH.participatedInDuoMove && canAct)
             {
                 currentUnit.ResetDMGRedux();
                 GameObject currentUnitGO = currentUnit.gameObject;
@@ -296,8 +311,6 @@ public class BattleSystem : MonoBehaviour
 
     }
 
-
-
     public void EnemyTurn(Unit currentUnit)
     {
         state = BattleState.ENEMYTURN;
@@ -329,7 +342,9 @@ public class BattleSystem : MonoBehaviour
         {
             return;
         }
+        //Attack is just debug for general attacks. It cant understand other things like status or vampireism but it knows weaknesses.
         Attack(currentUnit, target, move);
+        move.Use(currentUnit, target);
         battleUI.CloseBUI();
         StartCoroutine(EndMyTurn(timeToWait));
     }
@@ -347,7 +362,11 @@ public class BattleSystem : MonoBehaviour
     {
         yield return new WaitForSeconds(timeToWait);
 
-        placeInLineup++;
+        if (!currentUnitHasExtraTurn)
+        {
+            placeInLineup++;
+        }
+        currentUnitHasExtraTurn = false;
         NextPhase();
     }
 

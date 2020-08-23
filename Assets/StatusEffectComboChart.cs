@@ -58,4 +58,4 @@ public class StatusEffectComboChart : MonoBehaviour
  *   Stunned + Soaked = 
  *   
  */
-public enum StatusEffectList { Burning, Soaked, Frozen, Shocked, Bricked, Enraged, Stunned, Silenced, Sleep, Regen, Drain, Replinish, Phantom }
+public enum StatusEffectList { Burning, Soaked, Frozen, Shocked, Bricked, Enraged, Stunned, Silenced, Sleep, Regen, Drain, Replinish, Phantom, Accelerate }

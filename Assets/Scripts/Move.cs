@@ -83,48 +83,91 @@ public class Move : ScriptableObject
         switch (type)
         {
             case MoveType.Damage:
-                Attack(user, target);
+                if (CostFn(user))
+                {
+                    Attack(user, target);
+                }
                 break;
+
             case MoveType.Healing:
-                Heal(user, target);
+                if (CostFn(user))
+                {
+                    Heal(user, target);
+                }
                 break;
+
             case MoveType.Status:
-                ApplyStatus(target);
+                if (CostFn(user))
+                {
+                    ApplyStatus(target);
+                }
                 break;
+
             case MoveType.Defend:
-                Defend(user, 0.8f);
+                if (CostFn(user))
+                {
+                    Defend(user, 0.8f);
+                }
                 break;
+
             case MoveType.Vampire:
-                int dmg = SoloDamageFormula(user, target);
-                target.TakeDamage(dmg, !trueHit, !guardBreaker);
-                user.Heal(Mathf.CeilToInt(dmg * vampireHealCoefficient));
+                if (CostFn(user))
+                {
+                    int dmg = SoloDamageFormula(user, target);
+                    target.TakeDamage(dmg, !trueHit, !guardBreaker);
+                    user.Heal(Mathf.CeilToInt(dmg * vampireHealCoefficient));
+                }
                 break;
+
             case MoveType.Dam_Def:
-                Attack(user, target);
-                Defend(user, 0.8f);
+                if (CostFn(user))
+                {
+                    Attack(user, target);
+                    Defend(user, 0.8f);
+                }
                 break;
+
             case MoveType.Dam_Status:
-                Attack(user, target);
-                ApplyStatus(target);
+                if (CostFn(user))
+                {
+                    Attack(user, target);
+                    ApplyStatus(target);
+                }
                 break;
+
             case MoveType.Heal_Def:
-                Heal(user, target);
-                Defend(user, 0.8f);
+                if (CostFn(user))
+                {
+                    Heal(user, target);
+                    Defend(user, 0.8f);
+                }
                 break;
+
             case MoveType.Heal_Status:
-                Heal(user, target);
-                ApplyStatus(target);
+                if (CostFn(user))
+                {
+                    Heal(user, target);
+                    ApplyStatus(target);
+                }
                 break;
+
             case MoveType.Status_Def:
-                ApplyStatus(target);
-                Defend(user, 0.8f);
+                if (CostFn(user))
+                {
+                    ApplyStatus(target);
+                    Defend(user, 0.8f);
+                }
                 break;
+
             case MoveType.All:
-                int dmgAll = SoloDamageFormula(user, target);
-                target.TakeDamage(dmgAll, !trueHit, !guardBreaker);
-                user.Heal(Mathf.CeilToInt(dmgAll * vampireHealCoefficient));
-                ApplyStatus(target);
-                Defend(user, 0.8f);
+                if (CostFn(user))
+                {
+                    int dmgAll = SoloDamageFormula(user, target);
+                    target.TakeDamage(dmgAll, !trueHit, !guardBreaker);
+                    user.Heal(Mathf.CeilToInt(dmgAll * vampireHealCoefficient));
+                    ApplyStatus(target);
+                    Defend(user, 0.8f);
+                }
                 break;
         }
     }
@@ -262,7 +305,7 @@ public class Move : ScriptableObject
 
     public virtual bool CostFn(CharacterStats user)
     {
-        if(cost != MoveCost.None && costAmnt > 0)
+        if (cost != MoveCost.None && costAmnt > 0)
         {
             if (cost == MoveCost.HP && user.currentHP >= costAmnt + 1)
             {
@@ -274,8 +317,13 @@ public class Move : ScriptableObject
                 user.currentSP -= costAmnt;
                 return true;
             }
+
+            if (user.currentHP < costAmnt || user.currentSP < costAmnt)
+            {
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 
 }
