@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   id: 13
-  description: 
+  description: Test Status. the Id and status type swap around alot.
   hp_spChoice: 0
   hp_spMultiplier: 0.1
   statusType1: 10
