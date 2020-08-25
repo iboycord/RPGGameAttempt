@@ -35,20 +35,20 @@ public class Item : ScriptableObject
         Debug.Log("Using " + name);
         switch (item_type)
         {
+            case itemType.none:
+                Debug.Log("This item has no effect...");
+                break;
             case itemType.attack:
                 move.Use(user, target);
                 UseIncrementer(-1);
                 break;
             case itemType.heal:
-                user.Heal(healAmount);
+                target.Heal(healAmount);
                 UseIncrementer(-1);
                 break;
             case itemType.status:
                 StatusEffectHandler userSEH = user.gameObject.GetComponent<StatusEffectHandler>();
                 userSEH.AssignStatus(statusApplied);
-                break;
-            case itemType.none:
-                Debug.Log("This item has no effect...");
                 break;
         }
         
@@ -73,4 +73,4 @@ public class Item : ScriptableObject
     }
 }
 
-public enum itemType { heal, attack, status, none }
+public enum itemType { none, heal, attack, status }

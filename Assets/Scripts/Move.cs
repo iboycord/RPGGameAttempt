@@ -26,7 +26,7 @@ public class Move : ScriptableObject
     public MoveCost cost;
     public int costAmnt;
 
-    [Space, Tooltip("Is this move a solo move or a duo move?")]
+    [Space, Tooltip("Is this move a solo move or a duo move? Note: Only Damage, Healing, and Status moves are able to be Duo Moves.")]
     public Duality duality;
     [Tooltip("Is this move up close or far away?")]
     public Range range;
@@ -172,6 +172,23 @@ public class Move : ScriptableObject
         }
     }
 
+    public virtual void Use(CharacterStats user, CharacterStats[] allies, CharacterStats target)
+    {
+        switch (type)
+        {
+            case MoveType.Damage:
+                if (CostFn(user)) { Attack(user, allies, target); }
+                break;
+            case MoveType.Healing:
+                if (CostFn(user)) { Heal(user, allies, target); }
+                break;
+            case MoveType.Status:
+                if (CostFn(user)) { ApplyStatus(allies); }
+                break;
+        }
+    }
+
+    #region AttackCode
     // Attack
     //  Quick and dirty Attack method. Could easly put the damage formula function in here to run it easily from Use.
     public virtual void Attack(CharacterStats user, CharacterStats target)
@@ -179,12 +196,22 @@ public class Move : ScriptableObject
         // Fix instances like this so moves can ignore dodges (true hit) or guards (guard breakers)
         target.TakeDamage(SoloDamageFormula(user, target), !trueHit, !guardBreaker);
     }
+    public virtual void Attack(CharacterStats user, CharacterStats[] allies, CharacterStats target)
+    {
+        // Fix instances like this so moves can ignore dodges (true hit) or guards (guard breakers)
+        target.TakeDamage(DuoDamageFormula(user, allies, target), !trueHit, !guardBreaker);
+    }
+    #endregion
 
     // Heal
     //  Quick and dirty Heal method. Could easly put the Heal formula function in here to run it easily from Use.
     public virtual void Heal(CharacterStats user, CharacterStats target)
     {
         target.Heal(HealFormula(user));
+    }
+    public virtual void Heal(CharacterStats user, CharacterStats[] allies, CharacterStats target)
+    {
+        target.Heal(HealFormula(user, allies));
     }
 
     // ApplyStatus
@@ -194,6 +221,17 @@ public class Move : ScriptableObject
         if(canStatus && RNG(chanceToStatus))
         {
             target.gameObject.GetComponent<StatusEffectHandler>().AssignStatus(status);
+        }
+    }
+
+    public virtual void ApplyStatus(CharacterStats[] targets)
+    {
+        if (canStatus && RNG(chanceToStatus))
+        {
+            foreach (CharacterStats target in targets)
+            {
+                target.gameObject.GetComponent<StatusEffectHandler>().AssignStatus(status);
+            }
         }
     }
 
@@ -216,6 +254,19 @@ public class Move : ScriptableObject
         int healer = user.ReturnStatValue(atkStat);
 
         int heal = Mathf.CeilToInt(Mathf.Max(1, healer + basePower));
+
+        return heal;
+    }
+    public virtual int HealFormula(CharacterStats user, CharacterStats[] partners)
+    {
+        int healer = user.ReturnStatValue(atkStat);
+        int allies = 0;
+        foreach (CharacterStats partner in partners)
+        {
+            allies += partner.ReturnStatValue(atkStat);
+        }
+
+        int heal = Mathf.CeilToInt(Mathf.Max(1, healer + allies + basePower));
 
         return heal;
     }
