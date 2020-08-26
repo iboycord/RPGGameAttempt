@@ -8,11 +8,14 @@ public class Item : ScriptableObject
     new public string name = "New Item";
     public Sprite icon = null;
     public bool isDefaultItem = false;
-    public itemType item_type;
+    public ItemType item_type;
     public bool isKeyItem;
 
     public bool infiniteUses;
     public int useNum = 0;
+
+    public FlavorType flavor1;
+    public FlavorType flavor2;
 
     public Move move;
     public int healAmount;
@@ -35,23 +38,31 @@ public class Item : ScriptableObject
         Debug.Log("Using " + name);
         switch (item_type)
         {
-            case itemType.none:
+            case ItemType.none:
                 Debug.Log("This item has no effect...");
                 break;
-            case itemType.attack:
+            case ItemType.attack:
                 move.Use(user, target);
                 UseIncrementer(-1);
                 break;
-            case itemType.heal:
-                target.Heal(healAmount);
+            case ItemType.heal:
+                Heal(user, target);
                 UseIncrementer(-1);
                 break;
-            case itemType.status:
+            case ItemType.status:
                 StatusEffectHandler userSEH = user.gameObject.GetComponent<StatusEffectHandler>();
                 userSEH.AssignStatus(statusApplied);
+                UseIncrementer(-1);
                 break;
         }
         
+    }
+
+    public virtual void Heal(CharacterStats user, CharacterStats target)
+    {
+        FriendshipHandler targetFH = target.gameObject.GetComponent<FriendshipHandler>();
+        float multiplier = FriendshipStats.CheckFlavorPower(targetFH.favoriteFlavor1, targetFH.favoriteFlavor2, flavor1, flavor2);
+        target.Heal(Mathf.RoundToInt(healAmount * multiplier));
     }
 
     public virtual void UseIncrementer(int uses)
@@ -73,4 +84,5 @@ public class Item : ScriptableObject
     }
 }
 
-public enum itemType { none, heal, attack, status }
+public enum ItemType { none, heal, attack, status }
+public enum FlavorType { none, Sweet, Salty, Sour, Savory, Spicy, Bitter, Greasy, Natural, Meaty, Chocolate, Peanut_Butter }
