@@ -33,6 +33,9 @@ public class Unit : MonoBehaviour
     public ElementalTyping EType1;
     public ElementalTyping EType2;
 
+    public FlavorType favoriteFlavor1;
+    public FlavorType favoriteFlavor2;
+
     public int nextActTurn;
     public float dmgReduction = 1;
     public bool isDead;

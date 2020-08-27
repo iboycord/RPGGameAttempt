@@ -10,6 +10,7 @@ public class Item : ScriptableObject
     public bool isDefaultItem = false;
     public ItemType item_type;
     public bool isKeyItem;
+    public bool isStackable;
 
     public bool infiniteUses;
     public int useNum = 0;
@@ -19,6 +20,7 @@ public class Item : ScriptableObject
 
     public Move move;
     public int healAmount;
+    public int spAmount;
     public StatusEffectList statusApplied;
 
     public void Awake()
@@ -60,9 +62,16 @@ public class Item : ScriptableObject
 
     public virtual void Heal(CharacterStats user, CharacterStats target)
     {
-        FriendshipHandler targetFH = target.gameObject.GetComponent<FriendshipHandler>();
-        float multiplier = FriendshipStats.CheckFlavorPower(targetFH.favoriteFlavor1, targetFH.favoriteFlavor2, flavor1, flavor2);
-        target.Heal(Mathf.RoundToInt(healAmount * multiplier));
+        float multiplier = FriendshipStats.CheckFlavorPower(target.favoriteFlavor1, target.favoriteFlavor2, flavor1, flavor2);
+        if (healAmount > 0)
+        {
+            target.Heal(Mathf.RoundToInt(healAmount * multiplier));
+        }
+        if (spAmount > 0)
+        {
+            target.RecoverSP(Mathf.RoundToInt(spAmount * multiplier));
+        }
+
     }
 
     public virtual void UseIncrementer(int uses)

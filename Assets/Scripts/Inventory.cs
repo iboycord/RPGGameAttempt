@@ -21,21 +21,39 @@ public class Inventory : MonoBehaviour
     public OnItemChanged onItemChangedCallback;
 
     public int space = 20;
+    public int maxStack = 99;
 
     public List<Item> Items = new List<Item>();
+    public Dictionary<Item, int> itemList = new Dictionary<Item, int>();
 
     public bool Add(Item item)
     {
         if (!item.isDefaultItem)
         {
             
-            if (Items.Count >= space)
+            if (itemList.Count >= space)
             {
                 Debug.Log("Not enough room");
                 return false;
             }
             
-            Items.Add(item);
+            if(item.isStackable && itemList.TryGetValue(item, out int value))
+            {
+                if(value < maxStack)
+                {
+                    itemList[item] += 1;
+                }
+                else
+                {
+                    Debug.Log("Full on this item");
+                    return false;
+                }
+            }
+            else
+            {
+                itemList.Add(item, 1);
+            }
+            
             if(onItemChangedCallback != null)
             {
                 onItemChangedCallback.Invoke();
@@ -47,7 +65,23 @@ public class Inventory : MonoBehaviour
 
     public void Remove(Item item)
     {
-        Items.Remove(item);
+        if(item.isStackable && itemList.TryGetValue(item, out int value))
+        {
+            if(value > 0)
+            {
+                itemList[item] -= 1;
+            }
+            else
+            {
+                itemList.Remove(item);
+            }
+ 
+        }
+        else
+        {
+            itemList.Remove(item);
+        }
+
         if (onItemChangedCallback != null)
         {
             onItemChangedCallback.Invoke();
