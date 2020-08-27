@@ -22,6 +22,7 @@ public class Item : ScriptableObject
     public int healAmount;
     public int spAmount;
     public StatusEffectList statusApplied;
+    public int baseFriendshipGiven;
 
     public void Awake()
     {
@@ -72,6 +73,14 @@ public class Item : ScriptableObject
             target.RecoverSP(Mathf.RoundToInt(spAmount * multiplier));
         }
 
+    }
+
+    public virtual void GiveFriendship(CharacterStats user)
+    {
+        if(user.CompareTag("PlayerControlled"))
+        {
+            //FriendshipControl. Figure out if you need to use a singleton to increase the friendship.
+        }
     }
 
     public virtual void UseIncrementer(int uses)

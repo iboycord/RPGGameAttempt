@@ -10,7 +10,7 @@ public class Inventory : MonoBehaviour
     {
         if(instance != null)
         {
-            Debug.LogWarning("More than one Inventroy found");
+            Debug.LogWarning("More than one Inventory found");
             return;
         }
         instance = this;
@@ -23,7 +23,7 @@ public class Inventory : MonoBehaviour
     public int space = 20;
     public int maxStack = 99;
 
-    public List<Item> Items = new List<Item>();
+    //public List<Item> Items = new List<Item>();
     public Dictionary<Item, int> itemList = new Dictionary<Item, int>();
 
     public bool Add(Item item)

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -29,9 +30,9 @@ public class InventoryUI : MonoBehaviour
     {
         for(int i = 0; i < slots.Length; ++i)
         {
-            if(i < inventory.Items.Count)
+            if(i < inventory.itemList.Count)
             {
-                slots[i].AddItem(inventory.Items[i]);
+                slots[i].AddItem(inventory.itemList.ElementAt(i).Key);
             }
             else
             {
