@@ -19,7 +19,7 @@ public class FriendshipControl : MonoBehaviour
     
     public void RankCheck()
     {
-        if(overallFriendship >= milestones[rank + 1])
+        if(rank + 1 < milestones.Count && overallFriendship >= milestones[rank + 1])
         {
             rank++;
         }
