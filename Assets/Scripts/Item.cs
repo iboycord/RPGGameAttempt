@@ -49,7 +49,7 @@ public class Item : ScriptableObject
                 UseIncrementer(-1);
                 break;
             case ItemType.heal:
-                Heal(user, target);
+                Heal(target);
                 UseIncrementer(-1);
                 break;
             case ItemType.status:
@@ -61,7 +61,7 @@ public class Item : ScriptableObject
         
     }
 
-    public virtual void Heal(CharacterStats user, CharacterStats target)
+    public virtual void Heal(CharacterStats target)
     {
         float multiplier = FriendshipStats.CheckFlavorPower(target.favoriteFlavor1, target.favoriteFlavor2, flavor1, flavor2);
         if (healAmount > 0)

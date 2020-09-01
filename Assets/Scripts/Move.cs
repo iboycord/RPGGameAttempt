@@ -64,6 +64,8 @@ public class Move : ScriptableObject
     [Tooltip("Does this move bypass any guard on the target?")]
     public bool guardBreaker = false;
 
+    public int baseFriendshipGiven = 0;
+
     public GameObject gfx;
 
     // Accesser Functions
@@ -188,7 +190,7 @@ public class Move : ScriptableObject
         }
     }
 
-    #region AttackCode
+    #region Call Attack Code
     // Attack
     //  Quick and dirty Attack method. Could easly put the damage formula function in here to run it easily from Use.
     public virtual void Attack(CharacterStats user, CharacterStats target)
@@ -203,6 +205,7 @@ public class Move : ScriptableObject
     }
     #endregion
 
+    #region Call Heal Code
     // Heal
     //  Quick and dirty Heal method. Could easly put the Heal formula function in here to run it easily from Use.
     public virtual void Heal(CharacterStats user, CharacterStats target)
@@ -213,6 +216,7 @@ public class Move : ScriptableObject
     {
         target.Heal(HealFormula(user, allies));
     }
+    #endregion
 
     // ApplyStatus
     //  No status have been written yet. However this would hopefully apply them. Need a status manager to clear status in like 3 turns though

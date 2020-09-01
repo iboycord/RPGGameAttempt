@@ -118,6 +118,15 @@ public class StatusEffect : ScriptableObject
         return false;
     }
 
+    public virtual bool SealedHeartCheck()
+    {
+        if (statusType1 == StatusType.HeartSeal || statusType2 == StatusType.HeartSeal)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public virtual void AccelerateStartup(StatusEffectHandler statusEffectHandler, int turnsToGive)
     {
         if(statusType1 == StatusType.Accelerate || statusType2 == StatusType.Accelerate)
@@ -129,5 +138,5 @@ public class StatusEffect : ScriptableObject
 
 }
 
-public enum StatusType { None, Damaging, Healing, LostTurn, Enraged, DamagesWhenExpired, StatDown, StatUp, Drain, Replenish, Accelerate }
+public enum StatusType { None, Damaging, Healing, LostTurn, Enraged, DamagesWhenExpired, StatDown, StatUp, Drain, Replenish, Accelerate, HeartSeal }
 public enum HPorSP { Hp, Sp }

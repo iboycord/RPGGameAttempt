@@ -161,6 +161,10 @@ public class BattleUI : MonoBehaviour
     {
         targetingSubMenu.AddTarget(targetToAdd);
     }
+    public void SetupTargetMenu(CharacterStats Ptarget1, CharacterStats Ptarget2, CharacterStats[] targetArray)
+    {
+        targetingSubMenu.Setup(Ptarget1, Ptarget2, targetArray);
+    }
 
 
     public void SubMenuReset()

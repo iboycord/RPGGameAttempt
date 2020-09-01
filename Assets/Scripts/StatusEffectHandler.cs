@@ -9,6 +9,7 @@ public class StatusEffectHandler : MonoBehaviour
 
     public bool participatedInDuoMove = false;
     int duoCooldown = 0;
+    public bool sealedHeart = false;
     public int extraTurns = 0;
     [HideInInspector]
     public int extraTurnsToGive = 1;
@@ -25,6 +26,7 @@ public class StatusEffectHandler : MonoBehaviour
         if(currentStatusEffect == null) 
         { 
             currentStatusEffect = StatusEffectComboChart.LookupStatus(statusEffectToAssign);
+            sealedHeart = currentStatusEffect.SealedHeartCheck();
             currentStatusEffect.StatCheckChange(character);
             currentStatusEffect.AccelerateStartup(this, extraTurnsToGive);
         }
@@ -67,6 +69,7 @@ public class StatusEffectHandler : MonoBehaviour
 
     public void ClearStatus()
     {
+        sealedHeart = false;
         currentStatusEffect.End(character);
         currentStatusEffect = null;
     }

@@ -26,9 +26,16 @@ MonoBehaviour:
   atkStat: 2
   defStat: 0
   basePower: 45
-  baseLBlow: 0
-  luckyMultiplier: 1.5
+  baseCritBlow: 0
+  CritMultiplier: 1.5
   randomnessCoefficient: 0.2
+  canStatus: 0
+  status: 0
+  chanceToStatus: 0
   multihit: 0
   noOfHits: 0
+  vampireHealCoefficient: 1
+  trueHit: 0
+  guardBreaker: 0
+  baseFriendshipGiven: 10
   gfx: {fileID: 0}

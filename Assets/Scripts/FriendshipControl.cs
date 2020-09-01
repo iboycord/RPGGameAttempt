@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class FriendshipControl : MonoBehaviour
 {
+    #region Singleton
+    public static FriendshipControl instance;
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogWarning("More than one FriendshipControl found");
+            return;
+        }
+        instance = this;
+    }
+    #endregion
+
+
     public int overallFriendship = 0;
     public int maxFriendship = 1000;
     public List<int> milestones = new List<int>();
@@ -23,10 +37,22 @@ public class FriendshipControl : MonoBehaviour
         {
             rank++;
         }
-        if(overallFriendship < milestones[rank])
+        if(rank > 0 && overallFriendship < milestones[rank])
         {
-            rank--;
+            if(rank - 1 < 0)
+            {
+                rank = 0;
+            }
+            else
+            {
+                rank--;
+            }
         }
+    }
+
+    public void PrintData()
+    {
+        Debug.Log("Overall Friendship: " + overallFriendship + ", Max Friendship: " + maxFriendship + ", Current Milestone: " + milestones[rank].ToString() + ", Rank: " + rank);
     }
 
 }

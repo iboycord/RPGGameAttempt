@@ -190,6 +190,8 @@ MonoBehaviour:
     growth: 0
   EType1: 0
   EType2: 0
+  favoriteFlavor1: 0
+  favoriteFlavor2: 0
   nextActTurn: 0
   dmgReduction: 1
   isDead: 0
@@ -283,6 +285,7 @@ MonoBehaviour:
   character: {fileID: 0}
   currentStatusEffect: {fileID: 0}
   participatedInDuoMove: 0
+  sealedHeart: 0
   extraTurns: 0
   extraTurnsToGive: 1
   currentStatusTurnCount: 0
@@ -3309,7 +3312,6 @@ GameObject:
   - component: {fileID: 1006417892}
   - component: {fileID: 1006417891}
   - component: {fileID: 1006417896}
-  - component: {fileID: 1006417897}
   m_Layer: 0
   m_Name: TestUnitA
   m_TagString: PlayerControlled
@@ -3366,6 +3368,8 @@ MonoBehaviour:
     growth: 0
   EType1: 1
   EType2: 0
+  favoriteFlavor1: 0
+  favoriteFlavor2: 0
   nextActTurn: 0
   dmgReduction: 1
   isDead: 0
@@ -3458,21 +3462,10 @@ MonoBehaviour:
   character: {fileID: 0}
   currentStatusEffect: {fileID: 0}
   participatedInDuoMove: 0
+  sealedHeart: 0
   extraTurns: 0
   extraTurnsToGive: 1
   currentStatusTurnCount: 0
---- !u!114 &1006417897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1006417890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c221297dd9b54f418b8d12587ac1d58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1069796159
 GameObject:
   m_ObjectHideFlags: 0
@@ -5206,6 +5199,7 @@ GameObject:
   - component: {fileID: 1445010295}
   - component: {fileID: 1445010294}
   - component: {fileID: 1445010296}
+  - component: {fileID: 1445010298}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -5242,6 +5236,7 @@ MonoBehaviour:
   timeToWait: 2.5
   currentUnitHasExtraTurn: 0
   battleUI: {fileID: 70145960}
+  friendshipControl: {fileID: 1445010298}
 --- !u!4 &1445010295
 Transform:
   m_ObjectHideFlags: 0
@@ -5270,6 +5265,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chartElement:
   - {fileID: 11400000, guid: 9d63059382a42a34ca8bd6216be08778, type: 2}
+--- !u!114 &1445010298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445010293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dacef83cd9a59e444a41477a8214b7dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overallFriendship: 0
+  maxFriendship: 1000
+  milestones: 320000004b00000064000000
+  rank: 0
 --- !u!1 &1449895672
 GameObject:
   m_ObjectHideFlags: 0
@@ -5983,7 +5994,7 @@ MonoBehaviour:
   maxHP:
     baseValue: 0
     growth: 0
-  currentHP: 10
+  currentHP: 300
   maxSP:
     baseValue: 0
     growth: 0
@@ -6013,6 +6024,8 @@ MonoBehaviour:
     growth: 0
   EType1: 2
   EType2: 0
+  favoriteFlavor1: 0
+  favoriteFlavor2: 0
   nextActTurn: 0
   dmgReduction: 1
   isDead: 0
@@ -6106,6 +6119,7 @@ MonoBehaviour:
   character: {fileID: 0}
   currentStatusEffect: {fileID: 0}
   participatedInDuoMove: 0
+  sealedHeart: 0
   extraTurns: 0
   extraTurnsToGive: 1
   currentStatusTurnCount: 0

@@ -81,8 +81,12 @@ public class BattleSystem : MonoBehaviour
 
     public BattleUI battleUI;
 
+    public FriendshipControl friendshipControl;
+
     private void Start()
     {
+        if (friendshipControl == null) { friendshipControl = GetComponent<FriendshipControl>(); }
+
         state = BattleState.START;
 
         StartCoroutine(BattleSetup());
@@ -131,6 +135,11 @@ public class BattleSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             playerAUnit.gameObject.GetComponent<StatusEffectHandler>().AssignStatus(StatusEffectList.Burning);
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            friendshipControl.PrintData();
         }
 
     }
@@ -345,6 +354,13 @@ public class BattleSystem : MonoBehaviour
         //Attack is just debug for general attacks. It cant understand other things like status or vampireism but it knows weaknesses.
         Attack(currentUnit, target, move);
         move.Use(currentUnit, target);
+
+        if (currentUnit.CompareTag("PlayerControlled") && !currentUnit.GetComponent<StatusEffectHandler>().sealedHeart)
+        {
+            //Something something move this whole thing to Duo Moves only, but there could be moves that just increase friendship.
+            friendshipControl.IncrementFriendship(move.baseFriendshipGiven);
+        }
+
         battleUI.CloseBUI();
         StartCoroutine(EndMyTurn(timeToWait));
     }
