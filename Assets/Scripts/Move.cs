@@ -65,6 +65,7 @@ public class Move : ScriptableObject
     public bool guardBreaker = false;
 
     public int baseFriendshipGiven = 0;
+    public MoveAttackType attackType = MoveAttackType.Timing;
 
     public GameObject gfx;
 
@@ -246,11 +247,6 @@ public class Move : ScriptableObject
         user.dmgReduction = standardDefReduction;
     }
 
-    public virtual void PlayAnimation()
-    {
-
-    }
-
     // HealFormula
     //  Adds the certain stat and the move's base power
     public virtual int HealFormula(CharacterStats user)
@@ -389,3 +385,4 @@ public enum MoveCost { None, HP, SP }
 public enum Duality { Solo, Duo }
 public enum Range { Close, Far }
 public enum TargetStat { defense, special_defense, attack, special, luck, skill, speed, level, maxHP, currentHP, maxSP, currentSP, currentXp, XpToNextLevel }
+public enum MoveAttackType { Timing, Charge, Mash }

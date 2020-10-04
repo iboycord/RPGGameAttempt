@@ -20,6 +20,7 @@ public class BattleUI : MonoBehaviour
     public PanelGroup panelGroup;
 
     public BattleSystem battleSystem;
+    public BattleAnimationHandler animationHandler;
 
     bool canAct = true;
 
@@ -41,7 +42,10 @@ public class BattleUI : MonoBehaviour
                 //OpenTargetMenu();
                 //subMenuState = MenuState.Acting; //Is this part needed?
                 canAct = false;
-                battleSystem.OnStandardAttackButton(battleSystem.PlaceInLineup(), targetingSubMenu.SelectTarget(), currentSubMenu.SelectMove());
+                //battleSystem.OnStandardAttackButton(battleSystem.PlaceInLineup(), targetingSubMenu.SelectTarget(), currentSubMenu.SelectMove());
+                //EndUIFeatures();
+                animationHandler.enabled = true;
+                animationHandler.InitializeHandler(battleSystem.PlaceInLineup(), targetingSubMenu.SelectTarget(), currentSubMenu.SelectMove());
             }
             if (Input.GetKey(KeyCode.I))
             {
@@ -174,6 +178,12 @@ public class BattleUI : MonoBehaviour
         currentSubMenu.OnExit();
         currentSubMenu.gameObject.SetActive(false);
         subMenuState = MenuState.Unopened;
+    }
+
+    public void EndUIFeatures()
+    {
+        animationHandler.enabled = false;
+        battleSystem.OnStandardAttackButton(battleSystem.PlaceInLineup(), targetingSubMenu.SelectTarget(), currentSubMenu.SelectMove());
     }
 
 }

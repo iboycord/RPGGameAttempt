@@ -32,37 +32,37 @@ public class BattleSystem : MonoBehaviour
 
     public GameObject enemyPrefabA;
     public CharacterStats enemyAUnit;
-        /*
-    public GameObject enemyPrefabB;
-    public GameObject enemyPrefabC;
-    public GameObject enemyPrefabD;
-    public GameObject enemyPrefabE;
-    public GameObject enemyPrefabF;
-    public GameObject enemyPrefabG;
-    public GameObject enemyPrefabH;
+    /*
+public GameObject enemyPrefabB;
+public GameObject enemyPrefabC;
+public GameObject enemyPrefabD;
+public GameObject enemyPrefabE;
+public GameObject enemyPrefabF;
+public GameObject enemyPrefabG;
+public GameObject enemyPrefabH;
 
-    public Transform enemyAStartArea;
-    public Transform enemyBStartArea;
-    public Transform enemyCStartArea;
-    public Transform enemyDStartArea;
-    public Transform enemyEStartArea;
-    public Transform enemyFStartArea;
-    public Transform enemyGStartArea;
-    public Transform enemyHStartArea;
+public Transform enemyAStartArea;
+public Transform enemyBStartArea;
+public Transform enemyCStartArea;
+public Transform enemyDStartArea;
+public Transform enemyEStartArea;
+public Transform enemyFStartArea;
+public Transform enemyGStartArea;
+public Transform enemyHStartArea;
 
-    
-    public CharacterStats enemyBUnit;
-    public CharacterStats enemyCUnit;
-    public CharacterStats enemyDUnit;
-    public CharacterStats enemyEUnit;
-    public CharacterStats enemyFUnit;
-    public CharacterStats enemyGUnit;
-    public CharacterStats enemyHUnit;
 
-    https://stackoverflow.com/questions/49186166/unity-how-to-instantiate-a-prefab-by-string-name-to-certain-locationhttps://stackoverflow.com/questions/49186166/unity-how-to-instantiate-a-prefab-by-string-name-to-certain-location
-    https://docs.unity3d.com/ScriptReference/GameObject.Find.html
+public CharacterStats enemyBUnit;
+public CharacterStats enemyCUnit;
+public CharacterStats enemyDUnit;
+public CharacterStats enemyEUnit;
+public CharacterStats enemyFUnit;
+public CharacterStats enemyGUnit;
+public CharacterStats enemyHUnit;
 
-    */
+https://stackoverflow.com/questions/49186166/unity-how-to-instantiate-a-prefab-by-string-name-to-certain-locationhttps://stackoverflow.com/questions/49186166/unity-how-to-instantiate-a-prefab-by-string-name-to-certain-location
+https://docs.unity3d.com/ScriptReference/GameObject.Find.html
+
+*/
 
     //public BattleHUD playerHUD;
 
@@ -82,6 +82,7 @@ public class BattleSystem : MonoBehaviour
     public BattleUI battleUI;
 
     public FriendshipControl friendshipControl;
+    public BattleAnimationHandler animationHandler;
 
     private void Start()
     {
@@ -158,76 +159,7 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         turnNum = 1;
-        //NextPersonInLine();
         NextPhase();
-    }
-
-    public void NextPersonInLine()
-    {
-        /*
-        if(position <= lineup.Count)
-        {
-            CharacterStats currentUnit = lineup[position];
-
-            if (!currentUnit.isDead)
-            {
-                GameObject currentUnitGO = currentUnit.gameObject;
-
-                currentUnit.calcNextActTurn(currentUnit.nextActTurn);
-                lineup.Add(currentUnit);
-                lineup.Sort();
-                moveSelected = false;
-
-                if (currentUnitGO.tag == "PlayerControlled")
-                {
-                    Debug.Log("Player Go!");
-                    PlayerTurn(currentUnit);
-                }
-                if (currentUnitGO.tag == "EnemyControlled")
-                {
-                    Debug.Log("Enemy go...");
-                    EnemyTurn(currentUnit);
-                }
-            }
-        }
-        */
-
-        for(int i = 0; i < lineup.Count; ++i)
-        {
-            CharacterStats currentUnit = lineup[i];
-
-            if (!currentUnit.isDead)
-            {
-                GameObject currentUnitGO = currentUnit.gameObject;
-
-                //currentUnit.calcNextActTurn(currentUnit.nextActTurn);
-                //lineup.Add(currentUnit);
-                //lineup.Sort();
-                //moveSelected = false;
-
-                if (currentUnitGO.CompareTag("PlayerControlled"))
-                {
-                    Debug.Log("Player Go!");
-                    PlayerTurn(currentUnit);
-                }
-                if (currentUnitGO.CompareTag("EnemyControlled"))
-                {
-                    Debug.Log("Enemy go...");
-                    EnemyTurn(currentUnit);
-                }
-            }
-        }
-
-        Debug.Log("Turn Number " + turnNum.ToString());
-
-        ReshuffleLineup();
-
-        /*
-        else
-        {
-            ReshuffleLineup();
-        }
-        */
     }
 
     public void NextPhase()
@@ -252,7 +184,7 @@ public class BattleSystem : MonoBehaviour
                 Debug.Log("Extra Turn");
                 currentSEH.ExtraTurnIncrementer(-1);
             }
-            
+
             if (!currentUnit.isDead && !currentSEH.participatedInDuoMove && canAct)
             {
                 currentUnit.ResetDMGRedux();
@@ -271,12 +203,12 @@ public class BattleSystem : MonoBehaviour
                     EnemyTurn(currentUnit);
                 }
             }
-            
+
             else
             {
-                StartCoroutine(EndMyTurn(timeToWait));
+                FinishTurn();
             }
-            
+
         }
         else
         {
@@ -286,16 +218,12 @@ public class BattleSystem : MonoBehaviour
 
     public void ReshuffleLineup()
     {
-        //lineup.Clear();
-        //lineup.RemoveRange(0, lineup.Count - 1);
-
         lineup.Sort();
         placeInLineup = 0;
 
         turnNum += 1;
         Debug.Log("Turn Number " + turnNum);
         NextPhase();
-        //GatherAndCompare();
     }
 
     public CharacterStats PlaceInLineup()
@@ -316,8 +244,6 @@ public class BattleSystem : MonoBehaviour
 
         // Open Menu
         battleUI.OpenBUI();
-        //NextPersonInLine(posForLater + 1);
-
     }
 
     public void EnemyTurn(Unit currentUnit)
@@ -327,7 +253,6 @@ public class BattleSystem : MonoBehaviour
 
         // Attack with best damaging move/use best tactic then go to next turn
 
-        //NextPersonInLine(posForLater + 1);
         StartCoroutine(EndMyTurn(timeToWait));
     }
 
@@ -335,7 +260,7 @@ public class BattleSystem : MonoBehaviour
 
     public void OnStandardAttackButton(UIMoveHolder button)
     {
-        if(state != BattleState.PLAYERTURN)
+        if (state != BattleState.PLAYERTURN)
         {
             return;
         }
@@ -353,7 +278,9 @@ public class BattleSystem : MonoBehaviour
         }
         //Attack is just debug for general attacks. It cant understand other things like status or vampireism but it knows weaknesses.
         Attack(currentUnit, target, move);
+        //move.PlayAnimation(currentUnit.GetComponent<Animator>());
         move.Use(currentUnit, target);
+        //move.CompleteAttackAnimation(currentUnit, target, animationHandler.ReturnAnimMulti());
 
         if (currentUnit.CompareTag("PlayerControlled") && !currentUnit.GetComponent<StatusEffectHandler>().sealedHeart)
         {
@@ -362,7 +289,7 @@ public class BattleSystem : MonoBehaviour
         }
 
         battleUI.CloseBUI();
-        StartCoroutine(EndMyTurn(timeToWait));
+        FinishTurn();
     }
 
     public void OnSpecialAttackButton()
@@ -372,6 +299,11 @@ public class BattleSystem : MonoBehaviour
             return;
         }
         Debug.Log("I think letting the player scroll down a list, selecting the one they want, then passing it to the attack function might work.");
+    }
+
+    public void FinishTurn()
+    {
+        StartCoroutine(EndMyTurn(timeToWait));
     }
 
     IEnumerator EndMyTurn(float timeToWait)
@@ -397,7 +329,6 @@ public class BattleSystem : MonoBehaviour
         {
             Debug.Log("Target has weakness of " + WeaknessChart.GetEffective(move.elementType, target.EType1));
         }
-        
     }
 
     public void Defend(CharacterStats currentUnit)
