@@ -10,13 +10,32 @@ public class WeaknessChart : MonoBehaviour
 
     static readonly float[][] weaknessChart =
     {
-        //                   St, fr, wt, et, el
-        /*Std*/ new float[] {ef, ef, ef, ef, ef},
-        /*fir*/ new float[] {ef, ef, ne, se, ef},
-        /*wat*/ new float[] {ef, se, ef, ef, ef},
-        /*ert*/ new float[] {ef, se, ef, ef, se},
-        /*ele*/ new float[] {ef, ef, se, ne, ef}
+        //                   St, fr, wt, et, el  sp  PS  tx
+        
+        // Standard - basic untyped attack
+        /*Std*/ new float[] {ef, ef, ef, ef, ef, ef, ef, ef},
+        
+        // Fire - burn bright
+        /*fir*/ new float[] {ef, ef, ne, se, ef, ef, ef, se},
+        
+        // Water - wet and wild, includes ice
+        /*wat*/ new float[] {ef, se, ef, se, ef, ef, ef, se},
 
+        // Earth - has nature (grass & metal) and wind
+        /*ert*/ new float[] {ef, se, ef, ef, se, ef, ef, se},
+        
+        // Electricity - zappy zappy
+        /*ele*/ new float[] {ef, ef, se, ne, ef, ef, se, ef},
+
+        // Spectral - ghostly attacks that dont make sense
+        /*spc*/ new float[] {ef, ef, ef, ef, ef, se, se, ef},
+
+        // PSI - attacks using the mind
+        /*PSI*/ new float[] {ef, se, ef, ef, se, ne, ef, ne},
+        
+        // Toxic - corrosive and flamable substances
+        /*Txc*/ new float[] {ef, ef, ef, se, ef, ef, se, ne}
+        /**/
     };
 
     public static float GetEffective(ElementalTyping attack, ElementalTyping defend)
@@ -52,4 +71,4 @@ public class WeaknessChart : MonoBehaviour
 
 }
 
-public enum ElementalTyping { None, Standard, Fire, Water, Earth, Electricity }
+public enum ElementalTyping { None, Standard, Fire, Water, Earth, Electricity, Spectral, PSI, Toxic }

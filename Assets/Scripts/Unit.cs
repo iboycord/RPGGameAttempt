@@ -136,7 +136,7 @@ public class Unit : MonoBehaviour
 
     public virtual bool LuckRoll()
     {
-        int chance = Mathf.FloorToInt(luck.GetValue() / 100);
+        int chance = Mathf.FloorToInt(luck.GetValue() * 5);
         int t = Random.Range(0, 100);
         if (t <= chance)
         {

@@ -50,7 +50,12 @@ public class StatusEffectComboChart : MonoBehaviour
 }
 
 // Notes:
-/*
+/*  
+ *  Idea (10/26/2020): Break down into: (?) 
+ *      bio (physical ailments like burning, poison, ext),
+ *      psycho (ex: hp/sp/stats down, confusion, extra turn - pumped up?)
+ *      socio (ailments that affect team synergy, like heart seal or sync down)
+ *  
  *  > = beats
  *   Burning > Frozen > Bricked > Shocked > Soaked > Burning
  *   
