@@ -57,6 +57,21 @@ public class StatusEffectComboChart : MonoBehaviour
  *      socio (ailments that affect team synergy, like heart seal or sync down)
  *  
  *  > = beats
+ *   Bio:
+ *    Burn (hp over time, doesnt kill) > Frozen > 
+ *    
+ *   
+ *   Psycho:
+ *    Enraged (atk +2, def -2?)
+ *    Envigorated (all stats up?)
+ *    Feeling Good (Extra Turn/Turn Down)
+ *    
+ *   Socio:
+ *    Heart Seal (cant charge duo skill)
+ *    
+ *  
+ *  // Old --------------------------------------------------
+ *  > = beats
  *   Burning > Frozen > Bricked > Shocked > Soaked > Burning
  *   
  *   Enraged + Burning = Stunned?
