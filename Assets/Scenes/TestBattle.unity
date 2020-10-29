@@ -154,13 +154,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4d2e6efdc0f15c45ad21b9f2b442edf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  charName: 
+  charName: TU-B
   description: []
   level: 0
-  maxHP:
-    baseValue: 0
-    growth: 0
-  currentHP: 0
+  hp:
+    maxValue: 20
+    currentValue: 0
+    maxGrowth: 0
   maxSP:
     baseValue: 0
     growth: 0
@@ -1794,10 +1794,10 @@ MonoBehaviour:
   charName: Book
   description: []
   level: 0
-  maxHP:
-    baseValue: 10
-    growth: 0
-  currentHP: 0
+  hp:
+    maxValue: 0
+    currentValue: 0
+    maxGrowth: 0
   maxSP:
     baseValue: 0
     growth: 0
@@ -1805,7 +1805,7 @@ MonoBehaviour:
   currentXp: 0
   XpToNextLevel: 0
   attack:
-    baseValue: 1
+    baseValue: 0
     growth: 0
   defense:
     baseValue: 0
@@ -1823,7 +1823,7 @@ MonoBehaviour:
     baseValue: 0
     growth: 0
   speed:
-    baseValue: 10
+    baseValue: 0
     growth: 0
   EType1: 0
   EType2: 0
@@ -3669,10 +3669,10 @@ MonoBehaviour:
   description:
   - Test Unit A
   level: 1
-  maxHP:
-    baseValue: 10
-    growth: 0
-  currentHP: 10
+  hp:
+    maxValue: 10
+    currentValue: 0
+    maxGrowth: 0
   maxSP:
     baseValue: 0
     growth: 0
@@ -3680,25 +3680,25 @@ MonoBehaviour:
   currentXp: 0
   XpToNextLevel: 0
   attack:
-    baseValue: 5
+    baseValue: 2
     growth: 0
   defense:
-    baseValue: 5
+    baseValue: 2
     growth: 0
   special:
-    baseValue: 5
+    baseValue: 2
     growth: 0
   special_Defense:
-    baseValue: 5
+    baseValue: 2
     growth: 0
   luck:
-    baseValue: 5
+    baseValue: 2
     growth: 0
   skill:
-    baseValue: 5
+    baseValue: 2
     growth: 0
   speed:
-    baseValue: 5
+    baseValue: 2
     growth: 0
   EType1: 1
   EType2: 0
@@ -5633,6 +5633,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentAnimMultiplier: 1
+  canInput: 0
   canCharge: 0
   chargeSpeed: 0.2
   currentMove: {fileID: 0}
@@ -6369,10 +6370,10 @@ MonoBehaviour:
   description:
   - Test Enemy
   level: 5
-  maxHP:
-    baseValue: 300
-    growth: 0
-  currentHP: 0
+  hp:
+    maxValue: 50
+    currentValue: 0
+    maxGrowth: 0
   maxSP:
     baseValue: 0
     growth: 0
