@@ -21,6 +21,10 @@ public class StatusEffect : ScriptableObject
     public TargetStat targetStat1;
     public TargetStat targetStat2;
 
+    [Space]
+    public int baseNoOfTurns;
+
+    [Range(0, 2)]
     public float maxMultiplier1 = 2, maxMultiplier2 = 2;
     [Range(0,2)]
     public float statMultiplier1 = 1, statMultiplier2 = 1;
@@ -44,11 +48,11 @@ public class StatusEffect : ScriptableObject
     {
         if(statusType1 == StatusType.Damaging || statusType2 == StatusType.Damaging)
         {
-            characterAfflicted.TakeDamage(Mathf.FloorToInt(characterAfflicted.maxHP.GetValue() * hp_spMultiplier), false, false);
+            characterAfflicted.TakeDamage(Mathf.FloorToInt(characterAfflicted.hp.GetMaxValue() * hp_spMultiplier), false, false);
         }
         if (statusType1 == StatusType.Healing || statusType2 == StatusType.Healing)
         {
-            characterAfflicted.Heal(Mathf.FloorToInt(characterAfflicted.maxHP.GetValue() * hp_spMultiplier));
+            characterAfflicted.Heal(Mathf.FloorToInt(characterAfflicted.hp.GetMaxValue() * hp_spMultiplier));
         }
 
         if(statusType1 == StatusType.Drain || statusType2 == StatusType.Drain)
@@ -101,7 +105,7 @@ public class StatusEffect : ScriptableObject
     {
         if(statusType1 == StatusType.DamagesWhenExpired || statusType2 == StatusType.DamagesWhenExpired)
         {
-            characterAfflicted.TakeDamage(Mathf.FloorToInt(characterAfflicted.maxHP.GetValue() * hp_spMultiplier), false, false);
+            characterAfflicted.TakeDamage(Mathf.FloorToInt(characterAfflicted.hp.GetMaxValue() * hp_spMultiplier), false, false);
         }
 
         ClearStatChange(characterAfflicted);

@@ -43,9 +43,9 @@ public class BattleUI : MonoBehaviour
                 //subMenuState = MenuState.Acting; //Is this part needed?
                 canAct = false;
                 //battleSystem.OnStandardAttackButton(battleSystem.PlaceInLineup(), targetingSubMenu.SelectTarget(), currentSubMenu.SelectMove());
-                //EndUIFeatures();
-                animationHandler.enabled = true;
-                animationHandler.InitializeHandler(battleSystem.PlaceInLineup(), targetingSubMenu.SelectTarget(), currentSubMenu.SelectMove());
+                EndUIFeatures();
+                //animationHandler.enabled = true;
+                //animationHandler.InitializeHandler(battleSystem.PlaceInLineup(), targetingSubMenu.SelectTarget(), currentSubMenu.SelectMove());
             }
             if (Input.GetKey(KeyCode.I))
             {

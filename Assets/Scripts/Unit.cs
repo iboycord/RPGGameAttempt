@@ -12,12 +12,14 @@ public class Unit : MonoBehaviour
     [Space]
     [Header("Level, HP, and SP")]
     public int level;
-    public Stat maxHP;
-    public int currentHP;
+    //public Stat maxHP;
+    //public int currentHP;
+    public Stat_HPSP hp;
     public Stat maxSP;
     public int currentSP;
     public int currentXp;
     public int XpToNextLevel;
+    
     [Space]
     [Header("Stats")]
     public Stat attack;
@@ -42,7 +44,8 @@ public class Unit : MonoBehaviour
 
     private void Awake()
     {
-        currentHP = maxHP.GetValue();
+        //currentHP = maxHP.GetValue();
+        hp.SetValue();
     }
 
     public void TakeDamage(int damage, bool canDodge, bool allowsDMGRedux)
@@ -63,10 +66,11 @@ public class Unit : MonoBehaviour
                 damage = Mathf.Clamp(damage, 0, int.MaxValue);
             }
 
-            currentHP -= damage;
+            //currentHP -= damage;
+            hp.UpdateCurrentValue(-damage);
             Debug.Log(transform.name + " takes " + damage);
 
-            if (currentHP <= 0)
+            if (hp.GetCurrentValue() <= 0)//(currentHP <= 0)
             {
                 Die();
             }
@@ -94,14 +98,17 @@ public class Unit : MonoBehaviour
     {
         heal = Mathf.Clamp(heal, 0, int.MaxValue);
 
-        currentHP += heal;
+        //currentHP += heal;
+        hp.UpdateCurrentValue(heal);
         Debug.Log(transform.name + " heals " + heal);
 
-        int temp = maxHP.GetValue();
+        //int temp = maxHP.GetValue();
+        int temp = hp.GetMaxValue();
 
-        if (currentHP >= temp)
+        if (hp.GetCurrentValue() >= temp)//(currentHP >= temp)
         {
-            currentHP = temp;
+            //currentHP = temp;
+            hp.SetValue(temp);
         }
     }
 
@@ -122,14 +129,16 @@ public class Unit : MonoBehaviour
 
     public virtual void Die()
     {
-        currentHP = 0;
+        //currentHP = 0;
+        hp.SetValue(0);
         Debug.Log(transform.name + " died");
         isDead = true;
     }
 
     public virtual void Revive(int hpRestored)
     {
-        currentHP += hpRestored;
+        //currentHP += hpRestored;
+        hp.UpdateCurrentValue(hpRestored);
         Debug.Log(transform.name + " has been revived.");
         isDead = false;
     }
@@ -151,7 +160,7 @@ public class Unit : MonoBehaviour
         // HP + however much
         level += 1;
 
-        HpSpLvlUp(maxHP, currentHP);
+        //HpSpLvlUp(maxHP, currentHP);
         HpSpLvlUp(maxSP, currentSP);
 
         LvlUpStatHelper(attack);
@@ -239,10 +248,12 @@ public class Unit : MonoBehaviour
                 statVal = level;
                 break;
             case TargetStat.maxHP:
-                statVal = maxHP.GetValue();
+                //statVal = maxHP.GetValue();
+                statVal = hp.GetMaxValue();
                 break;
             case TargetStat.currentHP:
-                statVal = currentHP;
+                //statVal = currentHP;
+                statVal = hp.GetCurrentValue();
                 break;
             case TargetStat.maxSP:
                 statVal = maxSP.GetValue();
@@ -296,16 +307,6 @@ public class Unit : MonoBehaviour
         if (target == TargetStat.speed)
         {
             Stat stat = speed;
-            return stat;
-        }
-        if (target == TargetStat.maxHP)
-        {
-            Stat stat = maxHP;
-            return stat;
-        }
-        if (target == TargetStat.maxSP)
-        {
-            Stat stat = maxSP;
             return stat;
         }
         return attack;

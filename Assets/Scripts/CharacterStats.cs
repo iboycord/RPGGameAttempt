@@ -15,8 +15,10 @@ public class CharacterStats : Unit, IComparable<CharacterStats>
     {
         if(newItem != null)
         {
-            maxHP.AddModifier(newItem.HPMod);
-            currentHP += newItem.HPMod;
+            //maxHP.AddModifier(newItem.HPMod);
+            //currentHP += newItem.HPMod;
+            hp.AddModifier(newItem.HPMod);
+            hp.UpdateCurrentValue(newItem.HPMod);
 
             maxSP.AddModifier(newItem.SPMod);
             currentSP += newItem.SPMod;
@@ -31,8 +33,10 @@ public class CharacterStats : Unit, IComparable<CharacterStats>
         }
         if (oldItem != null)
         {
-            maxHP.RemoveModifier(oldItem.HPMod);
-            currentHP -= oldItem.HPMod;
+            //maxHP.RemoveModifier(oldItem.HPMod);
+            //currentHP -= oldItem.HPMod;
+            hp.RemoveModifier(oldItem.HPMod);
+            hp.UpdateCurrentValue(oldItem.HPMod);
 
             maxSP.RemoveModifier(oldItem.SPMod);
             currentSP -= oldItem.SPMod;

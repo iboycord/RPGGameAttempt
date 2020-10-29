@@ -45,6 +45,7 @@ public class BattleAnimationHandler : MonoBehaviour
         {
             if(battleSystem.state == BattleState.PLAYERTURN)
             {
+                Debug.Log("I am active");
                 ButtonPressHandle();
             }
             if(battleSystem.state == BattleState.ENEMYTURN)
@@ -54,6 +55,34 @@ public class BattleAnimationHandler : MonoBehaviour
         }
 
 
+    }
+
+    public void Execution()
+    {
+        if (moveFinished) // || attacker attack animation is done
+        {
+            FinishAnim();
+        }
+        // Thinking about using this to handle the first bit of attack animations and also the defending animations
+        //   Moves would call this upon being used, attack animations would play, trigger SetCurrentAnimMulti with the "timing"
+        //    of the move (1x for normal, 1.5x for great, 2x for perfect?, also call it again at the end to set it back to 1x for enemies to use as well).
+        //    Upon the player pressing the button, the animation would stop then play a "finishing" animation that actually triggers the
+        //    Move's Use Function and passes in the timing (I think for now at least). 
+        //
+        //   As for defending, I think just playing the animation and manually increasing/decreasing the defence of the character would do well.
+        //    I'd say it could be gradual decrease and the animation cant be cancelled so you do actually have to time it well.
+        if (Input.GetKeyDown(KeyCode.A) && !moveFinished && canInput)
+        {
+            if (battleSystem.state == BattleState.PLAYERTURN)
+            {
+                Debug.Log("I am active");
+                ButtonPressHandle();
+            }
+            if (battleSystem.state == BattleState.ENEMYTURN)
+            {
+
+            }
+        }
     }
 
     public void SetCurrentAnimMulti(float set)
@@ -121,6 +150,7 @@ public class BattleAnimationHandler : MonoBehaviour
         defender = target.GetComponent<Animator>();
         currentMove = move;
         //attacker.CrossFade("attack", 0.3f);
+        Execution();
     }
 
     public void InitializeHandler(Animator user, Animator[] helpers, Animator target, Move move)

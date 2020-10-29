@@ -16,7 +16,7 @@ public class BattleHud : MonoBehaviour
     public void SetHUD(CharacterStats unit)
     {
         nameText.text = unit.charName;
-        HPText.text = unit.currentHP.ToString() + "/" + unit.maxHP.GetValue();
+        HPText.text = unit.hp.GetCurrentValue().ToString() + "/" + unit.hp.GetMaxValue();
         SPText.text = unit.currentSP.ToString() + "/" + unit.maxSP.GetValue();
         levelText.text = "Level " + unit.level;
         //hpSlider.maxValue = unit.maxHP.GetValue();

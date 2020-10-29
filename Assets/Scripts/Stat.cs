@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class Stat
 {
-    [SerializeField]
+    [SerializeField, Range(0,5)]
     private int baseValue;
 
     [SerializeField]

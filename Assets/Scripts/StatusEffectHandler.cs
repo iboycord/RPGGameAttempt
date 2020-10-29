@@ -41,7 +41,7 @@ public class StatusEffectHandler : MonoBehaviour
             {
                 currentStatusEffect = StatusEffectComboChart.LookupStatus(statusEffectToAssign);
                 //int dmg = currentStatusEffect.basePower > 0 ? Mathf.RoundToInt(currentStatusEffect.basePower * 1.5f) : Mathf.RoundToInt(character.maxHP.GetValue() * 0.1f);
-                character.TakeDamage(Mathf.RoundToInt(character.maxHP.GetValue() * 0.2f), false, false);
+                character.TakeDamage(Mathf.RoundToInt(character.hp.GetMaxValue() * 0.2f), false, false);
             }
         }
         else

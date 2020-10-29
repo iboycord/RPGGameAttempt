@@ -320,8 +320,10 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
 
     public void Attack(CharacterStats currentUnit, CharacterStats target, Move move)
     {
-        Debug.Log(currentUnit.name + " hit " + target.name + " with " + move.name + " for a supposed " + move.SoloDamageFormula(currentUnit, target));
-        if(target.EType2 != ElementalTyping.None)
+        // Can desync with the actual value due to being two seperate calls.
+        //Debug.Log(currentUnit.name + " hit " + target.name + " with " + move.name + " for a supposed " + move.SoloDamageFormula(currentUnit, target));
+        Debug.Log(currentUnit.name + " attacks! ");
+        if (target.EType2 != ElementalTyping.None)
         {
             Debug.Log("Target has weakness of " + WeaknessChart.GetEffective(move.elementType, target.EType1, target.EType2)); 
         }
