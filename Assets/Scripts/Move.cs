@@ -360,17 +360,16 @@ public class Move : ScriptableObject
         {
             if (cost == MoveCost.HP && user.hp.GetCurrentValue() >= costAmnt + 1)
             {
-                //user.currentHP -= costAmnt;
                 user.hp.UpdateCurrentValue(costAmnt);
                 return true;
             }
-            if (cost == MoveCost.SP && user.currentSP >= costAmnt)
+            if (cost == MoveCost.SP && user.sp.GetCurrentValue() >= costAmnt)
             {
-                user.currentSP -= costAmnt;
+                user.sp.UpdateCurrentValue(-costAmnt);
                 return true;
             }
 
-            if (user.hp.GetCurrentValue() < costAmnt || user.currentSP < costAmnt)
+            if (user.hp.GetCurrentValue() < costAmnt || user.sp.GetCurrentValue() < costAmnt)
             {
                 return false;
             }

@@ -57,11 +57,11 @@ public class StatusEffect : ScriptableObject
 
         if(statusType1 == StatusType.Drain || statusType2 == StatusType.Drain)
         {
-            characterAfflicted.LooseSP(Mathf.FloorToInt(characterAfflicted.maxSP.GetValue() * hp_spMultiplier));
+            characterAfflicted.LooseSP(Mathf.FloorToInt(characterAfflicted.sp.GetMaxValue() * hp_spMultiplier));
         }
         if (statusType1 == StatusType.Replenish || statusType2 == StatusType.Replenish)
         {
-            characterAfflicted.RecoverSP(Mathf.FloorToInt(characterAfflicted.maxSP.GetValue() * hp_spMultiplier));
+            characterAfflicted.RecoverSP(Mathf.FloorToInt(characterAfflicted.sp.GetMaxValue() * hp_spMultiplier));
         }
 
     }

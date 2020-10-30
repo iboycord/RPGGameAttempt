@@ -15,13 +15,11 @@ public class CharacterStats : Unit, IComparable<CharacterStats>
     {
         if(newItem != null)
         {
-            //maxHP.AddModifier(newItem.HPMod);
-            //currentHP += newItem.HPMod;
             hp.AddModifier(newItem.HPMod);
             hp.UpdateCurrentValue(newItem.HPMod);
 
-            maxSP.AddModifier(newItem.SPMod);
-            currentSP += newItem.SPMod;
+            sp.AddModifier(newItem.SPMod);
+            sp.UpdateCurrentValue(newItem.SPMod);
 
             attack.AddModifier(newItem.attackMod);
             defense.AddModifier(newItem.defenceMod);
@@ -33,13 +31,11 @@ public class CharacterStats : Unit, IComparable<CharacterStats>
         }
         if (oldItem != null)
         {
-            //maxHP.RemoveModifier(oldItem.HPMod);
-            //currentHP -= oldItem.HPMod;
             hp.RemoveModifier(oldItem.HPMod);
             hp.UpdateCurrentValue(oldItem.HPMod);
 
-            maxSP.RemoveModifier(oldItem.SPMod);
-            currentSP -= oldItem.SPMod;
+            sp.RemoveModifier(oldItem.SPMod);
+            sp.UpdateCurrentValue(-oldItem.SPMod);
 
 
             attack.RemoveModifier(oldItem.attackMod);

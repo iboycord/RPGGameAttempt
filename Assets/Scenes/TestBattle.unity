@@ -161,10 +161,10 @@ MonoBehaviour:
     maxValue: 20
     currentValue: 0
     maxGrowth: 0
-  maxSP:
-    baseValue: 0
-    growth: 0
-  currentSP: 0
+  sp:
+    maxValue: 0
+    currentValue: 0
+    maxGrowth: 0
   currentXp: 0
   XpToNextLevel: 0
   attack:
@@ -1798,10 +1798,10 @@ MonoBehaviour:
     maxValue: 0
     currentValue: 0
     maxGrowth: 0
-  maxSP:
-    baseValue: 0
-    growth: 0
-  currentSP: 0
+  sp:
+    maxValue: 0
+    currentValue: 0
+    maxGrowth: 0
   currentXp: 0
   XpToNextLevel: 0
   attack:
@@ -3673,10 +3673,10 @@ MonoBehaviour:
     maxValue: 10
     currentValue: 0
     maxGrowth: 0
-  maxSP:
-    baseValue: 0
-    growth: 0
-  currentSP: 20
+  sp:
+    maxValue: 0
+    currentValue: 0
+    maxGrowth: 0
   currentXp: 0
   XpToNextLevel: 0
   attack:
@@ -5584,6 +5584,8 @@ MonoBehaviour:
   playerBUnit: {fileID: 0}
   enemyPrefabA: {fileID: 1642517817}
   enemyAUnit: {fileID: 1642517818}
+  enemies:
+  - {fileID: 1642517824}
   state: 0
   moveSelected: 0
   battleDecided: 0
@@ -6347,6 +6349,7 @@ GameObject:
   - component: {fileID: 1642517819}
   - component: {fileID: 1642517818}
   - component: {fileID: 1642517823}
+  - component: {fileID: 1642517824}
   m_Layer: 0
   m_Name: TestEnemy
   m_TagString: EnemyControlled
@@ -6374,10 +6377,10 @@ MonoBehaviour:
     maxValue: 50
     currentValue: 0
     maxGrowth: 0
-  maxSP:
-    baseValue: 0
-    growth: 0
-  currentSP: 10
+  sp:
+    maxValue: 0
+    currentValue: 0
+    maxGrowth: 0
   currentXp: 0
   XpToNextLevel: 0
   attack:
@@ -6502,6 +6505,20 @@ MonoBehaviour:
   extraTurns: 0
   extraTurnsToGive: 1
   currentStatusTurnCount: 0
+--- !u!114 &1642517824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1642517817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68feaa5db1cf43540be8943c23d95272, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 1642517817}
+  enemyUnit: {fileID: 1642517818}
 --- !u!1 &1646721991
 GameObject:
   m_ObjectHideFlags: 0

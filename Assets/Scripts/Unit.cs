@@ -12,11 +12,8 @@ public class Unit : MonoBehaviour
     [Space]
     [Header("Level, HP, and SP")]
     public int level;
-    //public Stat maxHP;
-    //public int currentHP;
     public Stat_HPSP hp;
-    public Stat maxSP;
-    public int currentSP;
+    public Stat_HPSP sp;
     public int currentXp;
     public int XpToNextLevel;
     
@@ -81,11 +78,11 @@ public class Unit : MonoBehaviour
     {
         spLost = Mathf.Clamp(spLost, 0, int.MaxValue);
 
-        currentSP -= spLost;
+        sp.UpdateCurrentValue(-spLost);
 
-        if(currentSP <= 0)
+        if(sp.GetCurrentValue() <= 0)
         {
-            currentSP = 0;
+            sp.SetValue(0);
         }
     }
 
@@ -116,14 +113,14 @@ public class Unit : MonoBehaviour
     {
         addSP = Mathf.Clamp(addSP, 0, int.MaxValue);
 
-        currentSP += addSP;
+        sp.UpdateCurrentValue(addSP);
         Debug.Log(transform.name + " gets sp: " + addSP);
 
-        int temp = maxSP.GetValue();
+        int temp = sp.GetMaxValue();
 
-        if (currentSP >= temp)
+        if (sp.GetCurrentValue() >= temp)
         {
-            currentSP = temp;
+            sp.SetValue(temp);
         }
     }
 
@@ -161,7 +158,7 @@ public class Unit : MonoBehaviour
         level += 1;
 
         //HpSpLvlUp(maxHP, currentHP);
-        HpSpLvlUp(maxSP, currentSP);
+        //HpSpLvlUp(maxSP, currentSP);
 
         LvlUpStatHelper(attack);
         LvlUpStatHelper(defense);
@@ -248,18 +245,16 @@ public class Unit : MonoBehaviour
                 statVal = level;
                 break;
             case TargetStat.maxHP:
-                //statVal = maxHP.GetValue();
                 statVal = hp.GetMaxValue();
                 break;
             case TargetStat.currentHP:
-                //statVal = currentHP;
                 statVal = hp.GetCurrentValue();
                 break;
             case TargetStat.maxSP:
-                statVal = maxSP.GetValue();
+                statVal = sp.GetMaxValue();
                 break;
             case TargetStat.currentSP:
-                statVal = currentSP;
+                statVal = sp.GetCurrentValue();
                 break;
             case TargetStat.currentXp:
                 statVal = currentXp;

@@ -32,6 +32,8 @@ public class BattleSystem : MonoBehaviour
 
     public GameObject enemyPrefabA;
     public CharacterStats enemyAUnit;
+
+    public EnemyBattleDataStruct[] enemies;
     /*
 public GameObject enemyPrefabB;
 public GameObject enemyPrefabC;
@@ -73,8 +75,6 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
 
     public bool battleDecided;
 
-    GameObject[] enemyUnits;
-
     public float timeToWait;
 
     public bool currentUnitHasExtraTurn = false;
@@ -83,6 +83,7 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
 
     public FriendshipControl friendshipControl;
     public BattleAnimationHandler animationHandler;
+
 
     private void Start()
     {
@@ -113,12 +114,9 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
         lineup.Add(playerBUnit.GetComponent<CharacterStats>());
         battleUI.AddToTargetMenu(playerBUnit.GetComponent<CharacterStats>());
 
-
-        enemyUnits = GameObject.FindGameObjectsWithTag("EnemyControlled");
-        foreach (GameObject enemyUnit in enemyUnits)
+        foreach (EnemyBattleDataStruct enemyUnit in enemies)
         {
-            CharacterStats currentUnit = enemyUnit.GetComponent<CharacterStats>();
-            //currentUnit.calcNextActTurn(0);
+            CharacterStats currentUnit = enemyUnit.enemyUnit;
             if (currentUnit != null || !currentUnit.isDead)
             {
                 lineup.Add(currentUnit);
@@ -352,4 +350,5 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
     {
 
     }
+
 }
