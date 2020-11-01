@@ -56,13 +56,23 @@ public class StatusEffectComboChart : MonoBehaviour
  *      psycho (ex: hp/sp/stats down, confusion, extra turn - pumped up?)
  *      socio (ailments that affect team synergy, like heart seal or sync down)
  *  
+ *  "Damage" over time. Defence/Stat adjust. Turn/Action economy, 
+ *  debilitator/action stoppers, Loss of control (avoid), shields/Nulls,
+ *  Setups, Transformations/Wild Card, KOs/Instakill (Not happening)
+ *  
+ *  Balance between situational (battles take short time), difficulty, and status' power (both strong and weak)
+ *  Moves that have bonus damage against statuses
+ *  Problems outside of battle? Mess/mesh with other parts of game,
+ *  
  *  > = beats
  *   Bio:
- *    Burn (hp over time, doesnt kill) > Frozen > 
- *    
+ *    Burn (hp over time, doesnt kill) > Frozen > Toxic > Stoned >- Loop
+ *    Work on this since there'd only be two unique things in the worst case
+ *    (ie two things do damage over time and the other two take away tuns)
  *   
  *   Psycho:
  *    Enraged (atk +2, def -2?)
+ *    Calm? (def +2, atk -2, opposite of enraged)
  *    Envigorated (all stats up?)
  *    Feeling Good (Extra Turn/Turn Down)
  *    
@@ -78,4 +88,4 @@ public class StatusEffectComboChart : MonoBehaviour
  *   Stunned + Soaked = 
  *   
  */
-public enum StatusEffectList { Burning, Soaked, Frozen, Shocked, Bricked, Enraged, Stunned, Silenced, Sleep, Regen, Drain, Replinish, Phantom, Accelerate }
+public enum StatusEffectList { None, Burning, Frozen, Poisoned, Stoned, Enraged, Stunned, Silenced, Sleep, Regen, Drain, Replinish, Phantom, Accelerate }

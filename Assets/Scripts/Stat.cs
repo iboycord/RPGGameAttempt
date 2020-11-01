@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class Stat
 {
-    [SerializeField, Range(0,20)]
+    [SerializeField, Range(0,30), Tooltip("0-5 for normal characters, 0-10 for bosses, 11+ reserved for rare enemies and secret bosses. IF THIS IS NOT FOLLOWED THEN EVERYTHINGS BUNGLED.")]
     private int baseValue;
 
     [SerializeField]

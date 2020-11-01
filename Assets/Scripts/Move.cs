@@ -46,9 +46,7 @@ public class Move : ScriptableObject
     [Tooltip("This is multiplied by Base Power to give moves damage variance. Higher = wacker values in both directions.")]
     public float randomnessCoefficient = 0.2f;
 
-    [Space, Tooltip("Can this move cause a status?")]
-    public bool canStatus;
-    [Tooltip("...that status being...?")]
+    [Tooltip("Status caused...?")]
     public StatusEffectList status;
     [Tooltip("...and the chance?")]
     public int chanceToStatus;
@@ -219,11 +217,12 @@ public class Move : ScriptableObject
     }
     #endregion
 
+    #region Call Status Code
     // ApplyStatus
     //  No status have been written yet. However this would hopefully apply them. Need a status manager to clear status in like 3 turns though
     public virtual void ApplyStatus(CharacterStats target)
     {
-        if(canStatus && RNG(chanceToStatus))
+        if(status != StatusEffectList.None && RNG(chanceToStatus))
         {
             target.gameObject.GetComponent<StatusEffectHandler>().AssignStatus(status);
         }
@@ -231,7 +230,7 @@ public class Move : ScriptableObject
 
     public virtual void ApplyStatus(CharacterStats[] targets)
     {
-        if (canStatus && RNG(chanceToStatus))
+        if (status != StatusEffectList.None && RNG(chanceToStatus))
         {
             foreach (CharacterStats target in targets)
             {
@@ -239,14 +238,18 @@ public class Move : ScriptableObject
             }
         }
     }
+    #endregion
 
+    #region Defense that needs to be reworked probably
     // Defend
     //  sets the user's damage reduction to the float passed in by the battle system and plays an animation.
     public virtual void Defend(CharacterStats user, float standardDefReduction)
     {
         user.dmgReduction = standardDefReduction;
     }
+    #endregion
 
+    #region Heal Formula
     // HealFormula
     //  Adds the certain stat and the move's base power
     public virtual int HealFormula(CharacterStats user)
@@ -270,7 +273,9 @@ public class Move : ScriptableObject
 
         return heal;
     }
+    #endregion
 
+    #region Damage Formula
     // SoloDamageFormula
     //  
     public virtual int SoloDamageFormula(CharacterStats user, CharacterStats target)
@@ -333,7 +338,9 @@ public class Move : ScriptableObject
 
         return dmg;
     }
+    #endregion
 
+    #region Various other helper functions
     public virtual int CritStrike(int def)
     {
         int chance = Mathf.FloorToInt(moveUser.ReturnStatValue(TargetStat.skill) / 3);
@@ -376,7 +383,7 @@ public class Move : ScriptableObject
         }
         return true;
     }
-
+    #endregion
 }
 
 //public enum MoveStrength { One_Star, Two_Star, Three_Star, Four_Star, Five_Star, Six_Star }
