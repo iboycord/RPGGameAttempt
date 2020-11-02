@@ -10,31 +10,28 @@ public class WeaknessChart : MonoBehaviour
 
     static readonly float[][] weaknessChart =
     {
-        //                   St, fr, wt, et, el  sp  PS  tx
+        //                   St, fr, wt, et, el  sp  PS 
         
         // Standard - basic untyped attack
-        /*Std*/ new float[] {ef, ef, ef, ef, ef, ef, ef, ef},
+        /*Std*/ new float[] {ef, ef, ef, ef, ef, ef, ef},
         
         // Fire - burn bright
-        /*fir*/ new float[] {ef, ef, ne, se, ef, ef, ef, se},
+        /*fir*/ new float[] {ef, ef, ne, se, ef, ef, ef},
         
         // Water - wet and wild, includes ice
-        /*wat*/ new float[] {ef, se, ef, se, ef, ef, ef, se},
+        /*wat*/ new float[] {ef, se, ef, se, ef, ef, ef},
 
         // Earth - has nature (grass & metal) and wind
-        /*ert*/ new float[] {ef, se, ef, ef, se, ef, ef, se},
+        /*ert*/ new float[] {ef, se, ef, ef, se, ef, ef},
         
         // Electricity - zappy zappy
-        /*ele*/ new float[] {ef, ef, se, ne, ef, ef, se, ef},
+        /*ele*/ new float[] {ef, ef, se, ne, ef, ef, se},
 
         // Spectral - ghostly attacks that dont make sense
-        /*spc*/ new float[] {ef, ef, ef, ef, ef, se, se, ef},
+        /*spc*/ new float[] {ef, ef, ef, ef, ef, se, se},
 
         // PSI - attacks using the mind
-        /*PSI*/ new float[] {ef, se, ef, ef, se, ne, ef, ne},
-        
-        // Toxic - corrosive and flamable substances
-        /*Txc*/ new float[] {ef, ef, ef, se, ef, ef, se, ne}
+        /*PSI*/ new float[] {ef, se, ef, ef, se, ne, ef},
         /**/
     };
 

@@ -64,6 +64,21 @@ public class StatusEffectComboChart : MonoBehaviour
  *  Moves that have bonus damage against statuses
  *  Problems outside of battle? Mess/mesh with other parts of game,
  *  
+ *  
+ *  Burn - hp damage over time
+ *  Frozen - loose turns while active
+ *  Poisoned - hp and sp damage over time(?)
+ *  
+ *  Fury - atk + 2, def - 2
+ *  
+ *  Danger - 5 hp left, atk + 1
+ *  Peril - 1 hp left, atk + 3 (should override Danger)
+ *  
+ *  Guard Phys - protects against physical
+ *  Guard Spec - protects against special
+ *  Guard Stus - protects against status moves
+ *  Guard All  - protects against all above
+ *  
  *  > = beats
  *   Bio:
  *    Burn (hp over time, doesnt kill) > Frozen > Toxic > Stoned >- Loop
