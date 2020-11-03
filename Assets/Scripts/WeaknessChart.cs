@@ -10,28 +10,25 @@ public class WeaknessChart : MonoBehaviour
 
     static readonly float[][] weaknessChart =
     {
-        //                   St, fr, wt, et, el  sp  PS 
+        //                   St, fr, wt, et, el  sp 
         
         // Standard - basic untyped attack
-        /*Std*/ new float[] {ef, ef, ef, ef, ef, ef, ef},
+        /*Std*/ new float[] {ef, ef, ef, ef, ef, ef},
         
         // Fire - burn bright
-        /*fir*/ new float[] {ef, ef, ne, se, ef, ef, ef},
+        /*fir*/ new float[] {ef, ef, ne, se, ef, ef},
         
         // Water - wet and wild, includes ice
-        /*wat*/ new float[] {ef, se, ef, se, ef, ef, ef},
+        /*wat*/ new float[] {ef, se, ef, se, ef, ef},
 
-        // Earth - has nature (grass & metal) and wind
-        /*ert*/ new float[] {ef, se, ef, ef, se, ef, ef},
+        // Earth - has nature (grass & metal), wind, and toxins
+        /*ert*/ new float[] {ef, se, ef, ef, se, ef},
         
-        // Electricity - zappy zappy
-        /*ele*/ new float[] {ef, ef, se, ne, ef, ef, se},
+        // Electricity - zappy zappy + mental zappy zappy
+        /*ele*/ new float[] {ef, ef, se, ne, ef, ef},
 
         // Spectral - ghostly attacks that dont make sense
-        /*spc*/ new float[] {ef, ef, ef, ef, ef, se, se},
-
-        // PSI - attacks using the mind
-        /*PSI*/ new float[] {ef, se, ef, ef, se, ne, ef},
+        /*spc*/ new float[] {ef, ef, ef, ef, ef, se},
         /**/
     };
 

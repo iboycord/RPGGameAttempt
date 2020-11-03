@@ -58,26 +58,39 @@ public class StatusEffectComboChart : MonoBehaviour
  *  
  *  "Damage" over time. Defence/Stat adjust. Turn/Action economy, 
  *  debilitator/action stoppers, Loss of control (avoid), shields/Nulls,
- *  Setups, Transformations/Wild Card, KOs/Instakill (Not happening)
+ *  Setups, Transformations/Wild Card, KOs/Instakill (Not happening aganst player)
  *  
  *  Balance between situational (battles take short time), difficulty, and status' power (both strong and weak)
  *  Moves that have bonus damage against statuses
  *  Problems outside of battle? Mess/mesh with other parts of game,
  *  
  *  
- *  Burn - hp damage over time
- *  Frozen - loose turns while active
- *  Poisoned - hp and sp damage over time(?)
+ *  Burned - 1 hp damage per turn, atk - 1, weak to stunned
+ *  Frozen - loose turns while active, def + 1, 1 hp damage when released, fire gets rid of this instantly
+ *      unthaw - secret status maybe? would make canceling frozen easier, but would also need to check for burn? Unless unthaw is the only one active for that turn.
+ *  Poisoned - 3 hp damage per turn(?), weak to frozen
+ *  Stunned - 5 sp damange, chance character afflicted cant move that turn, weak to poisoned
+ *  
+ *  Sleep - cant move but regain 1 hp and ~5 sp per missed turn. Getting hit wakes them up
+ *  Confuse - special moves sealed
+ *  Plushed/Baublefy/Minify(?) - turn into a plush object (maybe plush frog or other animals), unable to use physical attacks
+ *      or Minify - shrink and greatly loose attack (-3)
+ *  Sackless - seal items
  *  
  *  Fury - atk + 2, def - 2
+ *  Calm - atk - 2, def + 2
  *  
  *  Danger - 5 hp left, atk + 1
  *  Peril - 1 hp left, atk + 3 (should override Danger)
  *  
  *  Guard Phys - protects against physical
  *  Guard Spec - protects against special
- *  Guard Stus - protects against status moves
- *  Guard All  - protects against all above
+ *  Guard Stat - protects against status moves
+ *  
+ *  Staggered - loose a turn, def - 1
+ *  
+ *  Heart Seal - Duo bar cannot be charged.
+ *  Desync - seal duo items and duo move.
  *  
  *  > = beats
  *   Bio:
