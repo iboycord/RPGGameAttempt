@@ -16,6 +16,10 @@ public class StatusEffectHandler : MonoBehaviour
 
     public int currentStatusTurnCount = 0;
 
+    [Range(0, 4), Tooltip("Number multiplied by 25 then clamped between 0 and 100.")]
+    public int dodgePercentage;
+    readonly int dodgeMulti = 25;
+
     public void Awake()
     {
         character = gameObject.GetComponent<CharacterStats>();
@@ -112,5 +116,15 @@ public class StatusEffectHandler : MonoBehaviour
     public void ExtraTurnGiverReset()
     {
         if (extraTurnsToGive > 1) { extraTurnsToGive = 1; }
+    }
+
+    public bool dodgeRoll()
+    {
+        if(dodgePercentage < 1) { return false; }
+
+        int chance = Mathf.Clamp((dodgePercentage * dodgeMulti), 0, 100);
+        int t = Random.Range(0, 100);
+        if (t <= chance) { return true; }
+        return false;
     }
 }

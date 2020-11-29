@@ -39,20 +39,25 @@ public class Unit : MonoBehaviour
     public float dmgReduction = 1;
     public bool isDead;
 
+    StatusEffectHandler statEff;
+
     private void Awake()
     {
         //currentHP = maxHP.GetValue();
         hp.SetValue();
+        statEff = GetComponent<StatusEffectHandler>();
     }
 
     public void TakeDamage(int damage, bool canDodge, bool allowsDMGRedux)
     {
-        if(canDodge && LuckRoll())
+        bool dr = statEff.dodgeRoll();
+
+        if(canDodge && dr)
         {
             Debug.Log(name + " got lucky!");
         }
 
-        if(!canDodge || !LuckRoll())
+        if(!canDodge || !dr)
         {
             if (allowsDMGRedux)
             {
@@ -138,17 +143,6 @@ public class Unit : MonoBehaviour
         hp.UpdateCurrentValue(hpRestored);
         Debug.Log(transform.name + " has been revived.");
         isDead = false;
-    }
-
-    public virtual bool LuckRoll()
-    {
-        int chance = Mathf.FloorToInt(luck.GetValue() * 5);
-        int t = Random.Range(0, 100);
-        if (t <= chance)
-        {
-            return true;
-        }
-        return false;
     }
 
     public void LevelUp()
