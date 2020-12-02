@@ -22,12 +22,11 @@ public class StatusEffect : ScriptableObject
     public TargetStat targetStat2;
 
     [Space]
-    public int baseNoOfTurns;
+    public int baseNoOfTurns = 3;
 
-    [Range(0, 2)]
-    public float maxMultiplier1 = 2, maxMultiplier2 = 2;
-    [Range(0,2)]
-    public float statMultiplier1 = 1, statMultiplier2 = 1;
+    int maxStat = 8;
+    [Range(-8,8)]
+    public int statMultiplier1 = 1, statMultiplier2 = 1;
     [Space]
     public GameObject gfx;
     [Space, Tooltip("What status effect does this one combine with?")]
@@ -39,8 +38,8 @@ public class StatusEffect : ScriptableObject
 
     public void Awake()
     {
-        statMultiplier1 = Mathf.Clamp(statMultiplier1, -maxMultiplier1, maxMultiplier1);
-        statMultiplier2 = Mathf.Clamp(statMultiplier2, -maxMultiplier2, maxMultiplier2);
+        statMultiplier1 = Mathf.Clamp(statMultiplier1, -maxStat, maxStat);
+        statMultiplier2 = Mathf.Clamp(statMultiplier2, -maxStat, maxStat);
     }
 
     // For executing commands every turn
@@ -71,19 +70,19 @@ public class StatusEffect : ScriptableObject
 
         if (statusType1 == StatusType.StatDown || statusType1 == StatusType.StatUp)
         {
-            characterAfflicted.ReturnStat(targetStat1).AddModifier(Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat1) * statMultiplier1));
+            characterAfflicted.ReturnStat(targetStat1).AddModifier(statMultiplier1);
         }
         if (statusType2 == StatusType.StatDown || statusType2 == StatusType.StatUp)
         {
-            characterAfflicted.ReturnStat(targetStat2).AddModifier(Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat2) * statMultiplier2));
+            characterAfflicted.ReturnStat(targetStat2).AddModifier(statMultiplier2);
         }
     }
 
-    public virtual void ChangeMultiplier(CharacterStats chara, float newMulti1, float newMulti2)
+    public virtual void ChangeMultiplier(CharacterStats chara, int newMulti1, int newMulti2)
     {
         ClearStatChange(chara);
-        statMultiplier1 = Mathf.Clamp(newMulti1, -maxMultiplier1, maxMultiplier1);
-        statMultiplier2 = Mathf.Clamp(newMulti2, -maxMultiplier2, maxMultiplier2);
+        statMultiplier1 = Mathf.Clamp(newMulti1, -maxStat, maxStat);
+        statMultiplier2 = Mathf.Clamp(newMulti2, -maxStat, maxStat);
         StatCheckChange(chara);
     }
 
@@ -91,13 +90,11 @@ public class StatusEffect : ScriptableObject
     {
         if (statusType1 == StatusType.StatDown || statusType1 == StatusType.StatUp)
         {
-            characterAfflicted.ReturnStat(targetStat1).RemoveModifier(Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat1) * statMultiplier1));
-            //statAfterMultiply1 = 0;
+            characterAfflicted.ReturnStat(targetStat1).RemoveModifier(statMultiplier1);
         }
         if (statusType2 == StatusType.StatDown || statusType2 == StatusType.StatUp)
         {
-            characterAfflicted.ReturnStat(targetStat2).RemoveModifier(Mathf.RoundToInt(characterAfflicted.ReturnStatValue(targetStat2) * statMultiplier2));
-            //statAfterMultiply2 = 0;
+            characterAfflicted.ReturnStat(targetStat2).RemoveModifier(statMultiplier2);
         }
     }
 
@@ -109,8 +106,6 @@ public class StatusEffect : ScriptableObject
         }
 
         ClearStatChange(characterAfflicted);
-
-        //Remove the status somehow. Thinking theres a script on each combatant that reads a status' effects and then executes them
     }
 
     public virtual bool QuickLostTurnCheck()

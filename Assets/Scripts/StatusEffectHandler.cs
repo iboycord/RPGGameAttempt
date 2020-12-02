@@ -16,9 +16,9 @@ public class StatusEffectHandler : MonoBehaviour
 
     public int currentStatusTurnCount = 0;
 
-    [Range(0, 4), Tooltip("Number multiplied by 25 then clamped between 0 and 100.")]
+    [Range(0, 7), Tooltip("Number multiplied by 25 then clamped between 0 and 100.")]
     public int dodgePercentage;
-    readonly int dodgeMulti = 25;
+    readonly int dodgeMulti = 15;
 
     public void Awake()
     {
@@ -33,6 +33,7 @@ public class StatusEffectHandler : MonoBehaviour
             sealedHeart = currentStatusEffect.SealedHeartCheck();
             currentStatusEffect.StatCheckChange(character);
             currentStatusEffect.AccelerateStartup(this, extraTurnsToGive);
+            currentStatusTurnCount = currentStatusEffect.baseNoOfTurns;
         }
         else { CompareStatus(statusEffectToAssign); }
     }
@@ -45,12 +46,18 @@ public class StatusEffectHandler : MonoBehaviour
             {
                 currentStatusEffect = StatusEffectComboChart.LookupStatus(statusEffectToAssign);
                 //int dmg = currentStatusEffect.basePower > 0 ? Mathf.RoundToInt(currentStatusEffect.basePower * 1.5f) : Mathf.RoundToInt(character.maxHP.GetValue() * 0.1f);
-                character.TakeDamage(Mathf.RoundToInt(character.hp.GetMaxValue() * 0.2f), false, false);
+                //character.TakeDamage(Mathf.RoundToInt(character.hp.GetMaxValue() * 0.2f), false, false);
+                sealedHeart = currentStatusEffect.SealedHeartCheck();
+                currentStatusEffect.StatCheckChange(character);
+                currentStatusEffect.AccelerateStartup(this, extraTurnsToGive);
+                // Place Status Orb Code here
+
+                currentStatusTurnCount = currentStatusEffect.baseNoOfTurns;
             }
         }
         else
         {
-            TurnCountIncrementer(3);
+            TurnCountIncrementer(currentStatusEffect.baseNoOfTurns);
         }
     }
 

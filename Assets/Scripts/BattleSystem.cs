@@ -33,6 +33,8 @@ public class BattleSystem : MonoBehaviour
     public GameObject enemyPrefabA;
     public CharacterStats enemyAUnit;
 
+    // Better method might be to have field encounters handle the enemies and load them in from there
+    // Also having preset and specific setups for enemy formations might help so I dont need to have a struct like this
     public EnemyBattleDataStruct[] enemies;
     /*
 public GameObject enemyPrefabB;

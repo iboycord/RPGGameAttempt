@@ -89,8 +89,14 @@ public class StatusEffectComboChart : MonoBehaviour
  *  
  *  Staggered - loose a turn, def - 1
  *  
+ *  Amped Heart - Duo bar charges faster when the aflicted unit preforms a successful action command
  *  Heart Seal - Duo bar cannot be charged.
  *  Desync - seal duo items and duo move.
+ *  
+ *  Regen - regenerate 1 hp every turn this is active
+ *  ? - regenerate 5 sp every turn this is active
+ *  Clock In - gain extra turn(s)
+ *  Clock Out - lose turn(s)
  *  
  *  > = beats
  *   Bio:

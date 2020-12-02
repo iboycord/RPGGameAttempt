@@ -10,6 +10,8 @@ public class Abilities : ScriptableObject
     [TextArea(0, 4)]
     public string[] description;
 
+    public AbilityTrigger trigger;
+
     bool triggeredInBattle;
 
     StatusEffectList statusHolder;
@@ -21,5 +23,29 @@ public class Abilities : ScriptableObject
     [Header("In case we need a specific stat change")]
     TargetStat statAffected;
     int statChange;
-    float hpSpThreshold;
+    int hpSpThreshold;
+
+    public void AbilityStatusHandler(CharacterStats character)
+    {
+        switch (trigger)
+        {
+            case AbilityTrigger.None:
+                break;
+            case AbilityTrigger.HealthBased:
+                // Check unit's hp
+                if (character.hp.GetCurrentValue() <= hpSpThreshold) { ActivateAbility(); }
+                break;
+            case AbilityTrigger.SpBased:
+                // Check unit's sp
+                if (character.sp.GetCurrentValue() <= hpSpThreshold) { ActivateAbility(); }
+                break;
+        }
+    }
+
+    public void ActivateAbility()
+    {
+
+    }
+
 }
+public enum AbilityTrigger { None, HealthBased, SpBased, MoveBased, StatusBased, ItemBased, WeaknessBased, DamageBased }
