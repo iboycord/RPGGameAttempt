@@ -289,6 +289,7 @@ MonoBehaviour:
   extraTurns: 0
   extraTurnsToGive: 1
   currentStatusTurnCount: 0
+  dodgePercentage: 0
 --- !u!1 &65916418
 GameObject:
   m_ObjectHideFlags: 0
@@ -1779,6 +1780,7 @@ MonoBehaviour:
   extraTurns: 0
   extraTurnsToGive: 1
   currentStatusTurnCount: 0
+  dodgePercentage: 0
 --- !u!114 &454265740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3800,6 +3802,7 @@ MonoBehaviour:
   extraTurns: 0
   extraTurnsToGive: 1
   currentStatusTurnCount: 0
+  dodgePercentage: 0
 --- !u!95 &1006417897
 Animator:
   serializedVersion: 3
@@ -5622,6 +5625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chartElement:
   - {fileID: 11400000, guid: 9d63059382a42a34ca8bd6216be08778, type: 2}
+  - {fileID: 11400000, guid: e02a8ed5d1ea3734da3e2d6a0d464d08, type: 2}
 --- !u!114 &1445010297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6505,6 +6509,7 @@ MonoBehaviour:
   extraTurns: 0
   extraTurnsToGive: 1
   currentStatusTurnCount: 0
+  dodgePercentage: 0
 --- !u!114 &1642517824
 MonoBehaviour:
   m_ObjectHideFlags: 0
