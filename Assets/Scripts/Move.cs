@@ -298,10 +298,11 @@ public class Move : ScriptableObject
         // get target stat from both units, using the base power and ext ext.
         int attacker = user.ReturnStatValue(atkStat);
         int defender = target.ReturnStatValue(defStat);
-        float critBlow = RNG(baseCritBlow + user.ReturnStatValue(TargetStat.skill)) ? CritMultiplier : 1;
+        // Check this later since I dont know how strong Skill should be
+        float critBlow = RNG(baseCritBlow + (user.ReturnStatValue(TargetStat.skill) * 4)) ? CritMultiplier : 1;
 
-        float tempDmg = Mathf.Max(1, ((attacker + ((basePower + Random.Range(-basePower * randomnessCoefficient, basePower * randomnessCoefficient)) * weak)) * critBlow - (defender))); //-CritStrike(defender)
-
+        //float tempDmg = Mathf.Max(0, ((attacker + ((basePower + Random.Range(-basePower * randomnessCoefficient, basePower * randomnessCoefficient)) * weak)) * critBlow - (defender))); //-CritStrike(defender)
+        float tempDmg = Mathf.Max(0, attacker + ((basePower * weak) * critBlow) - defender); //-CritStrike(defender)
 
         int dmg = Mathf.CeilToInt(tempDmg);
 
@@ -332,7 +333,7 @@ public class Move : ScriptableObject
         int defender = target.ReturnStatValue(defStat);
         float critBlow = RNG(baseCritBlow + user.ReturnStatValue(TargetStat.skill)) ? CritMultiplier : 1;
 
-        float tempDmg = Mathf.Max(1, ((attacker + allies + ((basePower + Random.Range(-basePower * randomnessCoefficient, basePower * randomnessCoefficient)) * weak)) * critBlow - (defender))); ;
+        float tempDmg = Mathf.Max(0, ((attacker + allies + ((basePower + Random.Range(-basePower * randomnessCoefficient, basePower * randomnessCoefficient)) * weak)) * critBlow - (defender))); ;
 
         dmg = Mathf.CeilToInt(tempDmg);
 

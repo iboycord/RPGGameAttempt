@@ -19,10 +19,10 @@ public class WeaknessChart : MonoBehaviour
         /*fir*/ new float[] {ef, ef, ne, se, ef, ef},
         
         // Water - wet and wild, includes ice
-        /*wat*/ new float[] {ef, se, ef, se, ef, ef},
+        /*wat*/ new float[] {ef, se, ef, ef, ne, ef},
 
         // Earth - has nature (grass & metal), wind, and toxins
-        /*ert*/ new float[] {ef, se, ef, ef, se, ef},
+        /*ert*/ new float[] {ef, ne, ef, ef, se, ef},
         
         // Electricity - zappy zappy + mental zappy zappy
         /*ele*/ new float[] {ef, ef, se, ne, ef, ef},
@@ -65,4 +65,4 @@ public class WeaknessChart : MonoBehaviour
 
 }
 
-public enum ElementalTyping { None, Standard, Fire, Water, Earth, Electricity, Spectral, PSI, Toxic }
+public enum ElementalTyping { None, Standard, Fire, Water, Earth, Electricity, Spectral }

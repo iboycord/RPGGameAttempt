@@ -6391,13 +6391,13 @@ MonoBehaviour:
     baseValue: 1
     growth: 0
   defense:
-    baseValue: 10
+    baseValue: 1
     growth: 0
   special:
     baseValue: 1
     growth: 0
   special_Defense:
-    baseValue: 10
+    baseValue: 1
     growth: 0
   luck:
     baseValue: 1

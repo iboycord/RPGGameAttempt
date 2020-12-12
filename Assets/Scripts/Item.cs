@@ -103,5 +103,5 @@ public class Item : ScriptableObject
     }
 }
 
-public enum ItemType { none, heal, attack, status }
-public enum FlavorType { none, Sweet, Salty, Sour, Savory, Spicy, Bitter, Greasy, Natural, Meaty, Chocolate, Peanut_Butter }
+public enum ItemType { none, heal, attack, status, key }
+public enum FlavorType { none, Sweet, Salty, Sour, Savory, Spicy, Bitter, Greasy, Natural, Meaty, Peanut_Butter }

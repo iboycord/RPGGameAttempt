@@ -25,11 +25,10 @@ MonoBehaviour:
   elementType: 1
   atkStat: 2
   defStat: 0
-  basePower: 45
+  basePower: 4
   baseCritBlow: 0
   CritMultiplier: 1.5
   randomnessCoefficient: 0.2
-  canStatus: 0
   status: 0
   chanceToStatus: 0
   multihit: 0
@@ -38,4 +37,5 @@ MonoBehaviour:
   trueHit: 0
   guardBreaker: 0
   baseFriendshipGiven: 10
+  attackType: 0
   gfx: {fileID: 0}
