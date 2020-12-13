@@ -28,7 +28,7 @@ MonoBehaviour:
   baseCritBlow: 0
   CritMultiplier: 1.5
   randomnessCoefficient: 0.2
-  canStatus: 1
+  ActionCommandCoefficient: 0.2
   status: 13
   chanceToStatus: 100
   multihit: 0
@@ -36,4 +36,6 @@ MonoBehaviour:
   vampireHealCoefficient: 1
   trueHit: 0
   guardBreaker: 0
+  baseFriendshipGiven: 0
+  attackType: 0
   gfx: {fileID: 0}

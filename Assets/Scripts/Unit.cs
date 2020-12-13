@@ -14,6 +14,7 @@ public class Unit : MonoBehaviour
     public int level;
     public Stat_HPSP hp;
     public Stat_HPSP sp;
+    [Space]
     public int currentXp;
     public int XpToNextLevel;
     

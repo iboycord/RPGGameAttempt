@@ -14,7 +14,7 @@ public class BattleSystem : MonoBehaviour
     private List<CharacterStats> lineup;
 
     [SerializeField]
-    private GameObject actionsMenu, enemySelectMenu;
+    private GameObject enemySelectMenu;
 
     [Space]
     [Header("Player Stuff")]
@@ -90,7 +90,6 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
     private void Start()
     {
         if (friendshipControl == null) { friendshipControl = GetComponent<FriendshipControl>(); }
-
         state = BattleState.START;
 
         StartCoroutine(BattleSetup());
@@ -195,7 +194,7 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
                 if (currentUnitGO.CompareTag("PlayerControlled"))
                 {
                     Debug.Log("Player Go!");
-                    PlayerTurn(currentUnit);
+                    PlayerTurn(currentUnit, currentSEH);
                 }
                 if (currentUnitGO.CompareTag("EnemyControlled"))
                 {
@@ -242,7 +241,21 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
         state = BattleState.PLAYERTURN;
         Debug.Log(currentUnit.name + "'s turn!");
 
-        // Open Menu
+        // Open Menu - Create a new initializer function for status effects that effect this
+        battleUI.OpenBUI();
+    }
+
+    public void PlayerTurn(Unit currentUnit, StatusEffectHandler cUSH)
+    {
+        state = BattleState.PLAYERTURN;
+        Debug.Log(currentUnit.name + "'s turn!");
+
+        // Open Battle UI Menu and use initializer function for status effects that effect tab availability
+        if (cUSH.currentStatusEffect)
+        {
+            cUSH.currentStatusEffect.GetBattleTabSealNum(out bool atk, out bool spe, out bool itm, out bool tac);
+            battleUI.InitializeTabs(atk, spe, itm, tac);
+        }
         battleUI.OpenBUI();
     }
 
@@ -266,7 +279,6 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
         }
         //Debug.Log("Um, figure out how to get an attack though");
         Attack(lineup[placeInLineup], enemyAUnit, button.GetMove());
-        actionsMenu.SetActive(false);
         StartCoroutine(EndMyTurn(timeToWait));
     }
 

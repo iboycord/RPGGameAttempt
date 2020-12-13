@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4eca58d486ded94cb98d8756f7be5cb, type: 3}
   m_Name: test2
   m_EditorClassIdentifier: 
-  id: 1
+  id: 2
   description: burn
   hp_spChoice: 0
   hp_spMultiplier: 0
@@ -27,3 +27,7 @@ MonoBehaviour:
   weakness: 0
   transformsInto: 0
   resists: 0
+  SealsAttackTab: 0
+  SealsSpecialTab: 0
+  SealsItemsTab: 0
+  SealsTacticsTab: 0

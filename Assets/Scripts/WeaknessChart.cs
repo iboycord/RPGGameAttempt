@@ -59,8 +59,10 @@ public class WeaknessChart : MonoBehaviour
         col = (int)defend2 - 1;
         float d2 = weaknessChart[row][col];
 
+        // Funny business to avoid returning 0 for damage calcs, in the case of single or double not effective.
+        // Returns 2 instead of 2.25
+        if (d1 == se && d2 == se) { return Mathf.FloorToInt(d1 * d2); }
         return d1 * d2;
-
     }
 
 }

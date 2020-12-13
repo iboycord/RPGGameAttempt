@@ -17,12 +17,33 @@ public class BattleUI : MonoBehaviour
     public SubMenuContents currentSubMenu;
     public TargetingSubMenu targetingSubMenu;
 
+    public bool atkTabAvailable = true;
+    public bool speTabAvailable = true;
+    public bool itmTabAvailable = true;
+    public bool tacTabAvailable = true;
+
     public PanelGroup panelGroup;
 
     public BattleSystem battleSystem;
     public BattleAnimationHandler animationHandler;
 
     bool canAct = true;
+
+    public void InitializeTabs(bool atk, bool spe, bool itm, bool tac)
+    {
+        atkTabAvailable = atk;
+        speTabAvailable = spe;
+        itmTabAvailable = itm;
+        tacTabAvailable = tac;
+    }
+
+    public void ResetBattleTabStatus()
+    {
+        atkTabAvailable = true;
+        speTabAvailable = true;
+        itmTabAvailable = true;
+        tacTabAvailable = true;
+    }
 
     public void Update()
     {
@@ -92,19 +113,19 @@ public class BattleUI : MonoBehaviour
         if(subMenuState == MenuState.Unopened && canAct)
         {
             // 0 = Attack, 1 = Special, 2 = Items, 3 = Tactics
-            if (Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.W) && atkTabAvailable)
             {
                 OpenSubMenu(0);
             }
-            if (Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKeyDown(KeyCode.D) && speTabAvailable)
             {
                 OpenSubMenu(1);
             }
-            if (Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.S) && itmTabAvailable)
             {
                 OpenSubMenu(2);
             }
-            if (Input.GetKeyDown(KeyCode.A))
+            if (Input.GetKeyDown(KeyCode.A) && tacTabAvailable)
             {
                 OpenSubMenu(3);
             }
@@ -120,6 +141,7 @@ public class BattleUI : MonoBehaviour
     public void CloseBUI()
     {
         SubMenuReset();
+        ResetBattleTabStatus();
         gameObject.SetActive(false);
     }
 

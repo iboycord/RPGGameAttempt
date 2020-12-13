@@ -66,16 +66,21 @@ public class StatusEffectComboChart : MonoBehaviour
  *  
  *  
  *  Burned - 1 hp damage per turn, atk - 1, weak to stunned
- *  Frozen - loose turns while active, def + 1, 1 hp damage when released, fire gets rid of this instantly
+ *  Frozen - loose turns while active, 1 hp damage when released, fire gets rid of this instantly
  *      unthaw - secret status maybe? would make canceling frozen easier, but would also need to check for burn? Unless unthaw is the only one active for that turn.
  *  Poisoned - 3 hp damage per turn(?), weak to frozen
  *  Stunned - 5 sp damange, chance character afflicted cant move that turn, weak to poisoned
  *  
- *  Sleep - cant move but regain 1 hp and ~5 sp per missed turn. Getting hit wakes them up
- *  Confuse - special moves sealed
- *  Plushed/Baublefy/Minify(?) - turn into a plush object (maybe plush frog or other animals), unable to use physical attacks
- *      or Minify - shrink and greatly loose attack (-3)
- *  Sackless - seal items
+ *  Sleep - cant move but regain 1 hp and 5 sp per missed turn. Getting hit wakes them up
+ *  Mute - Cannot open the Specials tab in battle
+ *  Plushed/Baublefy - turn into a plush object (maybe plush frog or other animals), unable to use physical attacks
+ *  Berserked - Cannot open/use the items or tactics tabs in battle
+ *  Sackless - Cannot open the items tab in battle
+ *  Topple - loose turns, fall on back
+ *  
+ *  HP Regen - regenerate 1 hp every turn this is active
+ *  SP Regen - regenerate 5 sp every turn this is active
+ *  Haste - gain extra turn(s)
  *  
  *  Fury - atk + 2, def - 2
  *  Calm - atk - 2, def + 2
@@ -83,20 +88,11 @@ public class StatusEffectComboChart : MonoBehaviour
  *  Danger - 5 hp left, atk + 1
  *  Peril - 1 hp left, atk + 3 (should override Danger)
  *  
- *  Guard Phys - protects against physical
- *  Guard Spec - protects against special
- *  Guard Stat - protects against status moves
- *  
- *  Staggered - loose a turn, def - 1
- *  
  *  Amped Heart - Duo bar charges faster when the aflicted unit preforms a successful action command
  *  Heart Seal - Duo bar cannot be charged.
  *  Desync - seal duo items and duo move.
  *  
- *  Regen - regenerate 1 hp every turn this is active
- *  ? - regenerate 5 sp every turn this is active
- *  Clock In - gain extra turn(s)
- *  Clock Out - lose turn(s)
+ *  Stat decreases - can go up to 8 or -8
  *  
  *  > = beats
  *   Bio:

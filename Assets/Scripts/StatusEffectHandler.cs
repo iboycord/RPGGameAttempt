@@ -5,6 +5,7 @@ using UnityEngine;
 public class StatusEffectHandler : MonoBehaviour
 {
     public CharacterStats character;
+    // Refactor to handle multiple statuses? Would need to be an array.
     public StatusEffect currentStatusEffect = null;
 
     public bool participatedInDuoMove = false;
@@ -68,6 +69,11 @@ public class StatusEffectHandler : MonoBehaviour
             currentStatusEffect.Execute(character);
             Debug.Log("Effect is Active?");
 
+            if(currentStatusEffect.id == StatusEffectList.Accelerate)
+            {
+                if(extraTurns == 0) { ClearStatus(); }
+                return;
+            }
             if (currentStatusTurnCount - 1 >= 0) { TurnCountIncrementer(-1); }
             if (currentStatusTurnCount <= 0) 
             { 
@@ -80,6 +86,7 @@ public class StatusEffectHandler : MonoBehaviour
 
     public void ClearStatus()
     {
+        currentStatusTurnCount = 0;
         sealedHeart = false;
         currentStatusEffect.End(character);
         currentStatusEffect = null;
@@ -129,7 +136,7 @@ public class StatusEffectHandler : MonoBehaviour
     {
         if(dodgePercentage < 1) { return false; }
 
-        int chance = Mathf.Clamp((dodgePercentage * dodgeMulti), 0, 100);
+        int chance = Mathf.Clamp(dodgePercentage * dodgeMulti, 0, 100);
         int t = Random.Range(0, 100);
         if (t <= chance) { return true; }
         return false;

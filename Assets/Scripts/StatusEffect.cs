@@ -23,7 +23,7 @@ public class StatusEffect : ScriptableObject
 
     [Space]
     public int baseNoOfTurns = 3;
-
+    
     int maxStat = 8;
     [Range(-8,8)]
     public int statMultiplier1 = 1, statMultiplier2 = 1;
@@ -35,6 +35,12 @@ public class StatusEffect : ScriptableObject
     public StatusEffectList transformsInto;
     [Tooltip("What status does this one resist?")]
     public StatusEffectList resists;
+
+    [Space, Tooltip("Does this status have the ability to seal a characters battle tab menus? Note: one StatusType must be set to BattleTabSealing.")]
+    public bool SealsAttackTab;
+    public bool SealsSpecialTab;
+    public bool SealsItemsTab;
+    public bool SealsTacticsTab;
 
     public void Awake()
     {
@@ -135,7 +141,24 @@ public class StatusEffect : ScriptableObject
         }
     }
 
+    public virtual void GetBattleTabSealNum(out bool atk, out bool spe, out bool itm, out bool tac)
+    {
+        if (statusType1 == StatusType.BattleTabSealing || statusType2 == StatusType.BattleTabSealing)
+        {
+            atk = !SealsAttackTab;
+            spe = !SealsSpecialTab;
+            itm = !SealsItemsTab;
+            tac = !SealsTacticsTab;
+        }
+        else 
+        {
+            atk = true;
+            spe = true;
+            itm = true;
+            tac = true;
+        }
+    }
 }
 
-public enum StatusType { None, Damaging, Healing, LostTurn, Enraged, DamagesWhenExpired, StatDown, StatUp, Drain, Replenish, Accelerate, HeartSeal }
+public enum StatusType { None, Damaging, Healing, LostTurn, Enraged, DamagesWhenExpired, StatDown, StatUp, Drain, Replenish, Accelerate, HeartSeal, BattleTabSealing }
 public enum HPorSP { Hp, Sp }

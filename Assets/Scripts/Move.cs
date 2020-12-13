@@ -17,8 +17,6 @@ public class Move : ScriptableObject
 
     [TextArea(0, 4)]
     public string[] description;
-    //[Tooltip("The move's power or rarity simplified.")]
-    //public MoveStrength starRating;
     [Space, Tooltip("Does this move do damage, heal, cause a status, or a combination? ")]
     public MoveType type;
 
@@ -41,10 +39,12 @@ public class Move : ScriptableObject
     [Space, Tooltip("The move's power. Please confine to multiples of 5 please. My brain cant do math that well.")]
     public float basePower;
     [Tooltip("The move's natual ability to acchive a Critical blow and the multiplier for it... Might be getting removed due to crazy damage, dont know yet.")]
-    public int baseCritBlow;
+    public int baseCritBlow = 0;
     public float CritMultiplier = 1.5f;
     [Tooltip("This is multiplied by Base Power to give moves damage variance. Higher = wacker values in both directions.")]
     public float randomnessCoefficient = 0.2f;
+    [Tooltip("This is by how much an action command should alter the damage of the move.")]
+    public float ActionCommandCoefficient = 0.2f;
 
     [Tooltip("Status caused...?")]
     public StatusEffectList status;

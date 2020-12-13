@@ -10,21 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4eca58d486ded94cb98d8756f7be5cb, type: 3}
-  m_Name: Test
+  m_Name: EvenMoreTest
   m_EditorClassIdentifier: 
-  id: 13
-  description: Test Status. the Id and status type swap around alot.
+  id: 3
+  description: 
   hp_spChoice: 0
-  hp_spMultiplier: 0.1
-  statusType1: 10
+  hp_spMultiplier: 0
+  statusType1: 5
   statusType2: 0
   targetStat1: 0
   targetStat2: 0
-  maxMultiplier1: 2
-  maxMultiplier2: 2
+  baseNoOfTurns: 3
   statMultiplier1: 1
   statMultiplier2: 1
   gfx: {fileID: 0}
   weakness: 0
   transformsInto: 0
   resists: 0
+  SealsAttackTab: 1
+  SealsSpecialTab: 0
+  SealsItemsTab: 0
+  SealsTacticsTab: 0
