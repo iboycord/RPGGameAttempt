@@ -36,8 +36,8 @@ public class Move : ScriptableObject
     [Tooltip("Which stat on the target does this move target.")]
     public TargetStat defStat = TargetStat.defense;
 
-    [Space, Tooltip("The move's power. Please confine to multiples of 5 please. My brain cant do math that well.")]
-    public float basePower;
+    [Space, Range(-20, 20), Tooltip("The move's power. Keep it low.")]
+    public float basePower = 0;
     [Tooltip("The move's natual ability to acchive a Critical blow and the multiplier for it... Might be getting removed due to crazy damage, dont know yet.")]
     public int baseCritBlow = 0;
     public float CritMultiplier = 1.5f;

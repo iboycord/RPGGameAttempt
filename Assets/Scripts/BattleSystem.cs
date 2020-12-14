@@ -85,11 +85,13 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
 
     public FriendshipControl friendshipControl;
     public BattleAnimationHandler animationHandler;
+    public MoveCompendium compTest;
 
 
     private void Start()
     {
         if (friendshipControl == null) { friendshipControl = GetComponent<FriendshipControl>(); }
+        if (compTest == null) { compTest = FindObjectOfType<MoveCompendium>(); }
         state = BattleState.START;
 
         StartCoroutine(BattleSetup());
@@ -140,6 +142,11 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             friendshipControl.PrintData();
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            compTest.PrintStandardMoves();
         }
 
     }
