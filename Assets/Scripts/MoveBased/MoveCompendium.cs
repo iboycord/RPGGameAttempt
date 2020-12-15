@@ -37,7 +37,7 @@ public class MoveCompendium : MonoBehaviour
 
     public Move GetMove(int dicNum, int moveNum)
     {
-        switch (dicNum - 1)
+        switch (dicNum)
         {
             case 0:
                 return standardMoveDictionary[moveNum];
