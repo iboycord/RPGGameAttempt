@@ -8,6 +8,7 @@ public class UnitMoveList : MonoBehaviour
     [System.Serializable]
     public struct MoveNumHolder
     {
+        [Tooltip(" 0 = Standard, 1 = Fire, 2 = Water, 3 = Earth, 4 = Electricity, 5 = Spectral ")]
         public int typeNum;
         public int moveNum;
         public int levelLearned;
@@ -26,6 +27,12 @@ public class UnitMoveList : MonoBehaviour
             moveNum = other.moveNum;
             levelLearned = other.levelLearned;
         }
+        public void SetMoveNumHolder(int type, int move, int level)
+        {
+            typeNum = type;
+            moveNum = move;
+            levelLearned = level;
+        }
     }
 
     [HideInInspector]
@@ -33,9 +40,15 @@ public class UnitMoveList : MonoBehaviour
     [HideInInspector]
     public MoveCompendium compendium;
 
-    public MoveNumHolder[] unitsMoves;
+    public MoveNumHolder[] unitsStandardMoves;
     [Space]
-    public Move[] currentMoves = new Move[8];
+    public MoveNumHolder[] unitsSpecialMoves;
+    [Space]
+    public int maxNumOfStandardMoves = 8;
+    public List<Move> currentStandardMoves = new List<Move>();
+    [Space]
+    public int maxNumOfSpecialMoves = 8;
+    public List<Move> currentSpecialMoves = new List<Move>();
 
     private void Awake()
     {
@@ -46,20 +59,53 @@ public class UnitMoveList : MonoBehaviour
     private void Start()
     {
         // Extend for standard physical attacks and special moves.
-        InitMoveList();
+        // Also extend so there's a move pool that all the available moves go into first before the ones in use are selected
+        InitStandardMoveList();
+        InitSpecialMoveList();
     }
 
-    public void InitMoveList()
+    public void InitStandardMoveList()
     {
+        if(unitsStandardMoves.Length <= 0) { return; }
         int i = 0;
         bool foundEnd = false;
-        while (i < unitsMoves.Length && !foundEnd)
+        while (i < unitsStandardMoves.Length && !foundEnd)
         {
-            if(unitsMoves[i].ReturnLevelLearned() > stats.level) { foundEnd = true; }
-            currentMoves[i] = compendium.GetMove(unitsMoves[i].ReturnTypeNum(), unitsMoves[i].ReturnMoveNum());
+            if (unitsStandardMoves[i].ReturnLevelLearned() > stats.level) { foundEnd = true; }
+            currentStandardMoves.Add(compendium.GetMove(unitsStandardMoves[i].ReturnTypeNum(), unitsStandardMoves[i].ReturnMoveNum()));
             ++i;
         }
-        
+    }
+
+    public void InitSpecialMoveList()
+    {
+        if (unitsSpecialMoves.Length <= 0) { return; }
+        int i = 0;
+        bool foundEnd = false;
+        while (i < unitsSpecialMoves.Length && !foundEnd)
+        {
+            if(unitsSpecialMoves[i].ReturnLevelLearned() > stats.level) { foundEnd = true; }
+            currentSpecialMoves.Add(compendium.GetMove(unitsSpecialMoves[i].ReturnTypeNum(), unitsSpecialMoves[i].ReturnMoveNum()));
+            ++i;
+        }
+    }
+
+    public void AddStandardMove(int num)
+    {
+        Move tmp = compendium.GetMove(0, num);
+        if (!currentStandardMoves.Exists(e => tmp) && currentStandardMoves.Count < maxNumOfStandardMoves) { currentStandardMoves.Add(tmp); }
+    }
+    public void AddStandardMove(Move addition)
+    {
+        if (!currentStandardMoves.Exists(e => addition) && currentStandardMoves.Count < maxNumOfStandardMoves) { currentStandardMoves.Add(addition); }
+    }
+    public void RemoveStandardMove(Move removeMatching)
+    {
+        currentStandardMoves.Remove(removeMatching);
+    }
+    public void RemoveStandardMove(int removeMatching)
+    {
+        currentStandardMoves.Remove(compendium.GetMove(0, removeMatching));
     }
 
 }

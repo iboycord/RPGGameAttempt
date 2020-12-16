@@ -15,6 +15,7 @@ public class BattleUI : MonoBehaviour
     [Tooltip("0 = Attack, 1 = Special, 2 = Items, 3 = Tactics")]
     public List<SubMenuContents> subMenus;
     public SubMenuContents currentSubMenu;
+    public int sMtoClose;
     public TargetingSubMenu targetingSubMenu;
 
     public bool atkTabAvailable = true;
@@ -22,10 +23,9 @@ public class BattleUI : MonoBehaviour
     public bool itmTabAvailable = true;
     public bool tacTabAvailable = true;
 
-    public PanelGroup panelGroup;
-
     public BattleSystem battleSystem;
     public BattleAnimationHandler animationHandler;
+    public UnitMoveList currentUnitsMoves;
 
     bool canAct = true;
 
@@ -119,7 +119,7 @@ public class BattleUI : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.D) && speTabAvailable)
             {
-                OpenSubMenu(1);
+                OpenSubMenu(1); // If the list is empty then an error is thrown. Please fix
             }
             if (Input.GetKeyDown(KeyCode.S) && itmTabAvailable)
             {
@@ -133,34 +133,41 @@ public class BattleUI : MonoBehaviour
 
     }
 
-    public void OpenBUI()
+    public void OpenBUI(UnitMoveList passed)
     {
         canAct = true;
         gameObject.SetActive(true);
+        currentUnitsMoves = passed;
     }
     public void CloseBUI()
     {
+        currentSubMenu.OnExit();
         SubMenuReset();
         ResetBattleTabStatus();
         gameObject.SetActive(false);
+        currentUnitsMoves = null;
     }
 
 
     public void OpenSubMenu(int menuToOpen)
     {
-        currentSubMenu = subMenus[menuToOpen];
-        currentSubMenu.gameObject.SetActive(true);
+        sMtoClose = menuToOpen;
+        objectsToSwap[menuToOpen].SetActive(true);
+        if(menuToOpen < 2)
+        {
+            if (menuToOpen == 0) { currentSubMenu.ListSetup(currentUnitsMoves, true); }
+            if (menuToOpen == 1) { currentSubMenu.ListSetup(currentUnitsMoves, false); }
+        }
         subMenuState = MenuState.Selecting;
     }
     public IEnumerator CloseSubMenu()
     {
         canAct = false;
         currentSubMenu.OnExit();
-        for (int i = 0; i < subMenus.Count; ++i)
+        for (int i = 0; i < objectsToSwap.Count; ++i)
         {
-            subMenus[i].gameObject.SetActive(false);
+            objectsToSwap[i].SetActive(false);
         }
-        currentSubMenu = null;
         yield return new WaitForSeconds(0.2f);
         subMenuState = MenuState.Unopened;
         canAct = true;
@@ -198,7 +205,7 @@ public class BattleUI : MonoBehaviour
         targetingSubMenu.OnExit();
         targetingSubMenu.gameObject.SetActive(false);
         currentSubMenu.OnExit();
-        currentSubMenu.gameObject.SetActive(false);
+        objectsToSwap[sMtoClose].SetActive(false);
         subMenuState = MenuState.Unopened;
     }
 

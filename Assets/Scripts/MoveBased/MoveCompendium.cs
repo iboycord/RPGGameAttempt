@@ -28,11 +28,31 @@ public class MoveCompendium : MonoBehaviour
         {
             for (int i = 0; i < standardMoveList.Length; ++i) { standardMoveDictionary.Add(i, standardMoveList[i]); }
         }
-        //for (int i = 0; i < fireMoveList.Length; ++i) { fireMoveDictionary.Add(i, fireMoveList[i]); }
-        //for (int i = 0; i < waterMoveList.Length; ++i) { waterMoveDictionary.Add(i, waterMoveList[i]); }
-        //for (int i = 0; i < earthMoveList.Length; ++i) { earthMoveDictionary.Add(i, earthMoveList[i]); }
-        //for (int i = 0; i < electricityMoveList.Length; ++i) { electricityMoveDictionary.Add(i, electricityMoveList[i]); }
-        //for (int i = 0; i < spectralMoveList.Length; ++i) { spectralMoveDictionary.Add(i, spectralMoveList[i]); }
+        
+        if (fireMoveList.Length > 0) 
+        {
+            for (int i = 0; i < fireMoveList.Length; ++i) { fireMoveDictionary.Add(i, fireMoveList[i]); }
+        }
+        
+        if (waterMoveList.Length > 0) 
+        {
+            for (int i = 0; i < waterMoveList.Length; ++i) { waterMoveDictionary.Add(i, waterMoveList[i]); }
+        }
+        
+        if (earthMoveList.Length > 0) 
+        {
+            for (int i = 0; i < earthMoveList.Length; ++i) { earthMoveDictionary.Add(i, earthMoveList[i]); }
+        }
+        
+        if (electricityMoveList.Length > 0) 
+        {
+            for (int i = 0; i < electricityMoveList.Length; ++i) { electricityMoveDictionary.Add(i, electricityMoveList[i]); }
+        }
+
+        if (spectralMoveList.Length > 0) 
+        { 
+            for (int i = 0; i < spectralMoveList.Length; ++i) { spectralMoveDictionary.Add(i, spectralMoveList[i]); } 
+        }
     }
 
     public Move GetMove(int dicNum, int moveNum)

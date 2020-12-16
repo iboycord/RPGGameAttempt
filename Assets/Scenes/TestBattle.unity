@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 55093415}
   - component: {fileID: 55093414}
   - component: {fileID: 55093419}
+  - component: {fileID: 55093420}
   m_Layer: 0
   m_Name: TestUnitB
   m_TagString: PlayerControlled
@@ -290,6 +291,32 @@ MonoBehaviour:
   extraTurnsToGive: 1
   currentStatusTurnCount: 0
   dodgePercentage: 0
+--- !u!114 &55093420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55093413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e6ed507474997458e009ee3affe8c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 0}
+  compendium: {fileID: 0}
+  unitsStandardMoves:
+  - typeNum: 0
+    moveNum: 0
+    levelLearned: 1
+  unitsSpecialMoves:
+  - typeNum: 2
+    moveNum: 0
+    levelLearned: 1
+  maxNumOfStandardMoves: 8
+  currentStandardMoves: []
+  maxNumOfSpecialMoves: 8
+  currentSpecialMoves: []
 --- !u!1 &65916418
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,7 +428,6 @@ GameObject:
   - component: {fileID: 70145958}
   - component: {fileID: 70145957}
   - component: {fileID: 70145956}
-  - component: {fileID: 70145955}
   - component: {fileID: 70145960}
   m_Layer: 0
   m_Name: 3DMenu (1)
@@ -410,34 +436,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &70145955
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 70145954}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 795d61d037bf6f945a853776f64ad832, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tabButtons:
-  - {fileID: 402176333}
-  - {fileID: 1174038042}
-  - {fileID: 873756587}
-  - {fileID: 1826783863}
-  tabIdle: {fileID: 0}
-  tabHover: {fileID: 0}
-  tabActive: {fileID: 0}
-  selectedTab: {fileID: 0}
-  objectsToSwap:
-  - {fileID: 1449895672}
-  - {fileID: 1840897368}
-  - {fileID: 910019340}
-  - {fileID: 870559532}
-  panelGroup: {fileID: 0}
-  hoverTab: {fileID: 0}
 --- !u!65 &70145956
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -536,16 +534,17 @@ MonoBehaviour:
   - {fileID: 870559532}
   subMenuState: 0
   subMenus:
-  - {fileID: 1449895674}
-  currentSubMenu: {fileID: 0}
+  - {fileID: 0}
+  currentSubMenu: {fileID: 440544052}
+  sMtoClose: 0
   targetingSubMenu: {fileID: 1368163806}
   atkTabAvailable: 1
   speTabAvailable: 1
   itmTabAvailable: 1
   tacTabAvailable: 1
-  panelGroup: {fileID: 0}
   battleSystem: {fileID: 1445010294}
   animationHandler: {fileID: 1445010297}
+  currentUnitsMoves: {fileID: 0}
 --- !u!1 &131457477
 GameObject:
   m_ObjectHideFlags: 0
@@ -1516,7 +1515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27a720648be9a024a9bc3415cb56afef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tabGroup: {fileID: 70145955}
+  tabGroup: {fileID: 0}
   background: {fileID: 0}
   onTabSelected:
     m_PersistentCalls:
@@ -1702,6 +1701,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 440544051}
+  - component: {fileID: 440544052}
   m_Layer: 0
   m_Name: Submenus
   m_TagString: Untagged
@@ -1728,6 +1728,23 @@ Transform:
   m_Father: {fileID: 70145959}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &440544052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440544050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8408b6fff477dd44b1ff8b179e31dca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listType: 0
+  itemList: []
+  moveList: []
+  listIndex: 0
+  currentList: {fileID: 0}
 --- !u!1 &454265736 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7964718d3626b0a41a33093592d9cc35,
@@ -3212,7 +3229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27a720648be9a024a9bc3415cb56afef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tabGroup: {fileID: 70145955}
+  tabGroup: {fileID: 0}
   background: {fileID: 0}
   onTabSelected:
     m_PersistentCalls:
@@ -3841,22 +3858,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
   compendium: {fileID: 0}
-  unitsMoves:
+  unitsStandardMoves:
   - typeNum: 0
     moveNum: 0
     levelLearned: 1
   - typeNum: 0
     moveNum: 1
     levelLearned: 1
-  currentMoves:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - typeNum: 0
+    moveNum: 2
+    levelLearned: 1
+  unitsSpecialMoves: []
+  maxNumOfStandardMoves: 8
+  currentStandardMoves: []
+  maxNumOfSpecialMoves: 8
+  currentSpecialMoves: []
 --- !u!1 &1069796159
 GameObject:
   m_ObjectHideFlags: 0
@@ -4325,7 +4341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27a720648be9a024a9bc3415cb56afef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tabGroup: {fileID: 70145955}
+  tabGroup: {fileID: 0}
   background: {fileID: 0}
   onTabSelected:
     m_PersistentCalls:
@@ -5767,7 +5783,6 @@ GameObject:
   - component: {fileID: 1449895673}
   - component: {fileID: 1449895676}
   - component: {fileID: 1449895675}
-  - component: {fileID: 1449895674}
   m_Layer: 0
   m_Name: AttackSubMenu
   m_TagString: Untagged
@@ -5790,26 +5805,6 @@ Transform:
   m_Father: {fileID: 440544051}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1449895674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1449895672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8408b6fff477dd44b1ff8b179e31dca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  listType: 0
-  itemList: []
-  moveList:
-  - {fileID: 11400000, guid: df4894b315406ef4c9f7dbcdfc53df21, type: 2}
-  - {fileID: 11400000, guid: fdf57c97e344de84689cb47ee46476a2, type: 2}
-  - {fileID: 11400000, guid: c1f5a7e203ec7b2499e41a62842af556, type: 2}
-  - {fileID: 11400000, guid: 2a12a5ded4353c04e885c4d2c0f09b65, type: 2}
-  listIndex: 0
 --- !u!23 &1449895675
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7119,14 +7114,15 @@ MonoBehaviour:
   subMenuState: 0
   subMenus: []
   currentSubMenu: {fileID: 0}
+  sMtoClose: 0
   targetingSubMenu: {fileID: 0}
   atkTabAvailable: 1
   speTabAvailable: 1
   itmTabAvailable: 1
   tacTabAvailable: 1
-  panelGroup: {fileID: 0}
   battleSystem: {fileID: 0}
   animationHandler: {fileID: 0}
+  currentUnitsMoves: {fileID: 0}
 --- !u!1 &1818022269
 GameObject:
   m_ObjectHideFlags: 0
@@ -7318,7 +7314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27a720648be9a024a9bc3415cb56afef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tabGroup: {fileID: 70145955}
+  tabGroup: {fileID: 0}
   background: {fileID: 0}
   onTabSelected:
     m_PersistentCalls:

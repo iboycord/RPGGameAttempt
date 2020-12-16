@@ -8,17 +8,25 @@ public class SubMenuContents : MonoBehaviour
     public List<Item> itemList;
     public List<Move> moveList;
     public int listIndex = 0;
+    public UnitMoveList currentList;
+
+    public void ListSetup(UnitMoveList list, bool stdOrSpl)
+    {
+        currentList = list;
+        moveList = stdOrSpl ? currentList.currentStandardMoves : currentList.currentSpecialMoves;
+    }
 
     public void OnExit()
     {
         listIndex = 0;
+        moveList = null;
     }
 
     public Move IncrementMoveList()
     {
         if(listIndex + 1 < moveList.Count)
         {
-            listIndex++;
+            ++listIndex;
         }
         else
         {
@@ -31,12 +39,14 @@ public class SubMenuContents : MonoBehaviour
     {
         if(listIndex - 1 > -1)
         {
-            listIndex--;
+            --listIndex;
         }
         else
         {
             listIndex = moveList.Count - 1;
         }
+
+        if(listIndex <= -1) { listIndex = 0; }
         return moveList[listIndex];
     }
 
@@ -50,7 +60,7 @@ public class SubMenuContents : MonoBehaviour
     {
         if (listIndex + 1 < moveList.Count)
         {
-            listIndex++;
+            ++listIndex;
         }
         else
         {
@@ -63,7 +73,7 @@ public class SubMenuContents : MonoBehaviour
     {
         if (listIndex - 1 > -1)
         {
-            listIndex--;
+            --listIndex;
         }
         else
         {

@@ -243,15 +243,6 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
         lineup.TrimExcess();
     }
 
-    public void PlayerTurn(Unit currentUnit)
-    {
-        state = BattleState.PLAYERTURN;
-        Debug.Log(currentUnit.name + "'s turn!");
-
-        // Open Menu - Create a new initializer function for status effects that effect this
-        battleUI.OpenBUI();
-    }
-
     public void PlayerTurn(Unit currentUnit, StatusEffectHandler cUSH)
     {
         state = BattleState.PLAYERTURN;
@@ -263,7 +254,7 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
             cUSH.currentStatusEffect.GetBattleTabSealNum(out bool atk, out bool spe, out bool itm, out bool tac);
             battleUI.InitializeTabs(atk, spe, itm, tac);
         }
-        battleUI.OpenBUI();
+        battleUI.OpenBUI(currentUnit.GetComponent<UnitMoveList>());
     }
 
     public void EnemyTurn(Unit currentUnit)
