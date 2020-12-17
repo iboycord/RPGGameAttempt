@@ -85,13 +85,13 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
 
     public FriendshipControl friendshipControl;
     public BattleAnimationHandler animationHandler;
-    public MoveCompendium compTest;
+    public MoveCompendium mCompendium;
 
 
     private void Start()
     {
         if (friendshipControl == null) { friendshipControl = GetComponent<FriendshipControl>(); }
-        if (compTest == null) { compTest = FindObjectOfType<MoveCompendium>(); }
+        if (mCompendium == null) { mCompendium = FindObjectOfType<MoveCompendium>(); }
         state = BattleState.START;
 
         StartCoroutine(BattleSetup());
@@ -146,7 +146,7 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            compTest.PrintStandardMoves();
+            mCompendium.PrintStandardMoves();
         }
 
     }
@@ -220,6 +220,29 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
         {
             ReshuffleLineup();
         }
+    }
+
+    public void CheckCombatants(ref bool playerWiped, ref bool enemyWiped)
+    {
+        // Determine if either party is dead, more emphasis on the player party dying.
+        List<bool> tmp = new List<bool>();
+        if (playerAUnit.isDead && playerBUnit.isDead) 
+        { 
+            playerWiped = true;
+            // Early out so theres less "waiting" involved.
+            return;
+        }
+
+        foreach (EnemyBattleDataStruct foe in enemies)
+        {
+            tmp.Add(foe.GetCharStats().isDead);
+        }
+        enemyWiped = !tmp.Contains(false);
+    }
+
+    public void EndBattle()
+    {
+
     }
 
     public void ReshuffleLineup()

@@ -7,4 +7,6 @@ public class EnemyBattleDataStruct : MonoBehaviour
 {
     public GameObject enemyPrefab;
     public CharacterStats enemyUnit;
+
+    public CharacterStats GetCharStats() { return enemyUnit; }
 }
