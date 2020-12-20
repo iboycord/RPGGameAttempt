@@ -222,10 +222,9 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
         }
     }
 
-    public void CheckCombatants(ref bool playerWiped, ref bool enemyWiped)
+    public void CheckCombatants(bool playerWiped, bool enemyWiped)
     {
         // Determine if either party is dead, more emphasis on the player party dying.
-        List<bool> tmp = new List<bool>();
         if (playerAUnit.isDead && playerBUnit.isDead) 
         { 
             playerWiped = true;
@@ -233,6 +232,9 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
             return;
         }
 
+        List<bool> tmp = new List<bool>();
+        // For now have to add this one singularly
+        tmp.Add(enemyAUnit.isDead);
         foreach (EnemyBattleDataStruct foe in enemies)
         {
             tmp.Add(foe.GetCharStats().isDead);
@@ -240,9 +242,17 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
         enemyWiped = !tmp.Contains(false);
     }
 
-    public void EndBattle()
+    public void EndBattle(bool playerWiped, bool enemyWiped)
     {
-
+        if (playerWiped)
+        {
+            // Transition to game over. Swapping equipment would also be a nice thing somehow
+            Debug.Log("Player game over-ed...");
+        }
+        if (enemyWiped)
+        {
+            // Distribute xp 
+        }
     }
 
     public void ReshuffleLineup()
@@ -348,7 +358,17 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
             placeInLineup++;
         }
         currentUnitHasExtraTurn = false;
-        NextPhase();
+
+        bool pW = false, eW = false;
+        CheckCombatants(pW, eW);
+        if(pW || eW)
+        {
+            EndBattle(pW, eW);
+        }
+        else
+        {
+            NextPhase();
+        }
     }
 
     public void Attack(CharacterStats currentUnit, CharacterStats target, Move move)

@@ -3670,6 +3670,7 @@ GameObject:
   - component: {fileID: 1006417896}
   - component: {fileID: 1006417898}
   - component: {fileID: 1006417897}
+  - component: {fileID: 1006417899}
   m_Layer: 0
   m_Name: TestUnitA
   m_TagString: PlayerControlled
@@ -3873,6 +3874,19 @@ MonoBehaviour:
   currentStandardMoves: []
   maxNumOfSpecialMoves: 8
   currentSpecialMoves: []
+--- !u!114 &1006417899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006417890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5485b5c680a6e1140875b87fb4c10bb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentWeapon: {fileID: 11400000, guid: 2c8fbb0a93aab47428c105204557c468, type: 2}
 --- !u!1 &1069796159
 GameObject:
   m_ObjectHideFlags: 0
@@ -5700,7 +5714,7 @@ MonoBehaviour:
   battleUI: {fileID: 70145960}
   friendshipControl: {fileID: 1445010298}
   animationHandler: {fileID: 1445010297}
-  compTest: {fileID: 0}
+  mCompendium: {fileID: 0}
 --- !u!4 &1445010295
 Transform:
   m_ObjectHideFlags: 0
@@ -6291,6 +6305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5485b5c680a6e1140875b87fb4c10bb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentWeapon: {fileID: 0}
 --- !u!4 &1637092620
 Transform:
   m_ObjectHideFlags: 0

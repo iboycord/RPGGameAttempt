@@ -5,35 +5,7 @@ using UnityEngine;
 public class UnitMoveList : MonoBehaviour
 {
     // Store two numbers and use them to find certain moves.
-    [System.Serializable]
-    public struct MoveNumHolder
-    {
-        [Tooltip(" 0 = Standard, 1 = Fire, 2 = Water, 3 = Earth, 4 = Electricity, 5 = Spectral ")]
-        public int typeNum;
-        public int moveNum;
-        public int levelLearned;
-
-        public int ReturnTypeNum() { return typeNum; }
-        public int ReturnMoveNum() { return moveNum; }
-        public int ReturnLevelLearned() { return levelLearned; }
-
-        public void SetTypeNum(int num) { typeNum = num; }
-        public void SetMoveNum(int num) { moveNum = num; }
-        public void SetLevelLearned(int num) { levelLearned = num; }
-
-        public void SetMoveNumHolder(MoveNumHolder other)
-        {
-            typeNum = other.typeNum;
-            moveNum = other.moveNum;
-            levelLearned = other.levelLearned;
-        }
-        public void SetMoveNumHolder(int type, int move, int level)
-        {
-            typeNum = type;
-            moveNum = move;
-            levelLearned = level;
-        }
-    }
+    
 
     [HideInInspector]
     public CharacterStats stats;
@@ -60,7 +32,10 @@ public class UnitMoveList : MonoBehaviour
     {
         // Extend for standard physical attacks and special moves.
         // Also extend so there's a move pool that all the available moves go into first before the ones in use are selected
-        InitStandardMoveList();
+
+        // For now so test units dont scream in pain
+        if (GetComponent<EquipmentManager>()) { InitStandardMoveListWEM(); }
+        else { InitStandardMoveList(); }
         InitSpecialMoveList();
     }
 
@@ -74,6 +49,15 @@ public class UnitMoveList : MonoBehaviour
             if (unitsStandardMoves[i].ReturnLevelLearned() > stats.level) { foundEnd = true; }
             currentStandardMoves.Add(compendium.GetMove(unitsStandardMoves[i].ReturnTypeNum(), unitsStandardMoves[i].ReturnMoveNum()));
             ++i;
+        }
+    }
+
+    public void InitStandardMoveListWEM()
+    {
+        MoveNumHolder[] EMWM = GetComponent<EquipmentManager>().currentWeapon.WeapMoveset;
+        for (int i = 0; i < EMWM.Length; ++i)
+        {
+            currentStandardMoves.Add(compendium.GetMove(EMWM[i].ReturnTypeNum(), EMWM[i].ReturnMoveNum()));
         }
     }
 
@@ -108,4 +92,34 @@ public class UnitMoveList : MonoBehaviour
         currentStandardMoves.Remove(compendium.GetMove(0, removeMatching));
     }
 
+}
+
+[System.Serializable]
+public struct MoveNumHolder
+{
+    [Tooltip(" 0 = Standard, 1 = Fire, 2 = Water, 3 = Earth, 4 = Electricity, 5 = Spectral ")]
+    public int typeNum;
+    public int moveNum;
+    public int levelLearned;
+
+    public int ReturnTypeNum() { return typeNum; }
+    public int ReturnMoveNum() { return moveNum; }
+    public int ReturnLevelLearned() { return levelLearned; }
+
+    public void SetTypeNum(int num) { typeNum = num; }
+    public void SetMoveNum(int num) { moveNum = num; }
+    public void SetLevelLearned(int num) { levelLearned = num; }
+
+    public void SetMoveNumHolder(MoveNumHolder other)
+    {
+        typeNum = other.typeNum;
+        moveNum = other.moveNum;
+        levelLearned = other.levelLearned;
+    }
+    public void SetMoveNumHolder(int type, int move, int level)
+    {
+        typeNum = type;
+        moveNum = move;
+        levelLearned = level;
+    }
 }

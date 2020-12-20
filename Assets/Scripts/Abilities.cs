@@ -12,18 +12,20 @@ public class Abilities : ScriptableObject
 
     public AbilityTrigger trigger;
 
+    [SerializeField]
     bool triggeredInBattle;
 
+    [SerializeField]
     StatusEffectList statusHolder;
+    [SerializeField]
     bool causeOrDeflectStatus;
 
-    float multiplier;
-    bool multUsedToAttack;
+    public float multiplierToStat;
 
     [Header("In case we need a specific stat change")]
     TargetStat statAffected;
     int statChange;
-    int hpSpThreshold;
+    float hpSpPercentThreshold;
 
     public void AbilityStatusHandler(CharacterStats character)
     {
@@ -33,11 +35,11 @@ public class Abilities : ScriptableObject
                 break;
             case AbilityTrigger.HealthBased:
                 // Check unit's hp
-                if (character.hp.GetCurrentValue() <= hpSpThreshold) { ActivateAbility(); }
+                if (character.hp.GetCurrentValue() <= (character.hp.GetMaxValue() * hpSpPercentThreshold)) { ActivateAbility(); }
                 break;
             case AbilityTrigger.SpBased:
                 // Check unit's sp
-                if (character.sp.GetCurrentValue() <= hpSpThreshold) { ActivateAbility(); }
+                if (character.sp.GetCurrentValue() <= (character.sp.GetMaxValue() * hpSpPercentThreshold)) { ActivateAbility(); }
                 break;
         }
     }

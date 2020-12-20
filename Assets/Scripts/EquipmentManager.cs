@@ -14,10 +14,13 @@ public class EquipmentManager : MonoBehaviour
     #endregion
 
     Equipment[] currentEquipment;
+    public Weapon currentWeapon;
     Inventory inventory;
 
     public delegate void OnEquipmentChanged(Equipment newItem, Equipment oldItem);
     public OnEquipmentChanged onEquipmentChanged;
+    public delegate void OnEquipmentChangedWeapon(Weapon newItem, Weapon oldItem);
+    public OnEquipmentChangedWeapon onEquipmentChangedWeapon;
 
     private void Start()
     {
@@ -59,6 +62,24 @@ public class EquipmentManager : MonoBehaviour
                 onEquipmentChanged.Invoke(null, oldItem);
             }
         }
+    }
+
+    // For Weapons
+    public void Equip(Weapon newItem)
+    {
+        Weapon oldItem = null;
+
+        if (currentWeapon != null)
+        {
+            oldItem = currentWeapon;
+            inventory.Add(oldItem);
+        }
+
+        if (onEquipmentChanged != null)
+        {
+            onEquipmentChangedWeapon.Invoke(newItem, oldItem);
+        }
+        currentWeapon = newItem;
     }
 
     public void UnequipAll()
