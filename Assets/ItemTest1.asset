@@ -9,20 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 397dd64619597414e9df82346e41099b, type: 3}
-  m_Name: Testpen
+  m_Script: {fileID: 11500000, guid: c158af9a7b1f49941a4bc0c456a0a059, type: 3}
+  m_Name: ItemTest1
   m_EditorClassIdentifier: 
   item_ID: 0
   name: New Item
   icon: {fileID: 0}
   isDefaultItem: 0
-  item_type: 5
+  item_type: 2
   isKeyItem: 0
   isStackable: 0
-  WeapMoveset:
-  - typeNum: 0
-    moveNum: 0
-    levelLearned: 1
-  - typeNum: 0
-    moveNum: 1
-    levelLearned: 1
+  infiniteUses: 1
+  useNum: 0
+  flavor1: 0
+  flavor2: 0
+  move: {fileID: 11400000, guid: df4894b315406ef4c9f7dbcdfc53df21, type: 2}
+  healAmount: 0
+  spAmount: 0
+  statusApplied: 0
+  baseFriendshipGiven: 0

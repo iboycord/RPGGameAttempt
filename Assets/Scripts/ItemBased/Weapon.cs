@@ -9,6 +9,7 @@ public class Weapon : Item
 
     public override void Use()
     {
+        if(item_type != ItemType.weapon) { return; }
         base.Use();
         EquipmentManager.instance.Equip(this);
         RemoveFromInventory();

@@ -2,17 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
-public class Item : ScriptableObject
+[CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Useable Item")]
+public class UseableItem : Item
 {
-    public int item_ID;
-    new public string name = "New Item";
-    public Sprite icon = null;
-    public bool isDefaultItem = false;
-    public ItemType item_type;
-    public bool isKeyItem;
-    public bool isStackable;
-
     public bool infiniteUses;
     public int useNum = 0;
 
@@ -30,14 +22,8 @@ public class Item : ScriptableObject
         useNum = Mathf.Clamp(useNum, 0, int.MaxValue);
     }
 
-    // For equipment
-    public virtual void Use()
-    {
-        Debug.Log("Using " + name);
-    }
-
     // For useable items
-    public virtual void Use(CharacterStats user, CharacterStats target)
+    public void Use(CharacterStats user, CharacterStats target)
     {
         Debug.Log("Using " + name);
         switch (item_type)
@@ -50,7 +36,7 @@ public class Item : ScriptableObject
                 UseIncrementer(-1);
                 break;
             case ItemType.heal:
-                Heal(target);
+                Heal(user, target);
                 UseIncrementer(-1);
                 break;
             case ItemType.status:
@@ -58,13 +44,26 @@ public class Item : ScriptableObject
                 userSEH.AssignStatus(statusApplied);
                 UseIncrementer(-1);
                 break;
+            case ItemType.key:
+                Debug.Log("No use.");
+                break;
+            case ItemType.weapon:
+                Debug.Log("How did you get here? Thats wrong.");
+                break;
+            default:
+                break;
         }
-        
+
     }
 
-    public virtual void Heal(CharacterStats target)
+    public void Heal(CharacterStats user, CharacterStats target)
     {
-        float multiplier = FriendshipStats.CheckFlavorPower(target.favoriteFlavor1, target.favoriteFlavor2, flavor1, flavor2);
+        float multiplier;
+        // Set the multiplier
+        multiplier = flavor1 != FlavorType.none && flavor2 != FlavorType.none ? 
+            FriendshipStats.CheckFlavorPower(target.favoriteFlavor1, target.favoriteFlavor2, flavor1, flavor2)
+            : FriendshipStats.CheckFlavorPower(target.favoriteFlavor1, flavor1);
+
         if (healAmount > 0)
         {
             target.Heal(Mathf.RoundToInt(healAmount * multiplier));
@@ -73,18 +72,19 @@ public class Item : ScriptableObject
         {
             target.RecoverSP(Mathf.RoundToInt(spAmount * multiplier));
         }
-
+        GiveFriendship(user, target, multiplier);
     }
 
-    public virtual void GiveFriendship(CharacterStats user)
+    public void GiveFriendship(CharacterStats user, CharacterStats target, float additional)
     {
-        if(user.CompareTag("PlayerControlled"))
+        if (user.CompareTag("PlayerControlled") && target.CompareTag("PlayerControlled"))
         {
-            //FriendshipControl. Figure out if you need to use a singleton to increase the friendship.
+            FriendshipControl f = FindObjectOfType<FriendshipControl>();
+            f.IncrementFriendship(Mathf.RoundToInt(baseFriendshipGiven * additional));
         }
     }
 
-    public virtual void UseIncrementer(int uses)
+    public void UseIncrementer(int uses)
     {
         if (!infiniteUses || isKeyItem)
         {
@@ -94,14 +94,8 @@ public class Item : ScriptableObject
                 RemoveFromInventory();
             }
         }
-        
+
     }
 
-    public void RemoveFromInventory()
-    {
-        Inventory.instance.Remove(this);
-    }
 }
 
-public enum ItemType { none, heal, attack, status, key }
-public enum FlavorType { none, Sweet, Salty, Sour, Savory, Spicy, Bitter, Greasy, Natural, Meaty, Peanut_Butter }

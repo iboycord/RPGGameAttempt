@@ -23,7 +23,10 @@ public class Inventory : MonoBehaviour
     public int space = 20;
     public int maxStack = 99;
 
-    //public List<Item> Items = new List<Item>();
+    public List<Weapon> weapons = new List<Weapon>();
+    [Space]
+    public List<ItemInList> items = new List<ItemInList>();
+
     public Dictionary<Item, int> itemList = new Dictionary<Item, int>();
 
     public bool Add(Item item)
@@ -63,6 +66,23 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
+    public bool Add(Weapon newWeap)
+    {
+        if (weapons.Count >= space)
+        {
+            Debug.Log("Not enough room");
+            return false;
+        }
+
+        weapons.Add(newWeap);
+        return true;
+    }
+
+    public void Remove(Weapon removeWeap)
+    {
+        weapons.Remove(removeWeap);
+    }
+
     public void Remove(Item item)
     {
         if(item.isStackable && itemList.TryGetValue(item, out int value))
@@ -87,4 +107,16 @@ public class Inventory : MonoBehaviour
             onItemChangedCallback.Invoke();
         }
     }
+}
+
+[System.Serializable]
+public struct ItemInList
+{
+    public Item item;
+    public int amount;
+
+    public Item GetItem() { return item; }
+    public int GetAmount() { return amount; }
+
+    public void IncrementAmount(int a) { amount += a; }
 }
