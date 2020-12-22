@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: ItemTest1
   m_EditorClassIdentifier: 
   item_ID: 0
-  name: New Item
+  name: ItemTest1
   icon: {fileID: 0}
   isDefaultItem: 0
   item_type: 2
   isKeyItem: 0
   isStackable: 0
   infiniteUses: 1
-  useNum: 0
+  useNum: 1
   flavor1: 0
   flavor2: 0
   move: {fileID: 11400000, guid: df4894b315406ef4c9f7dbcdfc53df21, type: 2}

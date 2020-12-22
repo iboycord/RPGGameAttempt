@@ -22,29 +22,29 @@ public class Inventory : MonoBehaviour
 
     public int space = 20;
     public int maxStack = 99;
-
-    public List<Weapon> weapons = new List<Weapon>();
-    [Space]
-    public List<ItemInList> items = new List<ItemInList>();
-
+    [SerializeField]
     public Dictionary<Item, int> itemList = new Dictionary<Item, int>();
+    public List<Item> items = new List<Item>();
+    [Space]
+    public List<Weapon> weapons = new List<Weapon>();    
 
     public bool Add(Item item)
     {
         if (!item.isDefaultItem)
         {
             
-            if (itemList.Count >= space)
+            if (items.Count >= space) //itemList.Count >= space
             {
                 Debug.Log("Not enough room");
                 return false;
             }
             
-            if(item.isStackable && itemList.TryGetValue(item, out int value))
+            if(item.isStackable && items.Exists(e => item)) //itemList.TryGetValue(item, out int value)
             {
-                if(value < maxStack)
+                if (item.useNum < maxStack)
                 {
-                    itemList[item] += 1;
+                    //itemList[item] += 1;
+                    item.IncrementUseNum(1);
                 }
                 else
                 {
@@ -54,7 +54,9 @@ public class Inventory : MonoBehaviour
             }
             else
             {
-                itemList.Add(item, 1);
+                //itemList.Add(item, 1);
+                items.Add(item);
+                item.IncrementUseNum(1);
             }
             
             if(onItemChangedCallback != null)
@@ -85,21 +87,25 @@ public class Inventory : MonoBehaviour
 
     public void Remove(Item item)
     {
-        if(item.isStackable && itemList.TryGetValue(item, out int value))
+        if(item.isStackable && items.Exists(e => item)) //itemList.TryGetValue(item, out int value)
         {
-            if(value > 0)
+            if (item.useNum > 0)
             {
-                itemList[item] -= 1;
+                //itemList[item] -= 1;
+                item.IncrementUseNum(-1);
             }
             else
             {
-                itemList.Remove(item);
+                //itemList.Remove(item);
+                items.Remove(item);
             }
  
         }
         else
         {
-            itemList.Remove(item);
+            //itemList.Remove(item);
+            //items.Remove(items.Find(e => item));
+            items.Remove(item);
         }
 
         if (onItemChangedCallback != null)
@@ -107,16 +113,4 @@ public class Inventory : MonoBehaviour
             onItemChangedCallback.Invoke();
         }
     }
-}
-
-[System.Serializable]
-public struct ItemInList
-{
-    public Item item;
-    public int amount;
-
-    public Item GetItem() { return item; }
-    public int GetAmount() { return amount; }
-
-    public void IncrementAmount(int a) { amount += a; }
 }

@@ -26,6 +26,7 @@ public class BattleUI : MonoBehaviour
     public BattleSystem battleSystem;
     public BattleAnimationHandler animationHandler;
     public UnitMoveList currentUnitsMoves;
+    public Inventory playerInven;
 
     bool canAct = true;
 
@@ -99,7 +100,6 @@ public class BattleUI : MonoBehaviour
                 }
             }
 
-
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 OpenTargetMenu();
@@ -153,10 +153,12 @@ public class BattleUI : MonoBehaviour
     {
         sMtoClose = menuToOpen;
         objectsToSwap[menuToOpen].SetActive(true);
-        if(menuToOpen < 2)
+        if(menuToOpen < 3)
         {
             if (menuToOpen == 0) { currentSubMenu.ListSetup(currentUnitsMoves, true); }
             if (menuToOpen == 1) { currentSubMenu.ListSetup(currentUnitsMoves, false); }
+
+            if (menuToOpen == 2) { currentSubMenu.ItemListSetup(playerInven.items); }
         }
         subMenuState = MenuState.Selecting;
     }
@@ -212,6 +214,7 @@ public class BattleUI : MonoBehaviour
     public void EndUIFeatures()
     {
         animationHandler.enabled = false;
+        // Extend to items now. if(currentSubMenu.listType == ListType.Items) do something different
         battleSystem.OnStandardAttackButton(battleSystem.PlaceInLineup(), targetingSubMenu.SelectTarget(), currentSubMenu.SelectMove());
     }
 

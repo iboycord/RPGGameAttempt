@@ -5,9 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Useable Item")]
 public class UseableItem : Item
 {
-    public bool infiniteUses;
-    public int useNum = 0;
-
     public FlavorType flavor1;
     public FlavorType flavor2;
 

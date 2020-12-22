@@ -545,6 +545,7 @@ MonoBehaviour:
   battleSystem: {fileID: 1445010294}
   animationHandler: {fileID: 1445010297}
   currentUnitsMoves: {fileID: 0}
+  playerInven: {fileID: 1637092619}
 --- !u!1 &131457477
 GameObject:
   m_ObjectHideFlags: 0
@@ -6307,8 +6308,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   space: 20
   maxStack: 99
+  items:
+  - {fileID: 11400000, guid: 3e3d7d2303a5d7247bf6d093a0e24aab, type: 2}
+  - {fileID: 11400000, guid: de3703be44e1ad245ba408d9267e1471, type: 2}
+  - {fileID: 11400000, guid: 411175ddebdc1914d8b21ea3a2c28022, type: 2}
   weapons: []
-  items: []
 --- !u!4 &1637092620
 Transform:
   m_ObjectHideFlags: 0
@@ -7141,6 +7145,7 @@ MonoBehaviour:
   battleSystem: {fileID: 0}
   animationHandler: {fileID: 0}
   currentUnitsMoves: {fileID: 0}
+  playerInven: {fileID: 0}
 --- !u!1 &1818022269
 GameObject:
   m_ObjectHideFlags: 0

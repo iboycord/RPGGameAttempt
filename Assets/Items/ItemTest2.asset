@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c158af9a7b1f49941a4bc0c456a0a059, type: 3}
+  m_Name: ItemTest2
+  m_EditorClassIdentifier: 
+  item_ID: 0
+  name: ItemTest2
+  icon: {fileID: 0}
+  isDefaultItem: 0
+  item_type: 0
+  isKeyItem: 0
+  isStackable: 0
+  infiniteUses: 0
+  useNum: 1
+  flavor1: 0
+  flavor2: 0
+  move: {fileID: 0}
+  healAmount: 0
+  spAmount: 0
+  statusApplied: 0
+  baseFriendshipGiven: 0

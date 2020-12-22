@@ -12,6 +12,9 @@ public class Item : ScriptableObject
     public ItemType item_type;
     public bool isKeyItem;
     public bool isStackable = false;
+    public bool infiniteUses;
+    // Only to be used for player interactions
+    public int useNum = 0;
 
     // For everything
     public virtual void Use()
@@ -22,6 +25,12 @@ public class Item : ScriptableObject
     public void RemoveFromInventory()
     {
         Inventory.instance.Remove(this);
+    }
+
+    public void IncrementUseNum(int a)
+    {
+        useNum += a;
+        if(useNum < 0) { useNum = 0; }
     }
 }
 
