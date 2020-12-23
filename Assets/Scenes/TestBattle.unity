@@ -191,8 +191,8 @@ MonoBehaviour:
     growth: 0
   EType1: 0
   EType2: 0
-  favoriteFlavor1: 0
-  favoriteFlavor2: 0
+  favoriteFlavor1: 1
+  favoriteFlavor2: 2
   nextActTurn: 0
   dmgReduction: 1
   isDead: 0
@@ -6308,6 +6308,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   space: 20
   maxStack: 99
+  keyItems: []
   items:
   - {fileID: 11400000, guid: 3e3d7d2303a5d7247bf6d093a0e24aab, type: 2}
   - {fileID: 11400000, guid: de3703be44e1ad245ba408d9267e1471, type: 2}
