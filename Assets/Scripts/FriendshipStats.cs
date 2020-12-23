@@ -16,7 +16,7 @@ public class FriendshipStats : MonoBehaviour
     {
         if (f1 == f2)
         {
-            return 1.5f;
+            return 1.25f;
         }
         else return 1;
     }

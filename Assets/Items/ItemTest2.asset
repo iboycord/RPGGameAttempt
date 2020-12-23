@@ -16,15 +16,16 @@ MonoBehaviour:
   name: ItemTest2
   icon: {fileID: 0}
   isDefaultItem: 0
-  item_type: 0
+  item_type: 1
   isKeyItem: 0
   isStackable: 0
   infiniteUses: 0
-  useNum: 1
-  flavor1: 0
-  flavor2: 0
+  useNum: 2
+  flavor1: 1
+  flavor2: 2
   move: {fileID: 0}
-  healAmount: 0
-  spAmount: 0
+  healAmount: 5
+  spAmount: 10
   statusApplied: 0
-  baseFriendshipGiven: 0
+  userOrTarget: 1
+  baseFriendshipGiven: 2

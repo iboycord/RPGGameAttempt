@@ -398,7 +398,9 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
 
     public void Item(CharacterStats currentUnit, CharacterStats target, Item item)
     {
-
+        item.Use(currentUnit, target);
+        battleUI.CloseBUI();
+        FinishTurn();
     }
 
     public void flee(CharacterStats currentUnit)

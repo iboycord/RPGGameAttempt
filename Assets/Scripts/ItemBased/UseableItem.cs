@@ -12,6 +12,8 @@ public class UseableItem : Item
     public int healAmount;
     public int spAmount;
     public StatusEffectList statusApplied;
+    [Tooltip("True for effect on User, false for effect on target.")]
+    public bool userOrTarget = true;
     public int baseFriendshipGiven;
 
     public void Awake()
@@ -20,7 +22,7 @@ public class UseableItem : Item
     }
 
     // For useable items
-    public void Use(CharacterStats user, CharacterStats target)
+    public override void Use(CharacterStats user, CharacterStats target)
     {
         Debug.Log("Using " + name);
         switch (item_type)
@@ -37,12 +39,21 @@ public class UseableItem : Item
                 UseIncrementer(-1);
                 break;
             case ItemType.status:
-                StatusEffectHandler userSEH = user.gameObject.GetComponent<StatusEffectHandler>();
-                userSEH.AssignStatus(statusApplied);
+                // Extend for both target and user
+                if (userOrTarget)
+                {
+                    StatusEffectHandler userSEH = user.gameObject.GetComponent<StatusEffectHandler>();
+                    userSEH.AssignStatus(statusApplied);
+                }
+                else
+                {
+                    StatusEffectHandler targetSEH = target.gameObject.GetComponent<StatusEffectHandler>();
+                    targetSEH.AssignStatus(statusApplied);
+                }
                 UseIncrementer(-1);
                 break;
             case ItemType.key:
-                Debug.Log("No use.");
+                Debug.Log("No use?");
                 break;
             case ItemType.weapon:
                 Debug.Log("How did you get here? Thats wrong.");
@@ -61,6 +72,7 @@ public class UseableItem : Item
             FriendshipStats.CheckFlavorPower(target.favoriteFlavor1, target.favoriteFlavor2, flavor1, flavor2)
             : FriendshipStats.CheckFlavorPower(target.favoriteFlavor1, flavor1);
 
+        // Determine if you want ceil to int (gives more points) or round to int (less points = less hp issue)
         if (healAmount > 0)
         {
             target.Heal(Mathf.RoundToInt(healAmount * multiplier));
@@ -77,7 +89,7 @@ public class UseableItem : Item
         if (user.CompareTag("PlayerControlled") && target.CompareTag("PlayerControlled"))
         {
             FriendshipControl f = FindObjectOfType<FriendshipControl>();
-            f.IncrementFriendship(Mathf.RoundToInt(baseFriendshipGiven * additional));
+            f.IncrementFriendship(Mathf.CeilToInt(baseFriendshipGiven * additional));
         }
     }
 
@@ -85,7 +97,7 @@ public class UseableItem : Item
     {
         if (!infiniteUses || isKeyItem)
         {
-            useNum -= uses;
+            useNum += uses;
             if (useNum <= 0)
             {
                 RemoveFromInventory();

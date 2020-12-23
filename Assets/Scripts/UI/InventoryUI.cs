@@ -30,9 +30,10 @@ public class InventoryUI : MonoBehaviour
     {
         for(int i = 0; i < slots.Length; ++i)
         {
-            if(i < inventory.itemList.Count)
+            if(i < inventory.items.Count)
             {
-                slots[i].AddItem(inventory.itemList.ElementAt(i).Key);
+                //slots[i].AddItem(inventory.itemList.ElementAt(i).Key);
+                slots[i].AddItem(inventory.items.ElementAt(i));
             }
             else
             {

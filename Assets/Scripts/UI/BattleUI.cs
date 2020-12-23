@@ -115,11 +115,13 @@ public class BattleUI : MonoBehaviour
             // 0 = Attack, 1 = Special, 2 = Items, 3 = Tactics
             if (Input.GetKeyDown(KeyCode.W) && atkTabAvailable)
             {
-                OpenSubMenu(0);
+                if (currentUnitsMoves.currentStandardMoves.Count > 0) { OpenSubMenu(0); }
+                //OpenSubMenu(0);
             }
             if (Input.GetKeyDown(KeyCode.D) && speTabAvailable)
             {
-                OpenSubMenu(1); // If the list is empty then an error is thrown. Please fix
+                if(currentUnitsMoves.currentSpecialMoves.Count > 0) { OpenSubMenu(1); }
+                //OpenSubMenu(1); // If the list is empty then an error is thrown. Please fix
             }
             if (Input.GetKeyDown(KeyCode.S) && itmTabAvailable)
             {
@@ -214,10 +216,15 @@ public class BattleUI : MonoBehaviour
     public void EndUIFeatures()
     {
         animationHandler.enabled = false;
-        // Extend to items now. if(currentSubMenu.listType == ListType.Items) do something different
-        battleSystem.OnStandardAttackButton(battleSystem.PlaceInLineup(), targetingSubMenu.SelectTarget(), currentSubMenu.SelectMove());
+        if (currentSubMenu.listType == ListType.Moves) 
+        { 
+            battleSystem.OnStandardAttackButton(battleSystem.PlaceInLineup(), targetingSubMenu.SelectTarget(), currentSubMenu.SelectMove()); 
+        }
+        if (currentSubMenu.listType == ListType.Items)
+        {
+            battleSystem.Item(battleSystem.PlaceInLineup(), targetingSubMenu.SelectTarget(), currentSubMenu.SelectItem());
+        }
     }
-
 }
 
 public enum MenuState { Unopened, Selecting, Targeting, Info, Acting, NotMyTurn }

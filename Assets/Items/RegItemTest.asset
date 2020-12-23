@@ -16,8 +16,8 @@ MonoBehaviour:
   name: RegItemTest
   icon: {fileID: 0}
   isDefaultItem: 0
-  item_type: 0
-  isKeyItem: 0
+  item_type: 4
+  isKeyItem: 1
   isStackable: 0
   infiniteUses: 0
   useNum: 1

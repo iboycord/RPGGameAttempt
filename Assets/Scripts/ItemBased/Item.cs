@@ -21,6 +21,10 @@ public class Item : ScriptableObject
     {
         Debug.Log("Using " + name);
     }
+    public virtual void Use(CharacterStats p1, CharacterStats t1)
+    {
+        Debug.Log(p1.name + " using " + name + " on " + t1);
+    }
 
     public void RemoveFromInventory()
     {

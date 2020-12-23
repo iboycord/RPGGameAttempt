@@ -22,17 +22,19 @@ public class Inventory : MonoBehaviour
 
     public int space = 20;
     public int maxStack = 99;
-    [SerializeField]
-    public Dictionary<Item, int> itemList = new Dictionary<Item, int>();
+    //[SerializeField]
+    //public Dictionary<Item, int> itemList = new Dictionary<Item, int>();
+    public List<Item> keyItems = new List<Item>();
+    [Space]
     public List<Item> items = new List<Item>();
     [Space]
     public List<Weapon> weapons = new List<Weapon>();    
 
     public bool Add(Item item)
     {
-        if (!item.isDefaultItem)
+        // For Normal Items
+        if (!item.isDefaultItem && !item.isKeyItem)
         {
-            
             if (items.Count >= space) //itemList.Count >= space
             {
                 Debug.Log("Not enough room");
@@ -65,6 +67,36 @@ public class Inventory : MonoBehaviour
             }
             
         }
+        // For Key Items
+        if (!item.isDefaultItem && item.isKeyItem)
+        {
+            if (item.isStackable && !keyItems.Exists(e => item)) //itemList.TryGetValue(item, out int value)
+            {
+                if (item.useNum < maxStack)
+                {
+                    //itemList[item] += 1;
+                    //item.IncrementUseNum(1);
+                    item.infiniteUses = true;
+                }
+                else
+                {
+                    Debug.Log("Full on this item");
+                    return false;
+                }
+            }
+            else
+            {
+                //itemList.Add(item, 1);
+                keyItems.Add(item);
+                //item.IncrementUseNum(1);
+                item.infiniteUses = true;
+            }
+
+            if (onItemChangedCallback != null)
+            {
+                onItemChangedCallback.Invoke();
+            }
+        }
         return true;
     }
 
@@ -87,6 +119,7 @@ public class Inventory : MonoBehaviour
 
     public void Remove(Item item)
     {
+        if(item.isKeyItem) { return; }
         if(item.isStackable && items.Exists(e => item)) //itemList.TryGetValue(item, out int value)
         {
             if (item.useNum > 0)
