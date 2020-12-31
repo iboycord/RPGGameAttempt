@@ -38,6 +38,8 @@ public class Unit : MonoBehaviour
 
     public int nextActTurn;
     public float dmgReduction = 1;
+    public int rngAlteration = 0;
+    public int moveCostReduction = 0;
     public bool isDead;
 
     StatusEffectHandler statEff;

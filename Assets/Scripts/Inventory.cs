@@ -28,7 +28,10 @@ public class Inventory : MonoBehaviour
     [Space]
     public List<Item> items = new List<Item>();
     [Space]
-    public List<Weapon> weapons = new List<Weapon>();    
+    public List<Weapon> weapons = new List<Weapon>();
+    [Space]
+    public List<StarShardAvailability> starShards = new List<StarShardAvailability>();
+
 
     public bool Add(Item item)
     {
