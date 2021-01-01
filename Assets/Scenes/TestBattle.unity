@@ -195,6 +195,8 @@ MonoBehaviour:
   favoriteFlavor2: 2
   nextActTurn: 0
   dmgReduction: 1
+  rngAlteration: 0
+  moveCostReduction: 0
   isDead: 0
 --- !u!136 &55093415
 CapsuleCollider:
@@ -1855,6 +1857,8 @@ MonoBehaviour:
   favoriteFlavor2: 0
   nextActTurn: 0
   dmgReduction: 1
+  rngAlteration: 0
+  moveCostReduction: 0
   isDead: 0
 --- !u!1 &568597669
 GameObject:
@@ -3732,6 +3736,8 @@ MonoBehaviour:
   favoriteFlavor2: 0
   nextActTurn: 0
   dmgReduction: 1
+  rngAlteration: 0
+  moveCostReduction: 0
   isDead: 0
 --- !u!65 &1006417892
 BoxCollider:
@@ -3888,6 +3894,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentWeapon: {fileID: 11400000, guid: 2c8fbb0a93aab47428c105204557c468, type: 2}
+  equippedStarShards: []
+  ssNum: 0
 --- !u!1 &1069796159
 GameObject:
   m_ObjectHideFlags: 0
@@ -5716,6 +5724,7 @@ MonoBehaviour:
   friendshipControl: {fileID: 1445010298}
   animationHandler: {fileID: 1445010297}
   mCompendium: {fileID: 0}
+  testShard: {fileID: 11400000, guid: b39b4dbf9a152124fbed97bd53572039, type: 2}
 --- !u!4 &1445010295
 Transform:
   m_ObjectHideFlags: 0
@@ -6522,6 +6531,8 @@ MonoBehaviour:
   favoriteFlavor2: 0
   nextActTurn: 0
   dmgReduction: 1
+  rngAlteration: 0
+  moveCostReduction: 0
   isDead: 0
 --- !u!136 &1642517819
 CapsuleCollider:

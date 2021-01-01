@@ -31,6 +31,12 @@ public class StarShardItem : Item
     [Range(-10, 10)]
     public int modSkl;
 
+    public void Awake()
+    {
+        item_type = ItemType.shard;
+        infiniteUses = true;
+    }
+
     public bool CompareIDs(int id)
     {
         return ssid == id;

@@ -14,4 +14,10 @@ public class Weapon : Item
         EquipmentManager.instance.Equip(this);
         RemoveFromInventory();
     }
+
+    public void Remove()
+    {
+        if (item_type != ItemType.weapon) { return; }
+        EquipmentManager.instance.Unequip();
+    }
 }

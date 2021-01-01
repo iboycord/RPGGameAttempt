@@ -86,7 +86,7 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
     public FriendshipControl friendshipControl;
     public BattleAnimationHandler animationHandler;
     public MoveCompendium mCompendium;
-
+    public StarShardItem testShard;
 
     private void Start()
     {
@@ -147,6 +147,11 @@ https://docs.unity3d.com/ScriptReference/GameObject.Find.html
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             mCompendium.PrintStandardMoves();
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            playerAUnit.GetComponent<EquipmentManager>().Equip(testShard);
         }
 
     }
