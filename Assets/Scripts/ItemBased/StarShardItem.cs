@@ -89,7 +89,17 @@ public class StarShardItem : Item
                 break;
 
         }
-        // Copy for effect2
+        switch (effect2)
+        {
+            case shardEffect.Threashold:
+                if (hporsp == HPorSP.Hp && character.hp.GetCurrentValue() <= threshold) { ActivateEffect(); }
+                if (hporsp == HPorSP.Sp && character.sp.GetCurrentValue() <= threshold) { ActivateEffect(); }
+                break;
+            case shardEffect.DamageUser:
+                character.TakeDamage(threshold, false, false);
+                break;
+
+        }
     }
 
     public void RemoveShard(CharacterStats character)

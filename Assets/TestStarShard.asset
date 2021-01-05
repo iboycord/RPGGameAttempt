@@ -21,13 +21,13 @@ MonoBehaviour:
   isStackable: 0
   infiniteUses: 1
   useNum: 0
-  effect1: 3
+  effect1: 4
   effect2: 1
   hporsp: 0
   threshold: 0
   percentage: 30
   extraMove: {fileID: 0}
-  statusEffect: 0
+  statusEffect: 1
   modAtk: 2
   modDef: 3
   modSp: 0

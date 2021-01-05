@@ -74,26 +74,39 @@ public class StatusEffectComboChart : MonoBehaviour
  *  Sleep - cant move but regain 1 hp and 5 sp per missed turn. Getting hit wakes them up
  *  Mute - Cannot open the Specials tab in battle
  *  Plushed/Baublefy - turn into a plush object (maybe plush frog or other animals), unable to use physical attacks
- *  Berserked - Cannot open/use the items or tactics tabs in battle
- *  Sackless - Cannot open the items tab in battle
- *  Topple - loose turns, fall on back
+ *  (?)Berserked - Cannot open/use the items or tactics tabs in battle
+ *  (?)Sackless - Cannot open the items tab in battle
+ *  (?)Topple - loose turns, fall on back
  *  
- *  HP Regen - regenerate 1 hp every turn this is active
- *  SP Regen - regenerate 5 sp every turn this is active
- *  Haste - gain extra turn(s)
+ *  (?)HP Regen - regenerate 1 hp every turn this is active
+ *  (?)SP Regen - regenerate 5 sp every turn this is active
+ *  (?)Haste - gain extra turn(s)
  *  
- *  Fury - atk + 2, def - 2
- *  Calm - atk - 2, def + 2
+ *  (?)Fury - atk + 2, def - 2
+ *  (?)Calm - atk - 2, def + 2
  *  
  *  Danger - 5 hp left, atk + 1
  *  Peril - 1 hp left, atk + 3 (should override Danger)
  *  
  *  Amped Heart - Duo bar charges faster when the aflicted unit preforms a successful action command
- *  Heart Seal - Duo bar cannot be charged.
- *  Desync - seal duo items and duo move.
+ *  Heart Seal - Duo bar cannot be charged, seals duo items, and duo moves.
+ *  
+ *  Emotion circle? _____ is X?
+ *  Mad -> Seething : atk(s) + (1, 2), def(s) - (1, 2) And (?) Cannot open the tactics tab in battle
+ *  Sad -> Desolate : atk(s) - (1, 2), def(s) + (1, 2) And (?) Cannot open the items tab in battle
+ *  Glad -> Jovial : spd + (1, 2), skl - (1, 2) OR replace Haste (gain extra turn(s))
+ *  Careful -> Cautious : skl + (1, 2), lck - (1, 2) OR regen 5(?) sp every turn.
+ *  Feelin' Lucky -> Quite Fortunate : lck + (1, 2), spd - (1, 2) OR regen 1(?) hp every turn.
+ *  
+ *  Anxious -> Panicked : Lose Turns. Can only be inflicted by special means.
+ *  
+ *  ---- -> = beats below ----
+ *  Glad -> Mad -> Sad -> Careful -> Lucky -> Glad
+ *  Anxious -> everything else
  *  
  *  Stat decreases - can go up to 8 or -8
  *  
+ *  // Old --------------------------------------------------
  *  > = beats
  *   Bio:
  *    Burn (hp over time, doesnt kill) > Frozen > Toxic > Stoned >- Loop
@@ -109,8 +122,7 @@ public class StatusEffectComboChart : MonoBehaviour
  *   Socio:
  *    Heart Seal (cant charge duo skill)
  *    
- *  
- *  // Old --------------------------------------------------
+ *  // Older --------------------------------------------------
  *  > = beats
  *   Burning > Frozen > Bricked > Shocked > Soaked > Burning
  *   
