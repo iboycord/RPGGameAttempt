@@ -79,14 +79,17 @@ public class EquipmentManager : MonoBehaviour
         if (currentWeapon != null)
         {
             oldItem = currentWeapon;
-            inventory.Add(oldItem);
-        }
+            //inventory.Add(oldItem);
 
+            oldItem.Remove();
+        }
+        
         if (onEquipmentChanged != null)
         {
             onEquipmentChangedWeapon.Invoke(newItem, oldItem);
         }
         currentWeapon = newItem;
+        currentWeapon.AddStats(GetComponent<CharacterStats>());
     }
 
     public void Unequip()
@@ -94,6 +97,7 @@ public class EquipmentManager : MonoBehaviour
         if (currentWeapon != null)
         {
             Weapon oldItem = currentWeapon;
+            oldItem.RemoveStats(GetComponent<CharacterStats>());
             inventory.Add(oldItem);
 
             currentWeapon = null;

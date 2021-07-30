@@ -23,12 +23,17 @@ public class Item : ScriptableObject
     }
     public virtual void Use(CharacterStats p1, CharacterStats t1)
     {
-        Debug.Log(p1.name + " using " + name + " on " + t1);
+        Debug.Log(p1.charName + " using " + name + " on " + t1.charName);
     }
 
     public void RemoveFromInventory()
     {
         Inventory.instance.Remove(this);
+    }
+
+    public void AddToInventory()
+    {
+        Inventory.instance.Add(this);
     }
 
     public void IncrementUseNum(int a)
